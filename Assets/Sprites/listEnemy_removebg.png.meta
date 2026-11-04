@@ -1,0 +1,1290 @@
+fileFormatVersion: 2
+guid: 28e081742a83f4949bd8c6bff4ec54c9
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: listEnemy_removebg_13
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 275
+        width: 105
+        height: 87
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b9b63821aab9734cbec808d6acebc06
+      internalID: -1895764774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_14
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 274
+        width: 92
+        height: 74
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88377976b7898af428406ab3df39c432
+      internalID: -366323060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_15
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 273
+        width: 91
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 214ee09d21c2cd74d989205e2acf6679
+      internalID: 935347811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_16
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 279
+        width: 23
+        height: 65
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12bd48f06c90fc04ea6e1c8f8e0c0dfd
+      internalID: -1087605595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_17
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 274
+        width: 91
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 633c0d380ebc4d94a918bea14e6ec9bb
+      internalID: -1179519160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_18
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 281
+        width: 57
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c3b19f3ba8703c4990b9e2c4a607d3d
+      internalID: 273308343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_19
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 325
+        width: 22
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23b2d97a6c2b7ca4682b3bc1b1745f34
+      internalID: 1673156489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_21
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 305
+        width: 21
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efb628597faa1c84680fcfcca72c089e
+      internalID: -885639707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_22
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 280
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1e2944123789424e8f1943bd5ecfdfd
+      internalID: -1828156282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_24
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 182
+        width: 46
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7462865f6193b294782e038876e45b8e
+      internalID: -1287735631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_25
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 218
+        width: 34
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c29e87d04cb15b47bbefef6bc179b6d
+      internalID: 547629830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_26
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 178
+        width: 58
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 847a4cbf569fedd42ab39a16ca0034d8
+      internalID: 722319331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_27
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 220
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af669aa8c87342446bb1ec6191078594
+      internalID: 1513185353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_28
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 172
+        width: 85
+        height: 77
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f36ad96f0a5a5614e9d82a02ec781219
+      internalID: 1277703323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_29
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 184
+        width: 23
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be98334084e3670439543f3a5f6e719b
+      internalID: 122736445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_30
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 176
+        width: 69
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4881163453245fd45b00d544f789c5a1
+      internalID: -272047321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_31
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 203
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49d35fedebaab9a4a9e3d957a7dfbef1
+      internalID: 1956386098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_32
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 172
+        width: 59
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 246fd6e2410f421468def4bb2342c82b
+      internalID: -881611134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_33
+      rect:
+        serializedVersion: 2
+        x: 572
+        y: 174
+        width: 9
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd24129438e67ce4a831f7c749ee4c87
+      internalID: 843921548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_34
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 200
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40d89552dc84e984189dc5788a8c5781
+      internalID: 1536285436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_35
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 199
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b5fa5b89ec004d44a195607ff82d8bb
+      internalID: -1762957869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_36
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 197
+        width: 19
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f122321765c35bf40b6856173d471359
+      internalID: 135029166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_37
+      rect:
+        serializedVersion: 2
+        x: 583
+        y: 192
+        width: 10
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6e4d3f0d42de924988b49335cfe3da6
+      internalID: -285057503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_38
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 182
+        width: 36
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dfc1ae700270c7a4b9360907981a9427
+      internalID: 484752559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_39
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 177
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7d42c885e4ec2949b4dee2cc0fb02b2
+      internalID: -1753475337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_40
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 174
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de377a6f1b123d74cba08fc491bcbfad
+      internalID: 1953509645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_46
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 55
+        width: 96
+        height: 75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4741e5c811701a84c9a09b9506df4873
+      internalID: 1003416425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_47
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 55
+        width: 82
+        height: 75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e78fe5c7cf60f44f9d81d276c7dea3c
+      internalID: -1822831918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_48
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 102
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce3ccf93054840541aab0f29770fb748
+      internalID: 243514510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_49
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 51
+        width: 110
+        height: 92
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61cebc231243295458bedcf79212df05
+      internalID: -2004108649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_50
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 51
+        width: 110
+        height: 92
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ea3e9dae48489443b2a2941964125fc
+      internalID: -1603579454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_53
+      rect:
+        serializedVersion: 2
+        x: 487
+        y: 51
+        width: 112
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f86f3f993a2ea05469e5a31c4af5cfe3
+      internalID: -199659942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_56
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 79
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91f8d7cbe01d0c945899fa3dae07e137
+      internalID: 1021538600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_59
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 60
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfcb5fd3d5a25bb41af786ef8630e4a9
+      internalID: 2055034916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_23
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 256
+        width: 83
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a0da4ee4132b044faa389af14e684c2
+      internalID: -1234685144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_41
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 151
+        width: 87
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7eeaccf4a4a0424181b857e88c3eb2c
+      internalID: 69041329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_42
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 151
+        width: 88
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3dc495db1d65ded439f3ae7da4eb5120
+      internalID: -1802926392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_43
+      rect:
+        serializedVersion: 2
+        x: 249
+        y: 151
+        width: 96
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5114a4d75f419fe4f8bf260be693e348
+      internalID: -1644480668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_44
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 151
+        width: 94
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 510f12cafc5a4164a94bbe794b78ad63
+      internalID: -236145515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_45
+      rect:
+        serializedVersion: 2
+        x: 502
+        y: 151
+        width: 89
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 409f856ecb47df741baa75346d3e260f
+      internalID: 691656330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_63
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 31
+        width: 84
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1b4fe0e5d2db3b41ac1bb67197461a6
+      internalID: -1111991957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_64
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 31
+        width: 87
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7774b7df0ddb884aafc9cf1ad5b1c9d
+      internalID: 2066409439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_65
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 30
+        width: 101
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2aef9f7ff549984eaee3ca1cc76ddf8
+      internalID: -604545421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_66
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 31
+        width: 90
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb753619311bb0f418372d972af76616
+      internalID: 1290312876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_0
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 256
+        width: 93
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b902f03598ed657449fd78ceba7c0f3d
+      internalID: 810151338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_1
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 255
+        width: 94
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1160f9d25a211854c82c89741e92261e
+      internalID: 81229562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_2
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 255
+        width: 90
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92463055f0f718b4cab2b7ddcd2d0f4c
+      internalID: 1250641691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_3
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 255
+        width: 86
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bdbba10608a3d947a62348dd6ecfa0c
+      internalID: 418826463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: listEnemy_removebg_4
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 30
+        width: 92
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49b231a4256930d45b52e5472be0e8ef
+      internalID: -656014125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      listEnemy_removebg_0: 810151338
+      listEnemy_removebg_1: 81229562
+      listEnemy_removebg_10: 62049451
+      listEnemy_removebg_11: 864808384
+      listEnemy_removebg_12: -973881740
+      listEnemy_removebg_13: -1895764774
+      listEnemy_removebg_14: -366323060
+      listEnemy_removebg_15: 935347811
+      listEnemy_removebg_16: -1087605595
+      listEnemy_removebg_17: -1179519160
+      listEnemy_removebg_18: 273308343
+      listEnemy_removebg_19: 1673156489
+      listEnemy_removebg_2: 1250641691
+      listEnemy_removebg_20: 1115267745
+      listEnemy_removebg_21: -885639707
+      listEnemy_removebg_22: -1828156282
+      listEnemy_removebg_23: -1234685144
+      listEnemy_removebg_24: -1287735631
+      listEnemy_removebg_25: 547629830
+      listEnemy_removebg_26: 722319331
+      listEnemy_removebg_27: 1513185353
+      listEnemy_removebg_28: 1277703323
+      listEnemy_removebg_29: 122736445
+      listEnemy_removebg_3: 418826463
+      listEnemy_removebg_30: -272047321
+      listEnemy_removebg_31: 1956386098
+      listEnemy_removebg_32: -881611134
+      listEnemy_removebg_33: 843921548
+      listEnemy_removebg_34: 1536285436
+      listEnemy_removebg_35: -1762957869
+      listEnemy_removebg_36: 135029166
+      listEnemy_removebg_37: -285057503
+      listEnemy_removebg_38: 484752559
+      listEnemy_removebg_39: -1753475337
+      listEnemy_removebg_4: -656014125
+      listEnemy_removebg_40: 1953509645
+      listEnemy_removebg_41: 69041329
+      listEnemy_removebg_42: -1802926392
+      listEnemy_removebg_43: -1644480668
+      listEnemy_removebg_44: -236145515
+      listEnemy_removebg_45: 691656330
+      listEnemy_removebg_46: 1003416425
+      listEnemy_removebg_47: -1822831918
+      listEnemy_removebg_48: 243514510
+      listEnemy_removebg_49: -2004108649
+      listEnemy_removebg_5: -1348701655
+      listEnemy_removebg_50: -1603579454
+      listEnemy_removebg_51: 726314419
+      listEnemy_removebg_52: -1882751263
+      listEnemy_removebg_53: -199659942
+      listEnemy_removebg_54: -1812575414
+      listEnemy_removebg_55: 152442314
+      listEnemy_removebg_56: 1021538600
+      listEnemy_removebg_57: 268541631
+      listEnemy_removebg_58: 1637643951
+      listEnemy_removebg_59: 2055034916
+      listEnemy_removebg_6: -1362893163
+      listEnemy_removebg_60: -575019289
+      listEnemy_removebg_61: -1250056196
+      listEnemy_removebg_62: 1094097354
+      listEnemy_removebg_63: -1111991957
+      listEnemy_removebg_64: 2066409439
+      listEnemy_removebg_65: -604545421
+      listEnemy_removebg_66: 1290312876
+      listEnemy_removebg_67: -1928795879
+      listEnemy_removebg_68: -547430412
+      listEnemy_removebg_7: 1576184135
+      listEnemy_removebg_8: 1804287581
+      listEnemy_removebg_9: 1211486296
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

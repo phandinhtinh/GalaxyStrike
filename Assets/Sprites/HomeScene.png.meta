@@ -1,0 +1,624 @@
+fileFormatVersion: 2
+guid: 0262976f8c0d4b349b3e96d1dd6a89ef
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_0
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 1318
+        width: 123
+        height: 118
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da865fea091962e4db52deb37cd60f63
+      internalID: -1950296289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_1
+      rect:
+        serializedVersion: 2
+        x: 1033
+        y: 1274
+        width: 126
+        height: 138
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f55b234eb5f1b2d46b7f8cb52e23b20b
+      internalID: -1622886748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_2
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 875
+        width: 120
+        height: 122
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6854f6fb3b287fd43ad49e223956c973
+      internalID: 1165446817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_3
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 1117
+        width: 141
+        height: 125
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33cae31667b59ea4e81407244f183008
+      internalID: 1419254515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_4
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 685
+        width: 407
+        height: 418
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0374b3408d8bbae4b888e63cc8aaadfd
+      internalID: -1556373717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_5
+      rect:
+        serializedVersion: 2
+        x: 1032
+        y: 953
+        width: 134
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 587ce286de7fad84a9badedca0bbda38
+      internalID: 1076200164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_8
+      rect:
+        serializedVersion: 2
+        x: 1027
+        y: 773
+        width: 131
+        height: 152
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b4da0d85f2adea4caa5b7d5a4a07fdc
+      internalID: 69694059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_9
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 695
+        width: 128
+        height: 161
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a6fc6b9efb70c049887c5d5cda613aa
+      internalID: 1069110617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_13
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 459
+        width: 113
+        height: 142
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43af00c0d9c656c4297ebbc7c4c60e48
+      internalID: 380311623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_14
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 431
+        width: 515
+        height: 212
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c7a9d88f6a4ec0468db1f9f186ca369
+      internalID: -1980525051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_15
+      rect:
+        serializedVersion: 2
+        x: 880
+        y: 459
+        width: 117
+        height: 141
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be1422eea427508478eea02980db7ff1
+      internalID: 998584230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_16
+      rect:
+        serializedVersion: 2
+        x: 848
+        y: 36
+        width: 161
+        height: 172
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d2b6ea8addf17c48a257b701c45d1c6
+      internalID: 121419450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_17
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 247
+        width: 391
+        height: 132
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff36d80281965e341a4ff80853b12e21
+      internalID: -1744514109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_18
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 246
+        width: 386
+        height: 133
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6424093c92eba7b4281247e7de1d8459
+      internalID: 1152117576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_19
+      rect:
+        serializedVersion: 2
+        x: 1029
+        y: 105
+        width: 77
+        height: 79
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d66f9a3b65fbcc7499adcf61dae55c3c
+      internalID: -1316206353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_6
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 1150
+        width: 120
+        height: 144
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f5c59a0ae52e514e98e6f64542c086b
+      internalID: 925263383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_7
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 1007
+        width: 122
+        height: 133
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f79ba9c35a8252e49a3ec1110f491237
+      internalID: 1566223658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_10
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 38
+        width: 168
+        height: 172
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db09fe7dd58a15440a811252ec7a99b9
+      internalID: -1485507820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_11
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 37
+        width: 173
+        height: 171
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d992f042235d2e46a7c47b0193f932a
+      internalID: -1715296890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_12
+      rect:
+        serializedVersion: 2
+        x: 475
+        y: 32
+        width: 199
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0ffbb9e3d6ded0468e76be6254ecd61
+      internalID: -1300071352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_20
+      rect:
+        serializedVersion: 2
+        x: 680
+        y: 36
+        width: 160
+        height: 173
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ce703481500d984d8ec8b782436d3a6
+      internalID: -1226584220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: a_clean_transparent_background_game_ui_sprite_shee_21
+      rect:
+        serializedVersion: 2
+        x: 1037
+        y: 390
+        width: 111
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5e3aa2309037a34cb15698047233c82
+      internalID: -427199135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      a_clean_transparent_background_game_ui_sprite_shee_0: -1950296289
+      a_clean_transparent_background_game_ui_sprite_shee_1: -1622886748
+      a_clean_transparent_background_game_ui_sprite_shee_10: -1485507820
+      a_clean_transparent_background_game_ui_sprite_shee_11: -1715296890
+      a_clean_transparent_background_game_ui_sprite_shee_12: -1300071352
+      a_clean_transparent_background_game_ui_sprite_shee_13: 380311623
+      a_clean_transparent_background_game_ui_sprite_shee_14: -1980525051
+      a_clean_transparent_background_game_ui_sprite_shee_15: 998584230
+      a_clean_transparent_background_game_ui_sprite_shee_16: 121419450
+      a_clean_transparent_background_game_ui_sprite_shee_17: -1744514109
+      a_clean_transparent_background_game_ui_sprite_shee_18: 1152117576
+      a_clean_transparent_background_game_ui_sprite_shee_19: -1316206353
+      a_clean_transparent_background_game_ui_sprite_shee_2: 1165446817
+      a_clean_transparent_background_game_ui_sprite_shee_20: -1226584220
+      a_clean_transparent_background_game_ui_sprite_shee_21: -427199135
+      a_clean_transparent_background_game_ui_sprite_shee_3: 1419254515
+      a_clean_transparent_background_game_ui_sprite_shee_4: -1556373717
+      a_clean_transparent_background_game_ui_sprite_shee_5: 1076200164
+      a_clean_transparent_background_game_ui_sprite_shee_6: 925263383
+      a_clean_transparent_background_game_ui_sprite_shee_7: 1566223658
+      a_clean_transparent_background_game_ui_sprite_shee_8: 69694059
+      a_clean_transparent_background_game_ui_sprite_shee_9: 1069110617
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

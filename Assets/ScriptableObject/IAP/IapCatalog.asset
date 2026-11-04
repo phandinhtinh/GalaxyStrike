@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1be7ef1b28924643ac5056a71501167, type: 3}
+  m_Name: IapCatalog
+  m_EditorClassIdentifier: 
+  catalog:
+    gemPacks:
+    - productId: com.defaultcompany.galaxystrike.gems_small
+      displayName: Small Gem Pack
+      description: "G\xC3\xB3i Gem nh\xE1\xBB\x8F"
+      rewardType: 1
+      rewardAmount: 120
+      icon: {fileID: 0}
+      badge: 
+    - productId: com.defaultcompany.galaxystrike.gems_medium
+      displayName: Medium Gem Pack
+      description: "G\xC3\xB3i Gem v\xE1\xBB\xABa"
+      rewardType: 1
+      rewardAmount: 650
+      icon: {fileID: 0}
+      badge: POPULAR
+    - productId: com.defaultcompany.galaxystrike.gems_large
+      displayName: Large Gem Pack
+      description: "G\xC3\xB3i Gem l\xE1\xBB\u203An"
+      rewardType: 1
+      rewardAmount: 1400
+      icon: {fileID: 0}
+      badge: BEST VALUE
+    coinPacks:
+    - productId: com.defaultcompany.galaxystrike.coins_small
+      displayName: Small Coin Pack
+      description: "G\xC3\xB3i Coin nh\xE1\xBB\x8F"
+      rewardType: 0
+      rewardAmount: 2500
+      icon: {fileID: 0}
+      badge: 
+    - productId: com.defaultcompany.galaxystrike.coins_medium
+      displayName: Medium Coin Pack
+      description: "G\xC3\xB3i Coin v\xE1\xBB\xABa"
+      rewardType: 0
+      rewardAmount: 14000
+      icon: {fileID: 0}
+      badge: POPULAR
+    - productId: com.defaultcompany.galaxystrike.coins_large
+      displayName: Large Coin Pack
+      description: "G\xC3\xB3i Coin l\xE1\xBB\u203An"
+      rewardType: 0
+      rewardAmount: 32000
+      icon: {fileID: 0}
+      badge: BEST VALUE
+    removeAdsProductId: com.defaultcompany.galaxystrike.remove_ads
+    legendaryShipProductId: com.defaultcompany.galaxystrike.legendary_ship

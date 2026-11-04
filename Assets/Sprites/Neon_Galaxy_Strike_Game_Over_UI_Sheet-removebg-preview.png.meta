@@ -1,0 +1,375 @@
+fileFormatVersion: 2
+guid: bb7edee4521f2c14eaadb9744958a5b3
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_3
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 412
+        width: 311
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76062177f95844d44a20ef1e6b982b94
+      internalID: -2020895482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_5
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 512
+        width: 44
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2e7e961417d2194eb35aefe39c3f0b4
+      internalID: 1534397447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_6
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 512
+        width: 42
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9eac6cdae19b5cb498e96de9b061df2e
+      internalID: -1906514683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_7
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 463
+        width: 39
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 414a7368195d4504a9a8f3834aad16f7
+      internalID: -1456508885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_8
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 463
+        width: 40
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da1961f748d2255409dd692ff1ef18a1
+      internalID: 149637562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_10
+      rect:
+        serializedVersion: 2
+        x: 323
+        y: 298
+        width: 182
+        height: 147
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 269024f67da35b34886a95bcac94dbd9
+      internalID: -1652126713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_11
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 168
+        width: 175
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b3bc9fa9bc62b64ba28abfa0d351303
+      internalID: -791729731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_12
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 148
+        width: 162
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d2b36bb848a0674f990facffb3b0109
+      internalID: -1685988025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_13
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 125
+        width: 159
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a18733096dcde05438799ed9147ba60c
+      internalID: -1041264886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_14
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 104
+        width: 161
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0fc4a4d961bb8149974dac142529ebb
+      internalID: 685951905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_0: 14420639
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_1: 642534679
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_10: -1652126713
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_11: -791729731
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_12: -1685988025
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_13: -1041264886
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_14: 685951905
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_15: -1426151865
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_16: -889594919
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_17: -1175380922
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_18: -995019066
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_19: 202339663
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_2: 59576577
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_20: 549265795
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_21: -423720051
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_22: -1701833934
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_23: -1461835192
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_24: 59287927
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_3: -2020895482
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_4: 1810606643
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_5: 1534397447
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_6: -1906514683
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_7: -1456508885
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_8: 149637562
+      Neon_Galaxy_Strike_Game_Over_UI_Sheet-removebg-preview_9: 1559442238
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,923 @@
+fileFormatVersion: 2
+guid: 1c7c8934eeeb0cd4192179b565e395b2
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5139956436819950630
+    second: DreadnoughtBullets_0
+  - first:
+      213: 826863007714376094
+    second: DreadnoughtBullets_1
+  - first:
+      213: -1419167786057399360
+    second: DreadnoughtBullets_2
+  - first:
+      213: 6832296264753438458
+    second: DreadnoughtBullets_3
+  - first:
+      213: 6881440504216253478
+    second: DreadnoughtBullets_4
+  - first:
+      213: 2817088244627110095
+    second: DreadnoughtBullets_5
+  - first:
+      213: 1081610821238526857
+    second: DreadnoughtBullets_6
+  - first:
+      213: -7949685291715297427
+    second: DreadnoughtBullets_7
+  - first:
+      213: 2608212335674297869
+    second: DreadnoughtBullets_8
+  - first:
+      213: 3879352343750161706
+    second: DreadnoughtBullets_9
+  - first:
+      213: 4792478999254863530
+    second: DreadnoughtBullets_10
+  - first:
+      213: 4024920009246315949
+    second: DreadnoughtBullets_11
+  - first:
+      213: 293868359614637437
+    second: DreadnoughtBullets_12
+  - first:
+      213: -1965559494758108820
+    second: DreadnoughtBullets_13
+  - first:
+      213: 2116581563271001603
+    second: DreadnoughtBullets_14
+  - first:
+      213: 2140042096594953200
+    second: DreadnoughtBullets_15
+  - first:
+      213: 8586895130831270157
+    second: DreadnoughtBullets_16
+  - first:
+      213: 4151026024204909457
+    second: DreadnoughtBullets_17
+  - first:
+      213: -8789534074870176739
+    second: DreadnoughtBullets_18
+  - first:
+      213: -4725023293176368397
+    second: DreadnoughtBullets_19
+  - first:
+      213: 4623292342986968376
+    second: DreadnoughtBullets_20
+  - first:
+      213: 4268512375395646247
+    second: DreadnoughtBullets_21
+  - first:
+      213: 4996626619729551040
+    second: DreadnoughtBullets_22
+  - first:
+      213: -388202624151450817
+    second: DreadnoughtBullets_23
+  - first:
+      213: -7686020754262191557
+    second: DreadnoughtBullets_24
+  - first:
+      213: 5225933699528714247
+    second: DreadnoughtBullets_25
+  - first:
+      213: -8365727016871385076
+    second: DreadnoughtBullets_26
+  - first:
+      213: 1653555614329804720
+    second: DreadnoughtBullets_27
+  - first:
+      213: -2702214348193466851
+    second: DreadnoughtBullets_28
+  - first:
+      213: 6098663535440337363
+    second: DreadnoughtBullets_29
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DreadnoughtBullets_0
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 411
+        width: 455
+        height: 834
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad34d567ad43ba8b0800000000000000
+      internalID: -5139956436819950630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_1
+      rect:
+        serializedVersion: 2
+        x: 476
+        y: 71
+        width: 759
+        height: 1151
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e99f9bc468b997b00800000000000000
+      internalID: 826863007714376094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_2
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 1197
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c30f5bea6a1e4ce0800000000000000
+      internalID: -1419167786057399360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_3
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 1012
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afe5bd4f04131de50800000000000000
+      internalID: 6832296264753438458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_4
+      rect:
+        serializedVersion: 2
+        x: 1133
+        y: 972
+        width: 106
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6247bccdda9cf7f50800000000000000
+      internalID: 6881440504216253478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_5
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 915
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc87de935de481720800000000000000
+      internalID: 2817088244627110095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_6
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 875
+        width: 10
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9831421bf47a20f00800000000000000
+      internalID: 1081610821238526857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_7
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 893
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6f792fa85b0da190800000000000000
+      internalID: -7949685291715297427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_8
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 867
+        width: 20
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0e88a6ec4b323420800000000000000
+      internalID: 2608212335674297869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_9
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 838
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a25bec7276a36d530800000000000000
+      internalID: 3879352343750161706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_10
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 795
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aae0b18124e428240800000000000000
+      internalID: 4792478999254863530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_11
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 670
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da51d786c636bd730800000000000000
+      internalID: 4024920009246315949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_12
+      rect:
+        serializedVersion: 2
+        x: 1160
+        y: 679
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d75ae8157b7041400800000000000000
+      internalID: 293868359614637437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_13
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 671
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c61fb02bd0ee8b4e0800000000000000
+      internalID: -1965559494758108820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_14
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 660
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 306b8e8b7bb9f5d10800000000000000
+      internalID: 2116581563271001603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_15
+      rect:
+        serializedVersion: 2
+        x: 585
+        y: 594
+        width: 27
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f3acebc2f4f2bd10800000000000000
+      internalID: 2140042096594953200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_16
+      rect:
+        serializedVersion: 2
+        x: 738
+        y: 15
+        width: 296
+        height: 598
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d01babc40a7ca2770800000000000000
+      internalID: 8586895130831270157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_17
+      rect:
+        serializedVersion: 2
+        x: 701
+        y: 536
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19bb22a0d286b9930800000000000000
+      internalID: 4151026024204909457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_18
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 535
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d14eb2ee35d450680800000000000000
+      internalID: -8789534074870176739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_19
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 23
+        width: 339
+        height: 506
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f2b6ce59585d6eb0800000000000000
+      internalID: -4725023293176368397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_20
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 354
+        width: 24
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83d858404eb392040800000000000000
+      internalID: 4623292342986968376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_21
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 345
+        width: 54
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72bf0dec36dcc3b30800000000000000
+      internalID: 4268512375395646247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_22
+      rect:
+        serializedVersion: 2
+        x: 1139
+        y: 248
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ce9d38ff65975540800000000000000
+      internalID: 4996626619729551040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_23
+      rect:
+        serializedVersion: 2
+        x: 1150
+        y: 246
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3b049625c3dc9af0800000000000000
+      internalID: -388202624151450817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_24
+      rect:
+        serializedVersion: 2
+        x: 569
+        y: 167
+        width: 17
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b321ce5a8d4c55590800000000000000
+      internalID: -7686020754262191557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_25
+      rect:
+        serializedVersion: 2
+        x: 1155
+        y: 103
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 708e624f20f368840800000000000000
+      internalID: 5225933699528714247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_26
+      rect:
+        serializedVersion: 2
+        x: 1125
+        y: 67
+        width: 50
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c082e770a97f6eb80800000000000000
+      internalID: -8365727016871385076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_27
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 55
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b71b70021c92f610800000000000000
+      internalID: 1653555614329804720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_28
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 34
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d16f6f40e5ecf7ad0800000000000000
+      internalID: -2702214348193466851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DreadnoughtBullets_29
+      rect:
+        serializedVersion: 2
+        x: 311
+        y: 45
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d99c826c2ec2a450800000000000000
+      internalID: 6098663535440337363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      DreadnoughtBullets_0: -5139956436819950630
+      DreadnoughtBullets_1: 826863007714376094
+      DreadnoughtBullets_10: 4792478999254863530
+      DreadnoughtBullets_11: 4024920009246315949
+      DreadnoughtBullets_12: 293868359614637437
+      DreadnoughtBullets_13: -1965559494758108820
+      DreadnoughtBullets_14: 2116581563271001603
+      DreadnoughtBullets_15: 2140042096594953200
+      DreadnoughtBullets_16: 8586895130831270157
+      DreadnoughtBullets_17: 4151026024204909457
+      DreadnoughtBullets_18: -8789534074870176739
+      DreadnoughtBullets_19: -4725023293176368397
+      DreadnoughtBullets_2: -1419167786057399360
+      DreadnoughtBullets_20: 4623292342986968376
+      DreadnoughtBullets_21: 4268512375395646247
+      DreadnoughtBullets_22: 4996626619729551040
+      DreadnoughtBullets_23: -388202624151450817
+      DreadnoughtBullets_24: -7686020754262191557
+      DreadnoughtBullets_25: 5225933699528714247
+      DreadnoughtBullets_26: -8365727016871385076
+      DreadnoughtBullets_27: 1653555614329804720
+      DreadnoughtBullets_28: -2702214348193466851
+      DreadnoughtBullets_29: 6098663535440337363
+      DreadnoughtBullets_3: 6832296264753438458
+      DreadnoughtBullets_4: 6881440504216253478
+      DreadnoughtBullets_5: 2817088244627110095
+      DreadnoughtBullets_6: 1081610821238526857
+      DreadnoughtBullets_7: -7949685291715297427
+      DreadnoughtBullets_8: 2608212335674297869
+      DreadnoughtBullets_9: 3879352343750161706
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

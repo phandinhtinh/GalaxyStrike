@@ -1,0 +1,1180 @@
+fileFormatVersion: 2
+guid: c9b6e21848a74e7789bf182410c08ce9
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_0
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 822
+        width: 244
+        height: 262
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53389e8d5d510b54999636b8a5fc676c
+      internalID: -939460749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_1
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 828
+        width: 219
+        height: 245
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f38436b66dae864cb585d1d71b24ae4
+      internalID: -1775048059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_2
+      rect:
+        serializedVersion: 2
+        x: 682
+        y: 1062
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 911349dcf21a4cc4c811c50028a25087
+      internalID: -1323495148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_3
+      rect:
+        serializedVersion: 2
+        x: 746
+        y: 790
+        width: 266
+        height: 289
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed633bfc99d99a642bf7cc51c6b317c4
+      internalID: -1190462975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_4
+      rect:
+        serializedVersion: 2
+        x: 753
+        y: 1029
+        width: 18
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8be230eb1943afe4889684709e47f59a
+      internalID: -748902032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_5
+      rect:
+        serializedVersion: 2
+        x: 1017
+        y: 808
+        width: 410
+        height: 291
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6caf0607d5e8df7498ce3ca5733da046
+      internalID: -1160162287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_7
+      rect:
+        serializedVersion: 2
+        x: 1358
+        y: 964
+        width: 23
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2711da9e8eb3f940a2b335815ebb8ad
+      internalID: -2129723863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_9
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 909
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fe8cea863aa70f48a06e1bf4ed89d53
+      internalID: -2135032417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_10
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 563
+        width: 252
+        height: 241
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02c65fb99738ecc4e8ca95fc93fd5688
+      internalID: -152613834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_11
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 552
+        width: 272
+        height: 261
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3a2a49f7f430da4392fbb129e546720
+      internalID: -1315914411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_12
+      rect:
+        serializedVersion: 2
+        x: 905
+        y: 804
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc7b348b5d363b74baf1a40c66f40995
+      internalID: 698989847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_13
+      rect:
+        serializedVersion: 2
+        x: 1069
+        y: 65
+        width: 287
+        height: 242
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15744ea5fa4407443966352c2ec2b87c
+      internalID: -1853418201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_14
+      rect:
+        serializedVersion: 2
+        x: 1059
+        y: 802
+        width: 15
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11725b0e76752f848bb544dbea17c622
+      internalID: 1354353516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_15
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 563
+        width: 324
+        height: 227
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6e620f0000302f43a83f4cf190f5b20
+      internalID: 432901640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_16
+      rect:
+        serializedVersion: 2
+        x: 1354
+        y: 671
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5f57db955f3f8b4bbd8d878f81c018e
+      internalID: 2000170031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_17
+      rect:
+        serializedVersion: 2
+        x: 1360
+        y: 650
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3be250793a2bde478948f99b2471db1
+      internalID: 2099887235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_18
+      rect:
+        serializedVersion: 2
+        x: 674
+        y: 610
+        width: 4
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0579208a714fd846a9a1d09099fd7a9
+      internalID: -1228243977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_19
+      rect:
+        serializedVersion: 2
+        x: 678
+        y: 611
+        width: 4
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2993a35ea6478e6448cacfe1ce71f81e
+      internalID: -1249125288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_20
+      rect:
+        serializedVersion: 2
+        x: 680
+        y: 606
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf268c57b052ca4459a6796100ef362c
+      internalID: 761132726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_22
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 569
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35871ebd0b589cc46b3aa440353a8445
+      internalID: -1893373350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_24
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 316
+        width: 260
+        height: 238
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82549a11d43cede40965ffc7f285b8be
+      internalID: 1596593650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_25
+      rect:
+        serializedVersion: 2
+        x: 616
+        y: 551
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf559204c8d3bed4e816b7a472c4edf0
+      internalID: -1248862383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_26
+      rect:
+        serializedVersion: 2
+        x: 781
+        y: 24
+        width: 178
+        height: 285
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4142200c41b5fd94dae16fb2a7d714ec
+      internalID: 1874991779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_27
+      rect:
+        serializedVersion: 2
+        x: 1362
+        y: 526
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 921a2b3438ea3be4799ec2ce1b55709d
+      internalID: 270446788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_28
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 332
+        width: 9
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db8f250ca52455d48951c41eb2d1e0e8
+      internalID: -1093346600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_29
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 45
+        width: 292
+        height: 258
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdeaf1fa392cfb347b22fe789e9c2617
+      internalID: 2031992902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_30
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 44
+        width: 271
+        height: 271
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b0ba272bc503d84b99ef8a07860d3e8
+      internalID: -1011487143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_31
+      rect:
+        serializedVersion: 2
+        x: 744
+        y: 275
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d591b9dab72e3934b8073f4842b23024
+      internalID: -1087423943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_32
+      rect:
+        serializedVersion: 2
+        x: 736
+        y: 251
+        width: 6
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b357c207ea7d7340bf364dbbb9a38a1
+      internalID: 1682667876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_33
+      rect:
+        serializedVersion: 2
+        x: 692
+        y: 215
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ee85e00cf2b40040ad10bb456a049c1
+      internalID: -2025230163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_34
+      rect:
+        serializedVersion: 2
+        x: 712
+        y: 200
+        width: 12
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83823163f649d5346842a558fe7c14b5
+      internalID: -2039096442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_35
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 208
+        width: 5
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6340565c24237cf47b00e1b4627f92af
+      internalID: 1069809305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_36
+      rect:
+        serializedVersion: 2
+        x: 698
+        y: 147
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e3617da6d58df44b822fb46adbf3154
+      internalID: -235312282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_37
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 65
+        width: 44
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17bcf063f6202834bbd4b848180d4bb7
+      internalID: 203390556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_38
+      rect:
+        serializedVersion: 2
+        x: 736
+        y: 121
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e49cc221f057aa04ab6e9134192eda74
+      internalID: 1671921666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_39
+      rect:
+        serializedVersion: 2
+        x: 674
+        y: 79
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97ba95426df4b6e41a4171b1d59f4b6b
+      internalID: -1096539869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_40
+      rect:
+        serializedVersion: 2
+        x: 1219
+        y: 34
+        width: 4
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6fb88d5dcc8faee4a86a62e45152675c
+      internalID: -1477236331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_41
+      rect:
+        serializedVersion: 2
+        x: 1284
+        y: 32
+        width: 25
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c78d17aa3779e724187b06b0e2cd676e
+      internalID: -1339623260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_42
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 0
+        width: 23
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 192bafd411d4ef540881e5d9e2f751ec
+      internalID: -302954750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_43
+      rect:
+        serializedVersion: 2
+        x: 674
+        y: 25
+        width: 4
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63d3ea17f08cbb44d8d09728bdd2eb12
+      internalID: 616156907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_44
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 18
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d10c5cb41b4b5c546bf3492be65e54e0
+      internalID: 1128776680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_6
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 311
+        width: 297
+        height: 238
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3415f3c3d46b9847aece0eed812f47b
+      internalID: -2146516076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_8
+      rect:
+        serializedVersion: 2
+        x: 1076
+        y: 570
+        width: 261
+        height: 233
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f733165bb4e61ba44b598387e6c283a5
+      internalID: -641469739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_21
+      rect:
+        serializedVersion: 2
+        x: 1076
+        y: 316
+        width: 273
+        height: 230
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 804cc94a1b6432f4488017357273e48b
+      internalID: 1841038269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BackpackIconsAtlas_23
+      rect:
+        serializedVersion: 2
+        x: 753
+        y: 318
+        width: 268
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 809c5c77b28b5fe48a002c18d483bb46
+      internalID: 1506399323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 24fa00fc87aad7e4a9cf08ea04801559
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      BackpackIconsAtlas_0: -939460749
+      BackpackIconsAtlas_1: -1775048059
+      BackpackIconsAtlas_10: -152613834
+      BackpackIconsAtlas_11: -1315914411
+      BackpackIconsAtlas_12: 698989847
+      BackpackIconsAtlas_13: -1853418201
+      BackpackIconsAtlas_14: 1354353516
+      BackpackIconsAtlas_15: 432901640
+      BackpackIconsAtlas_16: 2000170031
+      BackpackIconsAtlas_17: 2099887235
+      BackpackIconsAtlas_18: -1228243977
+      BackpackIconsAtlas_19: -1249125288
+      BackpackIconsAtlas_2: -1323495148
+      BackpackIconsAtlas_20: 761132726
+      BackpackIconsAtlas_21: 1841038269
+      BackpackIconsAtlas_22: -1893373350
+      BackpackIconsAtlas_23: 1506399323
+      BackpackIconsAtlas_24: 1596593650
+      BackpackIconsAtlas_25: -1248862383
+      BackpackIconsAtlas_26: 1874991779
+      BackpackIconsAtlas_27: 270446788
+      BackpackIconsAtlas_28: -1093346600
+      BackpackIconsAtlas_29: 2031992902
+      BackpackIconsAtlas_3: -1190462975
+      BackpackIconsAtlas_30: -1011487143
+      BackpackIconsAtlas_31: -1087423943
+      BackpackIconsAtlas_32: 1682667876
+      BackpackIconsAtlas_33: -2025230163
+      BackpackIconsAtlas_34: -2039096442
+      BackpackIconsAtlas_35: 1069809305
+      BackpackIconsAtlas_36: -235312282
+      BackpackIconsAtlas_37: 203390556
+      BackpackIconsAtlas_38: 1671921666
+      BackpackIconsAtlas_39: -1096539869
+      BackpackIconsAtlas_4: -748902032
+      BackpackIconsAtlas_40: -1477236331
+      BackpackIconsAtlas_41: -1339623260
+      BackpackIconsAtlas_42: -302954750
+      BackpackIconsAtlas_43: 616156907
+      BackpackIconsAtlas_44: 1128776680
+      BackpackIconsAtlas_5: -1160162287
+      BackpackIconsAtlas_6: -2146516076
+      BackpackIconsAtlas_7: -2129723863
+      BackpackIconsAtlas_8: -641469739
+      BackpackIconsAtlas_9: -2135032417
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

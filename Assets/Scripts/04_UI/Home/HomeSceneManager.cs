@@ -1,0 +1,482 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using UnityEngine.SceneManagement;
+using GalaxyStrike.Data;
+using GalaxyStrike.Save;
+using GalaxyStrike.UI.Loading;
+
+namespace GalaxyStrike.UI.Home
+{
+    public class HomeSceneManager : MonoBehaviour
+    {
+        [Header("--- Top Bar Display ---")]
+        [SerializeField] private TextMeshProUGUI energyText;
+        [SerializeField] private TextMeshProUGUI coinText;
+        [SerializeField] private TextMeshProUGUI gemText;
+        [SerializeField] private TextMeshProUGUI levelText;
+        [SerializeField] private TextMeshProUGUI nameText;
+
+        [Header("--- Bottom Navigation Bar ---")]
+        [SerializeField] private Button shopNavBtn;
+        [SerializeField] private Button upgradeNavBtn;
+        [SerializeField] private Button homeNavBtn;
+        [SerializeField] private Button mapNavBtn;
+        [SerializeField] private Button leaderNavBtn;
+
+        [Header("--- Bottom Navigation Animation ---")]
+        [SerializeField] private float navSelectedScale = 1.12f;
+        [SerializeField] private float navAnimationDuration = 0.18f;
+
+        [Header("--- UI Panels ---")]
+        [SerializeField] private GameObject centerPanel;
+        [SerializeField] private GameObject shopPanel;
+        [SerializeField] private GameObject upgradePanel;
+        [SerializeField] private GameObject mapPanel;
+        [SerializeField] private GameObject leaderboardPanel;
+
+        [Header("--- Collection Popup ---")]
+        [SerializeField] private Button collectionButton;
+        [SerializeField] private GameObject collectionBoard;
+        [SerializeField] private Button closeCollectionButton;
+
+        [Header("--- Backpack Popup ---")]
+        [SerializeField] private Button backpackButton;
+        private BackpackUIController backpackUI;
+
+        [Header("--- Settings Popup ---")]
+        [SerializeField] private Button settingsBtn;
+        [SerializeField] private GameObject settingsPanel;
+        [SerializeField] private Button closeSettingsBtn;
+
+        [Header("--- Game Mode Selection ---")]
+        [SerializeField] private Button playBtn;
+        [SerializeField] private Button campaignBtn;
+        [SerializeField] private Button challengeBtn;
+        [SerializeField] private Button leftArrowBtn;
+        [SerializeField] private Button rightArrowBtn;
+
+        [Header("--- Ship Selection & Lock System ---")]
+        [SerializeField] private GameObject[] shipList; // Kéo Ship_1 -> Ship_8 vào đây
+        [SerializeField] private GameObject lockIcon;   // Biểu tượng ổ khóa (tùy chọn)
+        private int currentShipIndex = 0;
+        private Coroutine navSelectionRoutine;
+
+        public enum GameMode { Campaign, Challenge }
+        private GameMode currentMode = GameMode.Campaign;
+
+        private void OnEnable()
+        {
+            if (SaveManager.Instance != null)
+                SaveManager.Instance.OnDataChanged += RefreshTopBarUI;
+        }
+
+        private void OnDisable()
+        {
+            // FindObjectOfType thay vì .Instance: getter sẽ tự tạo lại object khi scene đang đóng.
+            SaveManager save = FindObjectOfType<SaveManager>();
+            if (save != null)
+                save.OnDataChanged -= RefreshTopBarUI;
+        }
+
+        private void Start()
+        {
+            InitUI();
+            backpackUI = GetComponent<BackpackUIController>();
+            if (backpackUI == null)
+                backpackUI = gameObject.AddComponent<BackpackUIController>();
+
+            if (backpackButton == null)
+            {
+                GameObject backpackObject = GameObject.Find("Backpack");
+                if (backpackObject != null)
+                    backpackButton = backpackObject.GetComponent<Button>();
+            }
+
+            RegisterButtonEvents();
+            if (backpackUI != null)
+                backpackUI.BindShopAction(() => OnTabSelected("Shop"));
+        }
+
+        private void InitUI()
+        {
+            // Hồi năng lượng theo thời gian thực đã trôi qua trước khi vẽ UI.
+            SaveManager.Instance.ApplyEnergyRefill();
+
+            currentShipIndex = SaveManager.Instance.SelectedShipIndex;
+
+            string savedMode = PlayerPrefs.GetString("SelectedGameMode", GameMode.Campaign.ToString());
+            if (System.Enum.TryParse(savedMode, out GameMode parsedMode))
+            {
+                currentMode = parsedMode;
+            }
+
+            RefreshTopBarUI();
+            UpdateModeUI();
+            UpdateShipDisplay();
+
+            // Mặc định hiển thị Home
+            OnTabSelected("Home");
+
+            if (settingsPanel != null) settingsPanel.SetActive(false);
+            if (collectionBoard != null) collectionBoard.SetActive(false);
+        }
+
+        private void RefreshTopBarUI()
+        {
+            SaveManager save = SaveManager.Instance;
+            if (save == null) return;
+
+            if (energyText) energyText.text = FormatEnergyText(save);
+            if (coinText) coinText.text = save.Coins.ToString("N0");
+            if (gemText) gemText.text = save.Gems.ToString("N0");
+            if (levelText) levelText.text = $"Lv.{save.Data.accountLevel}";
+            if (nameText) nameText.text = save.Data.playerName;
+        }
+
+        /// <summary>"28/30" khi đã đầy, hoặc "28/30  02:14" (đếm ngược) khi còn hồi.</summary>
+        private static string FormatEnergyText(SaveManager save)
+        {
+            int energy = save.Energy;
+            int max = save.MaxEnergy;
+
+            if (energy >= max)
+                return $"{energy}/{max}";
+
+            int seconds = save.SecondsUntilNextEnergy();
+            return $"{energy}/{max}  {seconds / 60:00}:{seconds % 60:00}";
+        }
+
+        private float energyUiTimer;
+
+        /// <summary>Cập nhật đồng hồ đếm ngược năng lượng mỗi giây, không cần chờ OnDataChanged.</summary>
+        private void Update()
+        {
+            if (energyText == null)
+                return;
+
+            SaveManager save = SaveManager.Instance;
+            if (save == null || save.Energy >= save.MaxEnergy)
+                return;
+
+            energyUiTimer += Time.unscaledDeltaTime;
+            if (energyUiTimer < 1f)
+                return;
+
+            energyUiTimer = 0f;
+            energyText.text = FormatEnergyText(save);
+        }
+
+        private void RegisterButtonEvents()
+        {
+            // 1. Navigation Bar
+            if (shopNavBtn)    { shopNavBtn.onClick.RemoveAllListeners(); shopNavBtn.onClick.AddListener(() => OnTabSelected("Shop")); }
+            if (upgradeNavBtn) { upgradeNavBtn.onClick.RemoveAllListeners(); upgradeNavBtn.onClick.AddListener(() => OnTabSelected("Upgrade")); }
+            if (homeNavBtn)    { homeNavBtn.onClick.RemoveAllListeners(); homeNavBtn.onClick.AddListener(() => OnTabSelected("Home")); }
+            if (mapNavBtn)     { mapNavBtn.onClick.RemoveAllListeners(); mapNavBtn.onClick.AddListener(() => OnTabSelected("Map")); }
+            if (leaderNavBtn)  { leaderNavBtn.onClick.RemoveAllListeners(); leaderNavBtn.onClick.AddListener(() => OnTabSelected("Leaderboard")); }
+            if (collectionButton) { collectionButton.onClick.RemoveAllListeners(); collectionButton.onClick.AddListener(OpenCollectionBoard); }
+            if (closeCollectionButton) { closeCollectionButton.onClick.RemoveAllListeners(); closeCollectionButton.onClick.AddListener(CloseCollectionBoard); }
+            if (backpackButton && backpackUI)
+            {
+                backpackButton.onClick.RemoveListener(backpackUI.OpenBackpack);
+                backpackButton.onClick.AddListener(backpackUI.OpenBackpack);
+            }
+
+            // 2. Mũi tên chuyển tàu
+            if (leftArrowBtn)  { leftArrowBtn.onClick.RemoveAllListeners(); leftArrowBtn.onClick.AddListener(SelectPreviousShip); }
+            if (rightArrowBtn) { rightArrowBtn.onClick.RemoveAllListeners(); rightArrowBtn.onClick.AddListener(SelectNextShip); }
+
+            // 3. Chọn Mode & Bắt đầu Game
+            if (campaignBtn)   { campaignBtn.onClick.RemoveAllListeners(); campaignBtn.onClick.AddListener(() => StartGameWithMode(GameMode.Campaign)); }
+            if (challengeBtn)  { challengeBtn.onClick.RemoveAllListeners(); challengeBtn.onClick.AddListener(() => StartGameWithMode(GameMode.Challenge)); }
+            if (playBtn)       { playBtn.onClick.RemoveAllListeners(); playBtn.onClick.AddListener(() => StartGameWithMode(currentMode)); }
+
+            // 4. Settings Popup
+            if (settingsBtn)      { settingsBtn.onClick.RemoveAllListeners(); settingsBtn.onClick.AddListener(OpenSettingsPopup); }
+            if (closeSettingsBtn) { closeSettingsBtn.onClick.RemoveAllListeners(); closeSettingsBtn.onClick.AddListener(CloseSettingsPopup); }
+        }
+
+        #region Public API Methods
+        public void OpenSettingsPopup()
+        {
+            if (settingsPanel != null) settingsPanel.SetActive(true);
+        }
+
+        public void CloseSettingsPopup()
+        {
+            if (settingsPanel != null) settingsPanel.SetActive(false);
+        }
+
+        public void OpenCollectionBoard()
+        {
+            if (collectionBoard != null) collectionBoard.SetActive(true);
+        }
+
+        public void CloseCollectionBoard()
+        {
+            if (collectionBoard != null) collectionBoard.SetActive(false);
+        }
+
+        // Hàm gọi từ Shop để Mua / Mở khóa tàu mới
+        public void UnlockShip(int shipIndex)
+        {
+            SaveManager.Instance.UnlockShip(shipIndex);
+            UpdateShipDisplay();
+            Debug.Log($"[HomeSceneManager] Unlocked Ship Index: {shipIndex}");
+        }
+
+        // Kiểm tra xem tàu index này đã mở khóa chưa
+        public bool IsShipUnlocked(int shipIndex)
+        {
+            // Ship_1 (Index 0) mặc định luôn được sở hữu từ đầu
+            return SaveManager.Instance.IsShipUnlocked(shipIndex);
+        }
+        #endregion
+
+        #region Internal Logic
+        private void SelectNextShip()
+        {
+            if (shipList == null || shipList.Length == 0) return;
+
+            currentShipIndex = (currentShipIndex + 1) % shipList.Length;
+            UpdateShipDisplay();
+        }
+
+        private void SelectPreviousShip()
+        {
+            if (shipList == null || shipList.Length == 0) return;
+
+            currentShipIndex--;
+            if (currentShipIndex < 0) currentShipIndex = shipList.Length - 1;
+            UpdateShipDisplay();
+        }
+
+        private void UpdateShipDisplay()
+        {
+            if (shipList == null) return;
+
+            bool isUnlocked = IsShipUnlocked(currentShipIndex);
+
+            for (int i = 0; i < shipList.Length; i++)
+            {
+                if (shipList[i] != null)
+                {
+                    bool isActive = (i == currentShipIndex);
+                    shipList[i].SetActive(isActive);
+
+                    // Xử lý đồ họa cho Tàu đang hiển thị
+                    if (isActive)
+                    {
+                        Image shipImage = shipList[i].GetComponent<Image>();
+                        if (shipImage != null)
+                        {
+                            // Đã sở hữu: Giữ màu sáng chuẩn | Chưa sở hữu: Làm tối xám (25% sáng)
+                            shipImage.color = isUnlocked ? Color.white : new Color(0.25f, 0.25f, 0.25f, 1f);
+                        }
+                    }
+                }
+            }
+
+            // Hiển thị / Ẩn icon Ổ khóa
+            if (lockIcon != null)
+            {
+                lockIcon.SetActive(!isUnlocked);
+            }
+
+            // Cập nhật trạng thái tương tác của các nút PLAY
+            if (playBtn != null) playBtn.interactable = isUnlocked;
+            if (campaignBtn != null) campaignBtn.interactable = isUnlocked;
+            if (challengeBtn != null) challengeBtn.interactable = isUnlocked;
+        }
+
+        private void StartGameWithMode(GameMode mode)
+        {
+            // Chặn vào trận nếu tàu chưa mở khóa
+            if (!IsShipUnlocked(currentShipIndex))
+            {
+                Debug.LogWarning("[HomeSceneManager] Tàu này chưa được sở hữu! Chuyển hướng sang Shop.");
+                OnTabSelected("Shop");
+                return;
+            }
+
+            currentMode = mode;
+            UpdateModeUI();
+
+            SaveManager save = SaveManager.Instance;
+
+            // Challenge: không tiêu năng lượng (không ảnh hưởng tiến trình chiến dịch).
+            if (currentMode == GameMode.Challenge || save.TryConsumeEnergy())
+            {
+                Debug.Log($"[HomeSceneManager] Starting Game - Mode: {currentMode} | Ship Index: {currentShipIndex}");
+
+                save.SelectShip(currentShipIndex);
+
+                PlayerPrefs.SetString("SelectedGameMode", currentMode.ToString());
+                PlayerPrefs.Save();
+
+                LoadingSceneController.LoadScene("GameScene");
+            }
+            else
+            {
+                Debug.LogWarning("[HomeSceneManager] Không đủ năng lượng để vào trận!");
+                OnTabSelected("Shop");
+            }
+        }
+
+        private void UpdateModeUI()
+        {
+            if (campaignBtn) campaignBtn.transform.localScale = (currentMode == GameMode.Campaign) ? new Vector3(1.1f, 1.1f, 1f) : Vector3.one;
+            if (challengeBtn) challengeBtn.transform.localScale = (currentMode == GameMode.Challenge) ? new Vector3(1.1f, 1.1f, 1f) : Vector3.one;
+        }
+
+        private void OnTabSelected(string tabName)
+        {
+            if (centerPanel) centerPanel.SetActive(false);
+            if (shopPanel) shopPanel.SetActive(false);
+            if (upgradePanel) upgradePanel.SetActive(false);
+            if (mapPanel) mapPanel.SetActive(false);
+            if (leaderboardPanel) leaderboardPanel.SetActive(false);
+
+            switch (tabName)
+            {
+                case "Home":
+                    if (centerPanel) centerPanel.SetActive(true);
+                    break;
+                case "Shop":
+                    if (shopPanel) shopPanel.SetActive(true);
+                    break;
+                case "Upgrade":
+                    if (upgradePanel) upgradePanel.SetActive(true);
+                    break;
+                case "Map":
+                    if (mapPanel) mapPanel.SetActive(true);
+                    break;
+                case "Leaderboard":
+                    if (leaderboardPanel) leaderboardPanel.SetActive(true);
+                    break;
+            }
+
+            AnimateNavSelection(tabName);
+        }
+
+        private void AnimateNavSelection(string selectedTab)
+        {
+            if (navSelectionRoutine != null)
+                StopCoroutine(navSelectionRoutine);
+
+            navSelectionRoutine = StartCoroutine(AnimateNavSelectionRoutine(selectedTab));
+        }
+
+        private IEnumerator AnimateNavSelectionRoutine(string selectedTab)
+        {
+            Button[] buttons = { shopNavBtn, upgradeNavBtn, homeNavBtn, mapNavBtn, leaderNavBtn };
+            string[] tabNames = { "Shop", "Upgrade", "Home", "Map", "Leaderboard" };
+            Vector3[] startScales = new Vector3[buttons.Length];
+            Color[] startBackgroundColors = new Color[buttons.Length];
+            Color[] startLabelColors = new Color[buttons.Length];
+            Color[] startIconColors = new Color[buttons.Length];
+            bool[] selectedStates = new bool[buttons.Length];
+
+            Canvas.ForceUpdateCanvases();
+
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                Button button = buttons[i];
+                if (button == null)
+                    continue;
+
+                selectedStates[i] = tabNames[i] == selectedTab;
+                startScales[i] = button.transform.localScale;
+
+                Transform tabBackgroundTransform = button.transform.Find("Tab_Background");
+                Image background = tabBackgroundTransform != null ? tabBackgroundTransform.GetComponent<Image>() : null;
+                startBackgroundColors[i] = background != null ? background.color : Color.clear;
+
+                TextMeshProUGUI label = button.GetComponentInChildren<TextMeshProUGUI>(true);
+                startLabelColors[i] = label != null ? label.color : Color.white;
+
+                Transform iconTransform = button.transform.Find("Icon");
+                Image icon = iconTransform != null ? iconTransform.GetComponent<Image>() : null;
+                startIconColors[i] = icon != null ? icon.color : Color.white;
+
+            }
+
+            float duration = Mathf.Max(0.01f, navAnimationDuration);
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                float t = Mathf.SmoothStep(0f, 1f, elapsed / duration);
+                for (int i = 0; i < buttons.Length; i++)
+                {
+                    Button button = buttons[i];
+                    if (button == null)
+                        continue;
+
+                    bool selected = selectedStates[i];
+                    float targetScale = selected ? navSelectedScale : 1f;
+
+                    button.transform.localScale = Vector3.Lerp(startScales[i], Vector3.one * targetScale, t);
+
+                    Transform tabBackgroundTransform = button.transform.Find("Tab_Background");
+                    Image background = tabBackgroundTransform != null ? tabBackgroundTransform.GetComponent<Image>() : null;
+                    if (background != null)
+                    {
+                        Color targetColor = selected ? Color.white : new Color(1f, 1f, 1f, 0f);
+                        background.color = Color.Lerp(startBackgroundColors[i], targetColor, t);
+                    }
+
+                    TextMeshProUGUI label = button.GetComponentInChildren<TextMeshProUGUI>(true);
+                    if (label != null)
+                    {
+                        Color targetColor = selected ? Color.white : new Color(0.72f, 0.82f, 0.94f, 0f);
+                        label.color = Color.Lerp(startLabelColors[i], targetColor, t);
+                    }
+
+                    Transform iconTransform = button.transform.Find("Icon");
+                    Image icon = iconTransform != null ? iconTransform.GetComponent<Image>() : null;
+                    if (icon != null)
+                    {
+                        Color targetColor = selected ? Color.white : new Color(0.82f, 0.90f, 1f, 0.88f);
+                        icon.color = Color.Lerp(startIconColors[i], targetColor, t);
+                    }
+                }
+
+                elapsed += Time.unscaledDeltaTime;
+                yield return null;
+            }
+
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                Button button = buttons[i];
+                if (button == null)
+                    continue;
+
+                bool selected = selectedStates[i];
+                button.transform.localScale = Vector3.one * (selected ? navSelectedScale : 1f);
+
+                Transform tabBackgroundTransform = button.transform.Find("Tab_Background");
+                Image background = tabBackgroundTransform != null ? tabBackgroundTransform.GetComponent<Image>() : null;
+                if (background != null)
+                    background.color = selected
+                        ? Color.white
+                        : new Color(1f, 1f, 1f, 0f);
+
+                TextMeshProUGUI label = button.GetComponentInChildren<TextMeshProUGUI>(true);
+                if (label != null)
+                    label.color = selected ? Color.white : new Color(0.72f, 0.82f, 0.94f, 0f);
+
+                Transform iconTransform = button.transform.Find("Icon");
+                Image icon = iconTransform != null ? iconTransform.GetComponent<Image>() : null;
+                if (icon != null)
+                    icon.color = selected ? Color.white : new Color(0.82f, 0.90f, 1f, 0.88f);
+            }
+
+            navSelectionRoutine = null;
+        }
+        #endregion
+    }
+}

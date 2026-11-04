@@ -1,0 +1,205 @@
+fileFormatVersion: 2
+guid: 12f32cb046289314999ec97f1de24736
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_6
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 182
+        width: 210
+        height: 285
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 682d071c77ec09344bb218efa656992f
+      internalID: -1033555209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_9
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 98
+        width: 206
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c540d234f6afbf4a9dfc3ea5d16f48b
+      internalID: 216161523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_0: 1907336622
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_1: -794630502
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_10: -1805304661
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_11: 1445320545
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_12: 1527634088
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_13: 1264842331
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_14: 880215197
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_15: -1531639763
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_16: -1103613218
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_17: -901449170
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_18: -1085380963
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_19: -671241766
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_2: 558825303
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_20: 103671597
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_21: 367974273
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_22: -817597919
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_3: 1346341194
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_4: 147148624
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_5: 1369936144
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_6: -1033555209
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_7: 1983978465
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_8: 444806731
+      Futuristic_Sci-Fi_Game_UI_Sprite_Sheet-removebg-preview_9: 216161523
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

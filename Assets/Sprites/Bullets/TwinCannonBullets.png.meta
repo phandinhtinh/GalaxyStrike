@@ -1,0 +1,611 @@
+fileFormatVersion: 2
+guid: 64c539e171575b341aaae3bb839706ad
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6256162304855200277
+    second: TwinCannonBullets_0
+  - first:
+      213: -5163591308187231578
+    second: TwinCannonBullets_1
+  - first:
+      213: -1370844025742225810
+    second: TwinCannonBullets_2
+  - first:
+      213: -5134298205748436944
+    second: TwinCannonBullets_3
+  - first:
+      213: 1170407825190720602
+    second: TwinCannonBullets_4
+  - first:
+      213: -4588007868046298217
+    second: TwinCannonBullets_5
+  - first:
+      213: 4594675934502627501
+    second: TwinCannonBullets_6
+  - first:
+      213: -6676669654487603747
+    second: TwinCannonBullets_7
+  - first:
+      213: -3587416681219223135
+    second: TwinCannonBullets_8
+  - first:
+      213: -4625980000199987077
+    second: TwinCannonBullets_9
+  - first:
+      213: 5066826704620971803
+    second: TwinCannonBullets_10
+  - first:
+      213: -1370264635566442406
+    second: TwinCannonBullets_11
+  - first:
+      213: -7530420332989896711
+    second: TwinCannonBullets_12
+  - first:
+      213: 3646324931354521583
+    second: TwinCannonBullets_13
+  - first:
+      213: 8260319503176419256
+    second: TwinCannonBullets_14
+  - first:
+      213: 6538970536364144011
+    second: TwinCannonBullets_15
+  - first:
+      213: 3078464836403520552
+    second: TwinCannonBullets_16
+  - first:
+      213: 3349919074624765853
+    second: TwinCannonBullets_17
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: TwinCannonBullets_0
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 323
+        width: 142
+        height: 339
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 512551e387a52d650800000000000000
+      internalID: 6256162304855200277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwinCannonBullets_1
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 9
+        width: 447
+        height: 684
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6aa9436201d3758b0800000000000000
+      internalID: -5163591308187231578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwinCannonBullets_2
+      rect:
+        serializedVersion: 2
+        x: 824
+        y: 37
+        width: 496
+        height: 633
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6e0b232f98c9fce0800000000000000
+      internalID: -1370844025742225810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwinCannonBullets_3
+      rect:
+        serializedVersion: 2
+        x: 1333
+        y: 21
+        width: 824
+        height: 695
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 030607b0cfe4fb8b0800000000000000
+      internalID: -5134298205748436944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwinCannonBullets_4
+      rect:
+        serializedVersion: 2
+        x: 2067
+        y: 618
+        width: 26
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5494d647bf1e3010800000000000000
+      internalID: 1170407825190720602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwinCannonBullets_5
+      rect:
+        serializedVersion: 2
+        x: 1535
+        y: 556
+        width: 7
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 793376ef62f1450c0800000000000000
+      internalID: -4588007868046298217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwinCannonBullets_6
+      rect:
+        serializedVersion: 2
+        x: 666
+        y: 371
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da8a0163b6193cf30800000000000000
+      internalID: 4594675934502627501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwinCannonBullets_7
+      rect:
+        serializedVersion: 2
+        x: 690
+        y: 397
+        width: 31
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd5e2a1e254b753a0800000000000000
+      internalID: -6676669654487603747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwinCannonBullets_8
+      rect:
+        serializedVersion: 2
+        x: 1331
+        y: 395
+        width: 32
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a11e9e098fe63ec0800000000000000
+      internalID: -3587416681219223135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwinCannonBullets_9
+      rect:
+        serializedVersion: 2
+        x: 1343
+        y: 427
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b70b40603b73dcfb0800000000000000
+      internalID: -4625980000199987077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwinCannonBullets_10
+      rect:
+        serializedVersion: 2
+        x: 2043
+        y: 346
+        width: 116
+        height: 155
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b17656bea0cf05640800000000000000
+      internalID: 5066826704620971803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwinCannonBullets_11
+      rect:
+        serializedVersion: 2
+        x: 627
+        y: 248
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5838cce297dbfce0800000000000000
+      internalID: -1370264635566442406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwinCannonBullets_12
+      rect:
+        serializedVersion: 2
+        x: 1325
+        y: 194
+        width: 9
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f722c2ea929e7790800000000000000
+      internalID: -7530420332989896711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwinCannonBullets_13
+      rect:
+        serializedVersion: 2
+        x: 1333
+        y: 194
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fef690db4395a9230800000000000000
+      internalID: 3646324931354521583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwinCannonBullets_14
+      rect:
+        serializedVersion: 2
+        x: 660
+        y: 168
+        width: 7
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b7cf06b2dc82a270800000000000000
+      internalID: 8260319503176419256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwinCannonBullets_15
+      rect:
+        serializedVersion: 2
+        x: 666
+        y: 166
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b85fab0de071fba50800000000000000
+      internalID: 6538970536364144011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwinCannonBullets_16
+      rect:
+        serializedVersion: 2
+        x: 1535
+        y: 120
+        width: 7
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 824ec535577e8ba20800000000000000
+      internalID: 3078464836403520552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TwinCannonBullets_17
+      rect:
+        serializedVersion: 2
+        x: 1794
+        y: 41
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9f705556ad4d7e20800000000000000
+      internalID: 3349919074624765853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      TwinCannonBullets_0: 6256162304855200277
+      TwinCannonBullets_1: -5163591308187231578
+      TwinCannonBullets_10: 5066826704620971803
+      TwinCannonBullets_11: -1370264635566442406
+      TwinCannonBullets_12: -7530420332989896711
+      TwinCannonBullets_13: 3646324931354521583
+      TwinCannonBullets_14: 8260319503176419256
+      TwinCannonBullets_15: 6538970536364144011
+      TwinCannonBullets_16: 3078464836403520552
+      TwinCannonBullets_17: 3349919074624765853
+      TwinCannonBullets_2: -1370844025742225810
+      TwinCannonBullets_3: -5134298205748436944
+      TwinCannonBullets_4: 1170407825190720602
+      TwinCannonBullets_5: -4588007868046298217
+      TwinCannonBullets_6: 4594675934502627501
+      TwinCannonBullets_7: -6676669654487603747
+      TwinCannonBullets_8: -3587416681219223135
+      TwinCannonBullets_9: -4625980000199987077
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

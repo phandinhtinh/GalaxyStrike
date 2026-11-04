@@ -1,0 +1,216 @@
+PARAGRAPHS=164 TABLES=11 INLINE_SHAPES=1 SECTIONS=1
+SECTION 1: size=8.50x11.00in margins=0.87,0.79,1.02,0.87in
+P0000 [Normal] HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG
+P0001 [Normal] CHƯƠNG TRÌNH THIẾT KẾ VÀ PHÁT TRIỂN GAME
+P0002 [Normal] THIẾT KẾ CƠ CHẾ VÀ MÀN CHƠI
+P0024 [Normal] BÀI BÁO CÁO LEVEL DOCUMENTATION:
+P0025 [Normal] Galaxy Strike: Shoot ‘em Up
+P0033 [Normal] Hà Nội – 2026
+P0034 [Heading 1] MỤC LỤC
+P0035 [Normal] Tóm tắt đề tài	3
+P0036 [Normal] 1. Giới thiệu đề tài	3
+P0037 [Normal] 2. Ý tưởng và thiết kế game	4
+P0038 [Normal] 3. Kiến trúc kỹ thuật và cấu trúc project	6
+P0039 [Normal] 4. Quá trình hiện thực hóa sản phẩm	8
+P0040 [Normal] 5. Thiết kế giao diện và trải nghiệm người dùng	9
+P0041 [Normal] 6. Kiểm thử và đánh giá trạng thái sản phẩm	11
+P0042 [Normal] 7. Quy trình hoàn thiện bản build và bàn giao	12
+P0043 [Normal] 8. Hạn chế và hướng phát triển	13
+P0044 [Normal] Kết luận	13
+P0045 [Heading 1] TÓM TẮT ĐỀ TÀI
+P0046 [Normal] Galaxy Strike là trò chơi bắn phi thuyền không gian 2D theo màn hình dọc, được phát triển bằng Unity và C#. Người chơi điều khiển tàu chiến ở khu vực phía dưới màn hình, tự động bắn đạn lên phía trên, né đòn tấn công và tiêu diệt các đợt kẻ địch để tiến tới những trận đấu khó hơn.
+P0047 [Normal] Hệ thống được tổ chức xoay quanh PlayerController, Enemy, EnemyGridSpawner, LevelManager và BossController. LevelManager tạo dữ liệu tiến trình cho tối đa 50 Level, chia thành năm khu vực thiên hà. EnemyGridSpawner chịu trách nhiệm tạo đội hình theo Wave; Enemy xử lý máu, bắn, rơi vật phẩm và phần thưởng; BossController quản lý chuyển động và cường độ chiến đấu của Boss theo các ngưỡng máu được cấu hình.
+P0048 [Normal] Trong quá trình phát triển, các chức năng điều khiển Player, bắn đạn, giới hạn vùng di chuyển, cấu hình prefab Enemy và các kiểu chuyển động đã được triển khai từng phần. Báo cáo trình bày thiết kế tổng thể, cấu trúc project, các hệ thống đã xây dựng và quy trình kiểm thử. Những hạng mục chưa được xác nhận bằng bản build — đặc biệt là Scene Menu riêng, liên kết các popup UI và kiểm thử trọn vẹn điều kiện thắng/thua — được nêu rõ để hoàn thiện trước khi bàn giao.
+P0049 [Heading 2] Từ khóa
+P0050 [Normal] Unity; C#; 2D Space Shooter; Mobile Game; Enemy Wave; Boss Controller; HUD; Game Loop.
+P0051 [Heading 1] 1. GIỚI THIỆU ĐỀ TÀI
+P0052 [Heading 2] 1.1. Bối cảnh và ý tưởng
+P0053 [Normal] Game bắn phi thuyền là thể loại phù hợp để xây dựng một vòng chơi ngắn, dễ tiếp cận nhưng có thể mở rộng độ khó thông qua các đội hình địch, kiểu đạn và trận đánh Boss. Galaxy Strike lấy bối cảnh người chơi chiến đấu xuyên qua các vùng không gian, lần lượt đối đầu với các loại tàu địch và chỉ huy của từng khu vực.
+P0054 [Normal] Trọng tâm của đề tài không chỉ là hiển thị phi thuyền và bắn đạn, mà còn là xây dựng luồng chơi có cấu trúc: sinh Enemy theo Wave, theo dõi số lượng địch còn lại, chuyển giai đoạn, xử lý sát thương và kết thúc màn chơi.
+P0055 [Heading 2] 1.2. Mục tiêu
+P0056 [List Bullet] Thiết kế game mobile 2D theo tỷ lệ màn hình dọc 9:16, sử dụng bối cảnh vũ trụ và các phi thuyền khoa học viễn tưởng.
+P0057 [List Bullet] Xây dựng cơ chế điều khiển Player bằng thao tác kéo/chạm, đồng thời hỗ trợ bàn phím khi kiểm thử trên máy tính.
+P0058 [List Bullet] Hiện thực hóa hệ thống bắn tự động, máu, bất tử sau sát thương, nâng cấp đạn và nhặt Power-Up.
+P0059 [List Bullet] Xây dựng nhiều loại Enemy có vai trò và kiểu di chuyển khác nhau; tổ chức chúng thành các Wave.
+P0060 [List Bullet] Tạo tiến trình nhiều Level, trong đó có các màn Mini-Boss và Boss định kỳ.
+P0061 [List Bullet] Hoàn thiện các Scene, HUD, popup thắng/thua và bản build có thể chơi được trước khi nộp sản phẩm.
+P0062 [Heading 2] 1.3. Phạm vi và nền tảng
+P0064 [Heading 1] 2. Ý TƯỞNG VÀ THIẾT KẾ GAME
+P0065 [Heading 2] 2.1. Phong cách hình ảnh
+P0066 [Normal] Galaxy Strike theo phong cách khoa học viễn tưởng với nền thiên hà xanh tím, tinh vân phát sáng, hành tinh, tiểu hành tinh và các tàu chiến có màu sắc tương phản. Các thành phần gameplay được đặt trên nền không gian để người chơi dễ phân biệt tàu của mình, Enemy, đạn và hiệu ứng kỹ năng. Thiết kế hướng đến bố cục dọc, thao tác một tay và khả năng đọc nhanh trên màn hình nhỏ.
+P0067 [Heading 2] 2.2. Vòng lặp gameplay
+P0069 [Heading 2] 2.3. Điều khiển và cơ chế của Player
+P0070 [List Bullet] Di chuyển: kéo rê chuột hoặc ngón tay để di chuyển theo độ dịch chuyển trên màn hình; hỗ trợ phím WASD hoặc phím mũi tên khi chạy trên PC.
+P0071 [List Bullet] Giới hạn vùng chơi: tọa độ Player được giới hạn bằng các mốc X/Y nhằm giữ tàu ở nửa dưới màn hình, tránh bay vào khu vực Enemy xuất hiện.
+P0072 [List Bullet] Bắn tự động: Player tạo đạn theo fireRate; FirePoint xác định vị trí xuất phát đạn.
+P0073 [List Bullet] Nâng cấp hỏa lực: số tia đạn có thể tăng từ 1 đến tối đa 5 theo cấu hình; Power-Up có thể tăng cấp đạn.
+P0074 [List Bullet] Máu và bất tử: Player có lượng máu tối đa được cấu hình; sau khi nhận sát thương, Player có thể bất tử trong khoảng thời gian ngắn và nhấp nháy để phản hồi trực quan.
+P0075 [List Bullet] Game Over: khi máu về 0, Player gọi GameManager xử lý kết thúc trận đấu và đối tượng Player bị hủy.
+P0076 [Heading 2] 2.4. Thiết kế Enemy
+P0078 [Normal] Bảng trên thể hiện vai trò thiết kế. Hành vi thật của từng prefab phải được đối chiếu với script và kiểm thử trong Unity; không nên chỉ dựa vào tên prefab để kết luận tính năng đã hoàn thành.
+P0079 [Heading 2] 2.5. Tiến trình Level và khu vực thiên hà
+P0081 [Normal] Theo cấu trúc LevelManager hiện có, LevelManager tự tạo dữ liệu Wave dựa trên số Level, khu vực và loại màn thường/Mini-Boss/Major Boss. Một số hệ số tốc độ, độ trễ spawn, số hàng và số cột tăng dần theo Level. Cần kiểm tra tổng số Enemy và HP màn chơi để bảo đảm kết quả tính đúng cho các Wave đặc biệt.
+P0082 [Heading 1] 3. KIẾN TRÚC KỸ THUẬT VÀ CẤU TRÚC PROJECT
+P0083 [Heading 2] 3.1. Cấu trúc thư mục
+P0085 [Normal] Cấu trúc trên tổng hợp từ các file đã thấy trong Unity Editor và code người phát triển cung cấp. Đường dẫn thực tế có thể khác nếu một số file được di chuyển vào thư mục con. Khi bàn giao, nên gom script vào thư mục con theo nhóm chức năng, nhưng không đổi tên/di chuyển file tùy tiện khi đang có lỗi tham chiếu.
+P0086 [Heading 2] 3.2. Trách nhiệm các thành phần chính
+P0088 [Heading 2] 3.3. Luồng dữ liệu
+P0090 [Heading 1] 4. QUÁ TRÌNH HIỆN THỰC HÓA SẢN PHẨM
+P0091 [Heading 2] 4.1. Hiện thực PlayerController
+P0092 [Normal] PlayerController được gắn vào GameObject Player và có các nhóm cấu hình chính: Health & Defense, Movement, Shooting & Upgrades. Hệ thống lấy dữ liệu cấp đạn đã lưu bằng PlayerPrefs, giới hạn cấp đạn theo maxBulletLevel, tạo nhiều tia đạn khi cấp độ tăng và cập nhật UI máu khi nhận sát thương.
+P0093 [Normal] Vùng di chuyển đã được thay đổi từ một Vector2 đối xứng thành các giới hạn độc lập min/max theo trục X và Y. Thiết lập thử nghiệm hiện tại dùng X từ -2.0 đến 2.0 và Y từ -4.0 đến -1.2. Đây là các giá trị tọa độ thế giới, cần hiệu chỉnh nếu thay camera hoặc tỉ lệ hiển thị.
+P0094 [Heading 2] 4.2. Hiện thực Enemy và phần thưởng
+P0095 [Normal] Enemy có các trường enemyName, health, scoreValue và coinValue. Khi chịu sát thương, Enemy giảm HP, cập nhật thông tin HP tổng ở GameManager nếu hệ thống được gắn. Khi bị tiêu diệt, Enemy vô hiệu hóa Collider, thử rơi Power-Up, phát sự kiện OnEnemyDied, phát âm thanh nổ và cập nhật điểm/coin. Cần bảo đảm hàm Die chỉ thực thi một lần để tránh ghi nhận phần thưởng hoặc sự kiện chết trùng lặp.
+P0096 [Heading 2] 4.3. EnemyGridSpawner và Wave
+P0097 [Normal] Mỗi Wave có tên, số hàng, số cột, khoảng cách giữa các tàu, tốc độ đội hình, tốc độ bay vào, độ trễ spawn và prefab Enemy tùy chọn. Spawner tạo một GameObject làm cha cho đội hình, tính offset để căn giữa, rồi lần lượt tạo Enemy và gọi InitializeEntry() để tàu bay đến vị trí đích. Đội hình có thể lắc lư theo trục X và trôi xuống nhưng dừng tại ngưỡng minFormationY.
+P0098 [Normal] Cơ chế chuyển Wave dựa trên số Enemy còn sống và trạng thái đang spawn. Khi đã tiêu diệt sạch Enemy trong Wave, hệ thống chờ delayBetweenWaves rồi tiếp tục. Cần kiểm thử cả trường hợp Wave rỗng, prefab bị thiếu, Player chết giữa Wave và Boss là Enemy cuối cùng.
+P0099 [Heading 2] 4.4. LevelManager và độ khó
+P0100 [Normal] LevelManager có currentLevel, useSavedProgress, maxLevels và các trường prefab cho Scout, Fighter, Striker, Gunship, Cruiser, Destroyer, Elite, MiniBoss và Boss. Tiến trình có thể được lưu bằng PlayerPrefs. LevelManager xác định zoneIndex, nhận diện các mốc Mini-Boss/Major Boss và gọi BuildWavesForLevel() để tạo cấu hình Wave phù hợp.
+P0101 [Normal] Một điểm cần kiểm tra là LoadPrefabsIfNull() dùng Resources.Load với đường dẫn Prefabs/.... Nếu các prefab chỉ nằm trong Assets/Prefabs thì Resources.Load không tự tìm thấy. Có thể gán trực tiếp prefab trong Inspector (cách đang được sử dụng) hoặc chuyển prefab vào Assets/Resources/Prefabs và cập nhật đường dẫn đồng nhất.
+P0102 [Heading 2] 4.5. BossController và EnemyBullet
+P0103 [Normal] Prefab Enemy_Boss đã được thêm BossController trong Inspector. Các cấu hình được thấy gồm biên độ và tần số chuyển động ngang, biên độ dọc, ngưỡng Phase 2/3 và hệ số tăng cường độ. Ngưỡng đã dùng khi thiết lập là 60% và 25% HP. Việc component đã xuất hiện trong Inspector chưa tự chứng minh các phase hoạt động đúng; cần kiểm thử bằng gameplay thực tế.
+P0104 [Normal] Enemy_Bullet đã được gắn EnemyBullet, Rigidbody2D dạng Kinematic và CircleCollider2D bật Is Trigger. EnemyBullet hiện di chuyển thẳng xuống, tự hủy sau Lifetime. PlayerController đã có xử lý Trigger đối với tag EnemyBullet, gọi TakeDamage(1) và hủy viên đạn khi va chạm hợp lệ. Cần xác nhận tag trên prefab chính xác là EnemyBullet, Player có Collider phù hợp và Layer Collision Matrix cho phép va chạm.
+P0105 [Heading 1] 5. THIẾT KẾ GIAO DIỆN VÀ TRẢI NGHIỆM NGƯỜI DÙNG
+P0106 [Heading 2] 5.1. Nguyên tắc UI/UX
+P0107 [List Bullet] Ưu tiên bố cục dọc 9:16 và vùng điều khiển dễ thao tác trên điện thoại.
+P0108 [List Bullet] Các chỉ số quan trọng như máu, điểm, năng lượng/đạn và trạng thái Boss cần đọc nhanh, không che khuất Player hoặc đường đạn.
+P0109 [List Bullet] Nút tương tác cần đủ lớn, khoảng cách rõ ràng, phản hồi trực quan khi nhấn.
+P0110 [List Bullet] Popup Settings, Win và Lose cần có nút tiếp tục/đóng/chơi lại/quay về Menu tương ứng; không để popup chặn input sau khi đóng.
+P0111 [List Bullet] Âm thanh, hiệu ứng nhấp nháy và màu sắc nên bổ trợ phản hồi gameplay, không làm nền quá rối.
+P0112 [Heading 2] 5.2. Các màn hình cần có
+P0115 [Normal] Hình 1. Ảnh chụp thử nghiệm Gameplay trong Unity Simulator ở trạng thái phát triển hiện tại.
+P0116 [Heading 2] 5.3. Yêu cầu tách Scene
+P0117 [Normal] Theo yêu cầu bàn giao, sản phẩm phải có tối thiểu hai Scene tách biệt. Scene Menu cần là điểm vào đầu tiên, có nút Start/Play, Settings và Quit. Scene Gameplay chứa vòng chiến đấu. Khi nhấn Start, game tải Gameplay; khi thắng/thua, người chơi có thể chơi tiếp/chơi lại hoặc quay về Menu.
+P0118 [Heading 1] 6. KIỂM THỬ VÀ ĐÁNH GIÁ TRẠNG THÁI SẢN PHẨM
+P0119 [Normal] Các kiểm thử dưới đây phân biệt kết quả đã được quan sát trong quá trình phát triển với những hạng mục cần xác minh lại. Trạng thái không xác nhận không có nghĩa chắc chắn chức năng hỏng; điều đó nghĩa là chưa có đủ bằng chứng để kết luận đạt.
+P0121 [Heading 2] 6.1. Các lỗi/rủi ro cần phòng tránh
+P0122 [List Bullet] Trùng định nghĩa class hoặc phương thức do giữ bản sao script (ví dụ LevelManager1.cs), gây lỗi compile và khiến Unity không hiện script trong Add Component.
+P0123 [List Bullet] EnemySpawner và EnemyGridSpawner cùng hoạt động, gây spawn trùng hoặc sai luồng Wave.
+P0124 [List Bullet] Tag EnemyBullet không khớp chính xác với PlayerController.CompareTag, khiến đạn không gây sát thương.
+P0125 [List Bullet] Resources.Load dùng đường dẫn không trỏ đến thư mục Resources; phải gán prefab trực tiếp hoặc sửa vị trí/đường dẫn thống nhất.
+P0126 [List Bullet] Wave/Boss được tính sai số lượng hoặc HP, khiến thanh máu tổng hay điều kiện hoàn thành không chính xác.
+P0127 [List Bullet] Time.timeScale không được khôi phục về 1 khi đóng Settings hoặc chuyển Scene, khiến game vẫn bị pause.
+P0128 [List Bullet] PlayerPrefs chứa dữ liệu cũ làm cấp độ đạn hoặc Level bắt đầu không đúng như dự kiến.
+P0129 [Heading 1] 7. QUY TRÌNH HOÀN THIỆN BẢN BUILD VÀ BÀN GIAO
+P0130 [Heading 2] 7.1. Chuẩn bị Scene
+P0131 [Normal] 1.  Tạo Scene Menu riêng (ví dụ MainMenu.unity), bố trí nút Start, Settings và Quit.
+P0132 [Normal] 2.  Giữ Scene Gameplay (hiện đang phát triển trên SampleScene) với Player, EnemySpawner/EnemyGridSpawner, GameManager, LevelManager và UI cần thiết.
+P0133 [Normal] 3.  Mở File > Build Settings (hoặc Build Profiles tùy giao diện Unity), thêm cả Menu và Gameplay vào danh sách Scenes In Build.
+P0134 [Normal] 4.  Đặt Menu ở vị trí đầu tiên trong danh sách để ứng dụng bắt đầu từ màn hình chính.
+P0135 [Normal] 5.  Kiểm tra các lệnh tải Scene dùng đúng tên/đường dẫn và tên Scene trùng với Build Settings.
+P0136 [Heading 2] 7.2. Cấu hình nền tảng mobile
+P0137 [Normal] 1.  Chọn nền tảng Android trong Build Settings/Build Profiles và cài module tương ứng nếu Unity yêu cầu.
+P0138 [Normal] 2.  Đặt hướng màn hình Portrait và kiểm tra UI trên độ phân giải tương đương 9:16.
+P0139 [Normal] 3.  Thiết lập tên ứng dụng, package/bundle identifier, icon và thông tin phiên bản theo yêu cầu môn học.
+P0140 [Normal] 4.  Kiểm tra Canvas Scaler của HUD/Popup bằng Scale With Screen Size và Reference Resolution phù hợp, ví dụ 1080 × 1920.
+P0141 [Normal] 5.  Test input cảm ứng thực tế; không chỉ dựa vào chuột trong Editor.
+P0142 [Normal] 6.  Tạo bản build độc lập, cài/chạy thử, kiểm tra Menu → Gameplay → Win/Lose → Retry/Menu.
+P0143 [Heading 2] 7.3. Tiêu chí bản build đạt
+P0145 [Heading 1] 8. HẠN CHẾ VÀ HƯỚNG PHÁT TRIỂN
+P0146 [Heading 2] 8.1. Hạn chế cần hoàn thiện
+P0147 [List Bullet] Giao diện Menu và Gameplay cần được kiểm tra như một luồng hoàn chỉnh; bản concept đồ họa không thay thế cho UI chạy thực tế trong Unity.
+P0148 [List Bullet] Cần kiểm thử toàn bộ Win/Lose, retry, chuyển Level và lưu tiến trình trong bản build độc lập.
+P0149 [List Bullet] Boss đã có component điều khiển nhưng cần kiểm tra thực tế các phase, đạn, sát thương và tiến trình hoàn thành Level.
+P0150 [List Bullet] Các thông số spawn, kích thước đội hình, giới hạn Player và Collider cần cân chỉnh theo camera và độ phân giải thiết bị.
+P0151 [List Bullet] Nên rà soát các script trùng hoặc không còn sử dụng, đồng thời kiểm tra Console và Build Settings trước khi đóng gói.
+P0152 [Heading 2] 8.2. Hướng phát triển
+P0153 [List Bullet] Bổ sung pattern đạn Boss đa dạng: hình quạt, vòng cung và chuỗi đạn có khoảng trống để né.
+P0154 [List Bullet] Thêm hiệu ứng nổ, hit feedback, âm thanh và animation chuyển phase cho Boss.
+P0155 [List Bullet] Mở rộng kho nâng cấp tàu, Store, Upgrade, Map và LeaderBoard theo thiết kế home screen.
+P0156 [List Bullet] Xem xét ScriptableObject cho dữ liệu Level/Wave nếu cần thiết kế màn chơi trực quan bằng Inspector; chỉ chuyển đổi khi có kế hoạch tương thích rõ ràng.
+P0157 [List Bullet] Bổ sung pooling cho đạn/Enemy nếu số lượng đối tượng lớn khiến Instantiate/Destroy gây giảm hiệu năng.
+P0158 [List Bullet] Hoàn thiện cân bằng độ khó, phần thưởng, chỉ số Enemy và Boss thông qua thử nghiệm nhiều lần.
+P0159 [Heading 1] KẾT LUẬN
+P0160 [Normal] Galaxy Strike đã hình thành nền tảng của một game bắn phi thuyền 2D với hệ thống điều khiển Player, tự động bắn, nâng cấp đạn, Enemy theo đội hình, dữ liệu tiến trình Level và component điều khiển Boss. Việc tổ chức code theo các thành phần riêng giúp tiếp tục mở rộng số loại Enemy và biến thể Wave mà không phải thay đổi toàn bộ gameplay.
+P0161 [Normal] Để đáp ứng đầy đủ tiêu chí nộp sản phẩm, công việc tiếp theo tập trung vào kiểm thử tích hợp và hoàn thiện quy trình chơi: xác nhận một hệ thống spawn duy nhất, kiểm thử Level 1 và Level 10, hoàn thiện Menu Scene riêng, liên kết các popup thắng/thua, xác nhận đầu vào cảm ứng và tạo bản build có thể chạy độc lập. Báo cáo cần được cập nhật bằng ảnh chụp màn hình thực tế của các Scene và kết quả build sau khi các hạng mục này hoàn thành.
+P0162 [Normal] Thông qua quá trình phát triển, đề tài giúp vận dụng Unity, C#, quản lý GameObject/Prefab, sự kiện giữa các thành phần, xử lý va chạm 2D, quản lý dữ liệu tiến trình và thiết kế vòng lặp gameplay. Những hệ thống đã có tạo nền tảng để hoàn thiện sản phẩm thành một game mobile có thể trải nghiệm trọn vẹn.
+TABLE 1 3x2
+Giảng viên hướng dẫn: | Trần Duy Hiếu
+Lớp: | D24CQGA04-B
+Sinh viên: | Phan Đình Tĩnh
+TABLE 2 7x2
+Hạng mục | Mô tả
+Engine | Unity 2022.3.62f2 (theo phiên bản hiển thị trong Unity Editor).
+Ngôn ngữ | C#.
+Thể loại | 2D vertical space shooter.
+Thiết bị mục tiêu | Điện thoại di động; tỷ lệ tham chiếu dọc 9:16.
+Kiểm thử phát triển | Unity Editor và Simulator; cần xác nhận thêm trên thiết bị/build độc lập.
+Quy mô tiến trình | LevelManager được thiết kế để sinh dữ liệu tối đa 50 Level.
+TABLE 3 6x3
+Giai đoạn | Hoạt động | Kết quả mong đợi
+1. Bắt đầu | Người chơi vào Gameplay Scene và trạng thái Level được khởi tạo. | Player, HUD và dữ liệu Level sẵn sàng.
+2. Chiến đấu | Player di chuyển, tự động bắn và né đạn. | Enemy nhận sát thương; Player có thể mất máu.
+3. Xử lý Wave | Spawner tạo đội hình; Enemy bị tiêu diệt sẽ phát sự kiện, cập nhật điểm và phần thưởng. | Số Enemy còn lại giảm chính xác.
+4. Chuyển giai đoạn | Khi Wave sạch, hệ thống chờ khoảng nghỉ rồi tạo Wave tiếp theo. | Trận đấu có nhịp độ và tiến triển rõ ràng.
+5. Kết thúc | Tiêu diệt Boss hoặc thỏa mãn điều kiện thắng; nếu Player hết máu thì Game Over. | Hiển thị kết quả, thưởng và lựa chọn chơi lại/tiếp tục.
+TABLE 4 11x3
+Prefab | Vai trò dự kiến | Hành vi thiết kế
+Enemy | Địch cơ bản. | Bay thẳng hoặc tham gia đội hình cơ bản.
+Enemy_Scout | Trinh sát nhanh. | Zigzag hoặc thay đổi hướng liên tục.
+Enemy_Fighter | Tàu chiến tiêu chuẩn. | Tấn công theo đội hình, bắn khi được bật cấu hình.
+Enemy_Striker | Tàu áp sát. | Lao về hướng/vị trí Player theo hành vi bổ nhào.
+Enemy_Gunship | Tàu hỗ trợ hỏa lực. | Có thể giữ vị trí và bắn theo nhịp.
+Enemy_Cruiser | Tàu hạng nặng. | Tốc độ chậm, độ bền và hỏa lực cao hơn.
+Enemy_Destroyer | Tàu phá hủy. | Địch mạnh dành cho Wave khó hơn.
+Enemy_Elite | Địch tinh nhuệ. | Có chỉ số hoặc hành vi khó hơn địch thường.
+Enemy_MiniBoss | Mini-Boss. | Đối thủ mạnh ở các mốc Level định kỳ.
+Enemy_Boss | Boss chính. | Có thanh máu, chuyển động và các phase chiến đấu.
+TABLE 5 6x3
+Khu vực | Level | Đặc điểm tiến trình
+Zone 1: Earth Orbit | 1–10 | Làm quen cơ chế; Level 10 là Major Boss.
+Zone 2: Asteroid Belt | 11–20 | Tăng độ khó; Level 15 Mini-Boss, Level 20 Major Boss.
+Zone 3: Deep Space | 21–30 | Kết hợp địch mạnh hơn; Level 25 Mini-Boss, Level 30 Major Boss.
+Zone 4: Alien Void | 31–40 | Đội hình/hỏa lực khó hơn; Level 35 Mini-Boss, Level 40 Major Boss.
+Zone 5: Mothership Core | 41–50 | Khu vực cuối; Level 45 Mini-Boss, Level 50 Major Boss.
+TABLE 6 2x1
+Assets/ / ├── Prefabs/ / │   ├── Bullet / │   ├── Enemy / │   ├── Enemy_Scout / Enemy_Fighter / Enemy_Striker / │   ├── Enemy_Gunship / Enemy_Cruiser / Enemy_Destroyer / │   ├── Enemy_Elite / Enemy_MiniBoss / Enemy_Boss / │   ├── Enemy_Bullet / │   └── PowerUp_Bullet / ├── Scenes/ / │   └── SampleScene  (Gameplay đang được phát triển/kiểm thử) / ├── Scripts/ / │   ├── PlayerController.cs / │   ├── Enemy.cs / │   ├── EnemyBullet.cs / │   ├── EnemySpawner.cs / │   ├── EnemyGridSpawner.cs / │   ├── LevelManager.cs / │   ├── BossController.cs / │   ├── GameManager.cs / │   ├── AudioManager.cs / │   ├── PanelManager.cs / │   ├── SettingsPanelUI.cs / │   ├── StageHealthBarUI.cs / │   └── VictoryPanelUI.cs / ├── Sprites/ / ├── Sounds/ / └── Resources/ (nếu sử dụng Resources.Load)
+
+TABLE 7 11x2
+Thành phần | Trách nhiệm
+PlayerController | Điều khiển, bắn tự động, quản lý máu, bất tử, nâng cấp đạn, va chạm với Enemy/EnemyBullet/Power-Up.
+Enemy | Máu Enemy, nhận sát thương, bắn đạn theo cấu hình, rơi vật phẩm, cộng điểm/coin, phát sự kiện chết.
+EnemyGridSpawner | Lấy cấu hình Wave, tạo đội hình, điều phối spawn theo hàng/cột, theo dõi số Enemy còn sống, chuyển Wave.
+EnemySpawner | Script spawn đơn giản đời đầu; cần xác nhận không chạy song song với EnemyGridSpawner.
+LevelManager | Tạo dữ liệu Level, chọn khu vực, prefab theo tier, đặt mốc Mini-Boss/Boss và lưu tiến trình.
+BossController | Điều khiển chuyển động Boss và cường độ/phase theo các ngưỡng HP, tùy cách triển khai hiện tại.
+EnemyBullet | Di chuyển đạn địch, tự hủy theo Lifetime; việc gây sát thương phụ thuộc tag và xử lý Trigger ở Player.
+GameManager | Quản lý trạng thái trận đấu, điểm, coin, khởi tạo thông số màn, Game Over và hoàn thành Level.
+AudioManager | Phát hiệu ứng âm thanh bắn, nổ và nhặt vật phẩm.
+PanelManager / các UI script | Điều khiển Settings, thanh máu tổng và panel kết quả; cần kiểm tra liên kết thực tế trong Scene.
+TABLE 8 7x2
+Bước | Luồng xử lý
+1 | LevelManager tạo LevelData và danh sách EnemyGridSpawner.WaveConfig.
+2 | EnemyGridSpawner đọc cấu hình, tạo formation parent và spawn Enemy vào các vị trí hàng/cột.
+3 | Enemy thực hiện di chuyển, bắn đạn và xử lý sát thương; khi chết phát OnEnemyDied.
+4 | Spawner cập nhật số Enemy còn sống và chờ Wave sạch.
+5 | GameManager/LevelManager cập nhật tiến trình; khi thỏa điều kiện kết thúc thì gọi Win hoặc Game Over.
+6 | UI hiển thị điểm, máu, trạng thái trận đấu và kết quả để người chơi tiếp tục hoặc quay về Menu.
+TABLE 9 7x3
+Scene / UI | Thành phần cần có | Trạng thái theo thông tin hiện có
+Menu Scene | Logo Galaxy Strike; Start/Play; Settings; Quit; có thể có Store, Upgrade, Map, LeaderBoard. | Chưa xác nhận đã có Scene Menu riêng trong project.
+Gameplay Scene | Background vũ trụ; Player; Enemy; đạn; thông tin máu/điểm; nút Pause/Settings; trạng thái Wave/Boss. | SampleScene đang được dùng để phát triển và kiểm thử Gameplay.
+HUD | Thanh máu Player, điểm/coin, chỉ báo Wave hoặc Boss HP, các thông tin thiết yếu. | Một số thành phần và script UI tồn tại; cần kiểm tra bố cục và liên kết thực tế.
+Win Popup | Thông báo hoàn thành, phần thưởng, Next Level, Menu. | Có script VictoryPanelUI trong project; cần kiểm thử liên kết và luồng chuyển scene.
+Lose Popup | Thông báo thất bại, Retry, Menu. | GameManager có lời gọi GameOver; cần xác nhận UI hiển thị và các nút hoạt động.
+Settings Popup | Âm thanh, tiếp tục, đóng popup hoặc quay về menu. | Có SettingsPanelUI; cần kiểm thử pause/resume và khôi phục Time.timeScale.
+TABLE 10 12x3
+Mã | Hạng mục | Kết quả/tiêu chí mong đợi
+T01 | Player movement bounds | Tàu không vượt ra ngoài bốn giới hạn X/Y.
+T02 | Player initial bullet level | Bắt đầu một tia đạn; Power-Up mới tăng cấp đạn.
+T03 | Enemy movement patterns | Scout/Striker thực hiện kiểu bay đã cấu hình.
+T04 | Enemy damage/reward | Enemy mất HP, chết một lần, cập nhật điểm/coin và drop hợp lệ.
+T05 | EnemyBullet collision | Đạn Enemy giảm 1 HP Player, sau đó tự hủy; bất tử được áp dụng.
+T06 | Wave transition | Wave kế tiếp chỉ xuất hiện khi Wave trước sạch.
+T07 | Level 10 Boss | Hai Wave trước kết thúc, Boss xuất hiện và có thể bị tiêu diệt.
+T08 | Boss phases | Boss đổi hành vi ở các ngưỡng HP đã đặt.
+T09 | Win/Lose flow | Win/Lose popup hiện đúng và nút Retry/Menu hoạt động.
+T10 | Separate Menu Scene | Menu là điểm vào; Start mở Gameplay; Quit hoạt động phù hợp nền tảng.
+T11 | Standalone/mobile build | Build mở được, không lỗi scene/prefab/input.
+TABLE 11 7x2
+Tiêu chí | Cách xác nhận
+Mở game | Ứng dụng khởi động vào Menu, không dừng ở Scene gameplay/debug.
+Điều hướng | Start mở gameplay; Settings mở/đóng đúng; Quit xử lý phù hợp nền tảng.
+Game loop | Chơi từ đầu đến thắng hoặc thua; có thể tiếp tục/chơi lại/quay menu.
+Không lỗi | Không có lỗi compile/runtime nghiêm trọng, prefab/Scene bị thiếu hoặc màn hình trắng.
+Thiết bị | Điều khiển cảm ứng chính xác, UI không tràn mép hoặc che đường chơi.
+Gói nộp | Có file build, project nguồn, báo cáo và hướng dẫn chạy nếu được yêu cầu.

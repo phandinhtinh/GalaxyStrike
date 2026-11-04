@@ -1,0 +1,408 @@
+fileFormatVersion: 2
+guid: e60a2fc394fe5cd4f8bc582961aca985
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_4
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 463
+        width: 247
+        height: 104
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb705257048321441be0eca599654895
+      internalID: -1907712630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_6
+      rect:
+        serializedVersion: 2
+        x: 346
+        y: 538
+        width: 38
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af82edd383ec99a488b919f73b3725b7
+      internalID: 1163313585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_7
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 538
+        width: 38
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31b24060c69197a408509c000550a0e3
+      internalID: 1311998723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_9
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 488
+        width: 36
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96686b87d01ba3f46bf7269c89a26e2c
+      internalID: -1685445010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_10
+      rect:
+        serializedVersion: 2
+        x: 346
+        y: 488
+        width: 38
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c674d73ba5dabaf4484e9b3e48b28c38
+      internalID: -1112235290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_11
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 488
+        width: 37
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81e92862c420a584683751d4bb3df05d
+      internalID: -853555903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_12
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 152
+        width: 217
+        height: 309
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1421a330bbd3b0d41af64cf589482940
+      internalID: 337250763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_13
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 411
+        width: 163
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fdb084884713724991427428d87a1ed
+      internalID: -564484353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_14
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 376
+        width: 135
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b18481c60b80c444ebd6a0dec41a17fa
+      internalID: 1872772661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_26
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 86
+        width: 183
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67e965b5b30ecc04b9e3cc18cab3fc90
+      internalID: -1095166722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_28
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 58
+        width: 168
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 017641b339fa3f946842107b3a7a8418
+      internalID: -732993842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_0: 51130491
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_1: -2047781661
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_10: -1112235290
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_11: -853555903
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_12: 337250763
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_13: -564484353
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_14: 1872772661
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_15: 1813273986
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_16: 1679295950
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_17: 265571520
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_18: -1312423505
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_19: -2297911
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_2: -1390896517
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_20: -116116502
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_21: -453325263
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_22: 1326681186
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_23: 390147574
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_24: 82261582
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_25: 1344715451
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_26: -1095166722
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_27: -1893257523
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_28: -732993842
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_29: -1578934199
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_3: -1930792801
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_30: -2128305011
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_31: 1595294392
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_32: -624582800
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_33: -1504819188
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_34: -953313278
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_35: -1080088276
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_36: 1269666036
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_4: -1907712630
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_5: -1927906826
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_6: 1163313585
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_7: 1311998723
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_8: 899073760
+      Neon_Sci_Fi_Victory_UI_Sprite_Sheet-removebg-preview_9: -1685445010
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

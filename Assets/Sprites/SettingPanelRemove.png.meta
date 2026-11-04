@@ -1,0 +1,1392 @@
+fileFormatVersion: 2
+guid: 82106df0f354060468e7be4b029fdb3b
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SettingPanelRemove_0
+      rect:
+        serializedVersion: 2
+        x: 361
+        y: 1253
+        width: 87
+        height: 81
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b813e9c9e0c212843841b028e9f453c8
+      internalID: -2049011800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_1
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 1253
+        width: 88
+        height: 81
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be598efc947a61243b2a28f402b108c9
+      internalID: -1018446567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_2
+      rect:
+        serializedVersion: 2
+        x: 555
+        y: 1253
+        width: 87
+        height: 81
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a5eab60a9035cc4e915ad43e81f291c
+      internalID: 2080305266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_3
+      rect:
+        serializedVersion: 2
+        x: 652
+        y: 1253
+        width: 86
+        height: 81
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbb61643653bcbc45a0f3c29c652c411
+      internalID: -1690673534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_4
+      rect:
+        serializedVersion: 2
+        x: 377
+        y: 1234
+        width: 55
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b79ecd4d6fa7a1e4d8c2794a49fe1d45
+      internalID: 2004652236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_5
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 1234
+        width: 82
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c9eb6988b95e8e41bd78f887c1ee0a5
+      internalID: -121757398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_6
+      rect:
+        serializedVersion: 2
+        x: 555
+        y: 1234
+        width: 85
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed120b4a2b16b7742b987ddafab5c839
+      internalID: 229899633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_7
+      rect:
+        serializedVersion: 2
+        x: 652
+        y: 1234
+        width: 86
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1d6a9560ace91e4cae9d1c9c59ace1d
+      internalID: -1127003575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_8
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 1148
+        width: 177
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ca5055cbcc97da4983c875281b4dc71
+      internalID: -1042716157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_9
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 1170
+        width: 205
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2b02a9c62dd6ad489f70197143093b3
+      internalID: -1633917693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_10
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 619
+        width: 303
+        height: 469
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d88868da8d53e774b902c7b592dd8015
+      internalID: 726470215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_11
+      rect:
+        serializedVersion: 2
+        x: 377
+        y: 1076
+        width: 259
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d16a0bee835f04341b1f2ce2cbd024b7
+      internalID: 649311344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_12
+      rect:
+        serializedVersion: 2
+        x: 377
+        y: 1022
+        width: 259
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6018720d5d40d494c9498372b23469df
+      internalID: 2093639500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_13
+      rect:
+        serializedVersion: 2
+        x: 676
+        y: 1004
+        width: 42
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09ca56b303b8cc4449b20e17bd148eb5
+      internalID: 1537767231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_14
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 962
+        width: 261
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4e3ad003a586e949a76ac11d90deffa
+      internalID: -1527239064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_15
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 870
+        width: 270
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76a548ce7c019c846b779a03dd6c11d1
+      internalID: 40670063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_16
+      rect:
+        serializedVersion: 2
+        x: 667
+        y: 881
+        width: 68
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1ae9e3b0fdcbe943a475218b84ed96e
+      internalID: 1748075470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_19
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 804
+        width: 270
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 896d16ff3a2e6364b8f20d59cd4f8cc9
+      internalID: -1307018856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_20
+      rect:
+        serializedVersion: 2
+        x: 667
+        y: 815
+        width: 67
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 458674ac49845c14f9b30e9a7d79d137
+      internalID: 473220500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_23
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 722
+        width: 270
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dae8e79587ab86e4da417c036a0a84f7
+      internalID: -1290852426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_25
+      rect:
+        serializedVersion: 2
+        x: 667
+        y: 733
+        width: 67
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06cb8a544c6556d4b9b1f0748e2aa71d
+      internalID: -2001440149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_27
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 660
+        width: 68
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a18976bf04b30444d897828a1d737fde
+      internalID: -1540148886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_30
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 660
+        width: 67
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: baa48b4e35da1f943ba2616f821c7c6c
+      internalID: -1036468645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_33
+      rect:
+        serializedVersion: 2
+        x: 663
+        y: 660
+        width: 68
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76ec6020ce96d17478e8244bbf972781
+      internalID: 1475488391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_36
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 550
+        width: 117
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1753b2c980c6dc74a8925cae9164bd4e
+      internalID: 1933867750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_41
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 542
+        width: 101
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f989f2fb58d4c344790147b2a6f0cc71
+      internalID: 445396511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_42
+      rect:
+        serializedVersion: 2
+        x: 506
+        y: 542
+        width: 101
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e153f110067b2e408bfb8c3afbc6410
+      internalID: -1600885145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_43
+      rect:
+        serializedVersion: 2
+        x: 625
+        y: 543
+        width: 103
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36e103dd8961c354f88fcce26b88a942
+      internalID: 1485185626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_44
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 475
+        width: 99
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6160141d5666ca64d96ce1419ecc96f9
+      internalID: -779924909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_45
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 475
+        width: 101
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f763059002407624eb559057084531ee
+      internalID: 1790066933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_46
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 475
+        width: 99
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d8c39faeee3a8749b57769c41649d9e
+      internalID: -398175464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_47
+      rect:
+        serializedVersion: 2
+        x: 547
+        y: 483
+        width: 177
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fadbcdad1702a354ab549b2460b0e908
+      internalID: -131956458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_55
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 414
+        width: 109
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 869c6af367c33964dbbe49eda7f86fe6
+      internalID: 519768613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_56
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 414
+        width: 109
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ceb361db17b9384cb9d390a6f544605
+      internalID: -1868234279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_57
+      rect:
+        serializedVersion: 2
+        x: 544
+        y: 430
+        width: 182
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 190286189b063114c91b0a4727c4e30f
+      internalID: 117299354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_65
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 359
+        width: 136
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c3513bc7355d664487cb3cbb67cc420
+      internalID: 1842685619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_66
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 359
+        width: 126
+        height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ee211473351c1943835c18db484ffb5
+      internalID: 1304159215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_71
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 360
+        width: 184
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 143edb995b2da70468803e698419b293
+      internalID: -848842418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_75
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 155
+        width: 210
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 780a1fc9a96616941833d9862895a83e
+      internalID: 2108523742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_76
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 308
+        width: 47
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb90634b7d552b2419fe89700113cbf0
+      internalID: 1250723025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_77
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 309
+        width: 46
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 943b8ed26c09d394ba80e5fc59222d75
+      internalID: -2060731687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_80
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 315
+        width: 137
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74bf4962ff5cecb42b8e13801e77f4a6
+      internalID: 1078882319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_81
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 310
+        width: 46
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0b408e478008e242a6a9563a4f0ed20
+      internalID: 1704376089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_82
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 314
+        width: 99
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8b3ef9d9f0f8f140b36f0fbcf100fbe
+      internalID: -1457796831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_84
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 261
+        width: 47
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ffe7f9a640d8da4a9df5513b1e6c4cf
+      internalID: -1519282298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_85
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 262
+        width: 46
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3ad800b3af4ff443a17e62c287d975e
+      internalID: 342153124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_88
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 268
+        width: 123
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccfdd21f70e6d75478ddd46323cca949
+      internalID: 763472522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_89
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 262
+        width: 47
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81ac3632af6ea8a42a88cae15a059669
+      internalID: 1609000893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_90
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 268
+        width: 85
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0692342eed5bc54b89fa1e0d90c306b
+      internalID: 254547350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_91
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 265
+        width: 41
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3d09e52244d734488f27947e4bc2e4f
+      internalID: 1278344098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_92
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 150
+        width: 236
+        height: 79
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2573da43bd90564f9556e4a31b36a05
+      internalID: 267077055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_93
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 150
+        width: 225
+        height: 79
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe6a8a7deae06eb4f8e86fbb23ea60a6
+      internalID: 2094594908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_94
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 61
+        width: 227
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f45c162a3606be04ab335b9cbfde8d80
+      internalID: -392680727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_95
+      rect:
+        serializedVersion: 2
+        x: 267
+        y: 61
+        width: 235
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57f33f5a41088074a8216426fadadc8e
+      internalID: -499913472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SettingPanelRemove_96
+      rect:
+        serializedVersion: 2
+        x: 574
+        y: 67
+        width: 123
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 453a6386656d2c74cbe2fef80a8f5f96
+      internalID: 291438078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      SettingPanelRemove_0: -2049011800
+      SettingPanelRemove_1: -1018446567
+      SettingPanelRemove_10: 726470215
+      SettingPanelRemove_11: 649311344
+      SettingPanelRemove_12: 2093639500
+      SettingPanelRemove_13: 1537767231
+      SettingPanelRemove_14: -1527239064
+      SettingPanelRemove_15: 40670063
+      SettingPanelRemove_16: 1748075470
+      SettingPanelRemove_17: 751663338
+      SettingPanelRemove_18: 513089321
+      SettingPanelRemove_19: -1307018856
+      SettingPanelRemove_2: 2080305266
+      SettingPanelRemove_20: 473220500
+      SettingPanelRemove_21: -1044469334
+      SettingPanelRemove_22: -16071713
+      SettingPanelRemove_23: -1290852426
+      SettingPanelRemove_24: 705662431
+      SettingPanelRemove_25: -2001440149
+      SettingPanelRemove_26: 152831932
+      SettingPanelRemove_27: -1540148886
+      SettingPanelRemove_28: -2059036220
+      SettingPanelRemove_29: -1313441103
+      SettingPanelRemove_3: -1690673534
+      SettingPanelRemove_30: -1036468645
+      SettingPanelRemove_31: 911165340
+      SettingPanelRemove_32: -495154753
+      SettingPanelRemove_33: 1475488391
+      SettingPanelRemove_34: 1466886845
+      SettingPanelRemove_35: -1645400244
+      SettingPanelRemove_36: 1933867750
+      SettingPanelRemove_37: -1598315109
+      SettingPanelRemove_38: -1492390519
+      SettingPanelRemove_39: 186741560
+      SettingPanelRemove_4: 2004652236
+      SettingPanelRemove_40: 786701995
+      SettingPanelRemove_41: 445396511
+      SettingPanelRemove_42: -1600885145
+      SettingPanelRemove_43: 1485185626
+      SettingPanelRemove_44: -779924909
+      SettingPanelRemove_45: 1790066933
+      SettingPanelRemove_46: -398175464
+      SettingPanelRemove_47: -131956458
+      SettingPanelRemove_48: 1757336755
+      SettingPanelRemove_49: -2117013341
+      SettingPanelRemove_5: -121757398
+      SettingPanelRemove_50: 1492947405
+      SettingPanelRemove_51: 1426415762
+      SettingPanelRemove_52: -228766917
+      SettingPanelRemove_53: 785856143
+      SettingPanelRemove_54: -1497977788
+      SettingPanelRemove_55: 519768613
+      SettingPanelRemove_56: -1868234279
+      SettingPanelRemove_57: 117299354
+      SettingPanelRemove_58: 1762773837
+      SettingPanelRemove_59: 1858222652
+      SettingPanelRemove_6: 229899633
+      SettingPanelRemove_60: 816998047
+      SettingPanelRemove_61: -714458923
+      SettingPanelRemove_62: 1142640893
+      SettingPanelRemove_63: -1049666912
+      SettingPanelRemove_64: -710520959
+      SettingPanelRemove_65: 1842685619
+      SettingPanelRemove_66: 1304159215
+      SettingPanelRemove_67: -981703176
+      SettingPanelRemove_68: 332488781
+      SettingPanelRemove_69: 570283812
+      SettingPanelRemove_7: -1127003575
+      SettingPanelRemove_70: 290878846
+      SettingPanelRemove_71: -848842418
+      SettingPanelRemove_72: -526987308
+      SettingPanelRemove_73: -1650590893
+      SettingPanelRemove_74: -428008814
+      SettingPanelRemove_75: 2108523742
+      SettingPanelRemove_76: 1250723025
+      SettingPanelRemove_77: -2060731687
+      SettingPanelRemove_78: 1070960063
+      SettingPanelRemove_79: 71373696
+      SettingPanelRemove_8: -1042716157
+      SettingPanelRemove_80: 1078882319
+      SettingPanelRemove_81: 1704376089
+      SettingPanelRemove_82: -1457796831
+      SettingPanelRemove_83: -911348478
+      SettingPanelRemove_84: -1519282298
+      SettingPanelRemove_85: 342153124
+      SettingPanelRemove_86: -1383054048
+      SettingPanelRemove_87: -863352275
+      SettingPanelRemove_88: 763472522
+      SettingPanelRemove_89: 1609000893
+      SettingPanelRemove_9: -1633917693
+      SettingPanelRemove_90: 254547350
+      SettingPanelRemove_91: 1278344098
+      SettingPanelRemove_92: 267077055
+      SettingPanelRemove_93: 2094594908
+      SettingPanelRemove_94: -392680727
+      SettingPanelRemove_95: -499913472
+      SettingPanelRemove_96: 291438078
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,678 @@
+fileFormatVersion: 2
+guid: 063aaf5dbd12916468e2e1cd22829a1b
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 1043
+        width: 115
+        height: 104
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce0002a4a4e5123479061c5e64015778
+      internalID: 1454289747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 1219
+        width: 503
+        height: 161
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 689e8624ea1996245974c4e9b5e9e816
+      internalID: -269922006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 915
+        width: 412
+        height: 251
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b20525b826cb03146b54f39569d64583
+      internalID: -716055355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 815
+        width: 113
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f8b79aa8976e7947820ec5b1ae4036e
+      internalID: 2119532794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 663
+        width: 103
+        height: 138
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7df158bd9127967429b7d47e5d476374
+      internalID: -1867710035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 705
+        width: 113
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a79cb3d958c92345afb1cee0395d268
+      internalID: -1283308139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 581
+        width: 362
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53db0c0162fcfe344bcbe6ee88eba794
+      internalID: 405422491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 585
+        width: 113
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de24435876d3db3498c6af23f29c523a
+      internalID: 1210258108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 604
+        y: 434
+        width: 102
+        height: 133
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe2c4df9a9af2e74492ab583da351614
+      internalID: 330189328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_24
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 302
+        width: 333
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24c4081e47b2058428b8f319e289d410
+      internalID: -653464598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_26
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 312
+        width: 391
+        height: 89
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74ebe6f79fd50b64c90f04f45a0c8f19
+      internalID: -1430181109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_27
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 228
+        width: 87
+        height: 87
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d74e7545136fa894da073c80e0a4d6a0
+      internalID: -129423185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_28
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 224
+        width: 95
+        height: 89
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a3e2a1b83bb4984aa09ed99cc7eff9d
+      internalID: 764492894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_29
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 117
+        width: 474
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6ab254391e16794ead9ac6f1d37199a
+      internalID: -896370472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_32
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 234
+        width: 120
+        height: 53
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7271872585168c34d9455ed435e39752
+      internalID: -290563007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_33
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 929
+        width: 113
+        height: 104
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c74c9c4d8c0a35147ac9444351c71a35
+      internalID: 1369146722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 718
+        y: 664
+        width: 104
+        height: 137
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b35d5877cd77fb41861da451cff42fa
+      internalID: 1994588862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 833
+        y: 663
+        width: 104
+        height: 138
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69e1f79908dc86240897db2faa77e9d5
+      internalID: 119427812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 946
+        y: 663
+        width: 101
+        height: 139
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90a9c87095ca14e4c8132b444716b88a
+      internalID: -370722044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 716
+        y: 434
+        width: 105
+        height: 134
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76c66e3c9b34f864d8092e3604322780
+      internalID: -329090453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 434
+        width: 107
+        height: 133
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eaa4f3678a43b2c49a49280e70e5d62c
+      internalID: 31424772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 948
+        y: 435
+        width: 103
+        height: 133
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab914fb75052659449033ff693298343
+      internalID: 1426541098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 1128
+        width: 377
+        height: 202
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da22f8c23557a8544b58cb05adfee8f6
+      internalID: 104718777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Sci-Fi Store UI Sprite Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 216
+        width: 154
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddc0db245bb6b6b44a76c45d8461d6f9
+      internalID: -2058367133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Neon Sci-Fi Store UI Sprite Sheet_0: 1454289747
+      Neon Sci-Fi Store UI Sprite Sheet_1: -269922006
+      Neon Sci-Fi Store UI Sprite Sheet_10: 1426541098
+      Neon Sci-Fi Store UI Sprite Sheet_11: 104718777
+      Neon Sci-Fi Store UI Sprite Sheet_12: -2058367133
+      Neon Sci-Fi Store UI Sprite Sheet_13: -1283308139
+      Neon Sci-Fi Store UI Sprite Sheet_14: 405422491
+      Neon Sci-Fi Store UI Sprite Sheet_15: -2084281778
+      Neon Sci-Fi Store UI Sprite Sheet_16: 447354067
+      Neon Sci-Fi Store UI Sprite Sheet_17: 1966265357
+      Neon Sci-Fi Store UI Sprite Sheet_18: 1210258108
+      Neon Sci-Fi Store UI Sprite Sheet_19: 330189328
+      Neon Sci-Fi Store UI Sprite Sheet_2: -716055355
+      Neon Sci-Fi Store UI Sprite Sheet_20: -1152934289
+      Neon Sci-Fi Store UI Sprite Sheet_21: 1600246506
+      Neon Sci-Fi Store UI Sprite Sheet_22: -1979980865
+      Neon Sci-Fi Store UI Sprite Sheet_23: -1972737860
+      Neon Sci-Fi Store UI Sprite Sheet_24: -653464598
+      Neon Sci-Fi Store UI Sprite Sheet_25: -279787642
+      Neon Sci-Fi Store UI Sprite Sheet_26: -1430181109
+      Neon Sci-Fi Store UI Sprite Sheet_27: -129423185
+      Neon Sci-Fi Store UI Sprite Sheet_28: 764492894
+      Neon Sci-Fi Store UI Sprite Sheet_29: -896370472
+      Neon Sci-Fi Store UI Sprite Sheet_3: 2119532794
+      Neon Sci-Fi Store UI Sprite Sheet_30: 5316890
+      Neon Sci-Fi Store UI Sprite Sheet_31: -406740916
+      Neon Sci-Fi Store UI Sprite Sheet_32: -290563007
+      Neon Sci-Fi Store UI Sprite Sheet_33: 1369146722
+      Neon Sci-Fi Store UI Sprite Sheet_4: 1994588862
+      Neon Sci-Fi Store UI Sprite Sheet_5: -1867710035
+      Neon Sci-Fi Store UI Sprite Sheet_6: 119427812
+      Neon Sci-Fi Store UI Sprite Sheet_7: -370722044
+      Neon Sci-Fi Store UI Sprite Sheet_8: -329090453
+      Neon Sci-Fi Store UI Sprite Sheet_9: 31424772
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,793 @@
+fileFormatVersion: 2
+guid: e3a22efebe5c94245b82d58446faaec5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7363098514458399976
+    second: DroneFighterBullets_0
+  - first:
+      213: 436483525029904113
+    second: DroneFighterBullets_1
+  - first:
+      213: 321241311268524981
+    second: DroneFighterBullets_2
+  - first:
+      213: -1436478482666757895
+    second: DroneFighterBullets_3
+  - first:
+      213: -7175817635026403851
+    second: DroneFighterBullets_4
+  - first:
+      213: 2200266625102590948
+    second: DroneFighterBullets_5
+  - first:
+      213: -1743523777716738203
+    second: DroneFighterBullets_6
+  - first:
+      213: -4281165103323258410
+    second: DroneFighterBullets_7
+  - first:
+      213: 7822748357671875342
+    second: DroneFighterBullets_8
+  - first:
+      213: -6800918691640369690
+    second: DroneFighterBullets_9
+  - first:
+      213: 3882606154790264727
+    second: DroneFighterBullets_10
+  - first:
+      213: 4676878074707370771
+    second: DroneFighterBullets_11
+  - first:
+      213: 7659051660139445746
+    second: DroneFighterBullets_12
+  - first:
+      213: -1435485067236350775
+    second: DroneFighterBullets_13
+  - first:
+      213: 3784146189003199162
+    second: DroneFighterBullets_14
+  - first:
+      213: -193207954099530991
+    second: DroneFighterBullets_15
+  - first:
+      213: -7649301704714880772
+    second: DroneFighterBullets_16
+  - first:
+      213: -3302202557046696691
+    second: DroneFighterBullets_17
+  - first:
+      213: -1202536130879869490
+    second: DroneFighterBullets_18
+  - first:
+      213: -253712653426079072
+    second: DroneFighterBullets_19
+  - first:
+      213: 6523261373077186758
+    second: DroneFighterBullets_20
+  - first:
+      213: 6954175113453572393
+    second: DroneFighterBullets_21
+  - first:
+      213: 5989263810670839888
+    second: DroneFighterBullets_22
+  - first:
+      213: 6077499606521077182
+    second: DroneFighterBullets_23
+  - first:
+      213: -4211896030047477572
+    second: DroneFighterBullets_24
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DroneFighterBullets_0
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 53
+        width: 621
+        height: 605
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81b208799e401d990800000000000000
+      internalID: -7363098514458399976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_1
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 498
+        width: 52
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1feb7b31473be0600800000000000000
+      internalID: 436483525029904113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_2
+      rect:
+        serializedVersion: 2
+        x: 676
+        y: 549
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b357554547457400800000000000000
+      internalID: 321241311268524981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_3
+      rect:
+        serializedVersion: 2
+        x: 684
+        y: 100
+        width: 423
+        height: 578
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f0e7294e6a901ce0800000000000000
+      internalID: -1436478482666757895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_4
+      rect:
+        serializedVersion: 2
+        x: 1115
+        y: 21
+        width: 398
+        height: 675
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fd744b41ef5a6c90800000000000000
+      internalID: -7175817635026403851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_5
+      rect:
+        serializedVersion: 2
+        x: 1335
+        y: 498
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e3336886dae88e10800000000000000
+      internalID: 2200266625102590948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_6
+      rect:
+        serializedVersion: 2
+        x: 1629
+        y: 506
+        width: 367
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5672fbb9c52cdc7e0800000000000000
+      internalID: -1743523777716738203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_7
+      rect:
+        serializedVersion: 2
+        x: 652
+        y: 390
+        width: 89
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d16e97650f3694c0800000000000000
+      internalID: -4281165103323258410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_8
+      rect:
+        serializedVersion: 2
+        x: 1468
+        y: 455
+        width: 27
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e037d424f2cff8c60800000000000000
+      internalID: 7822748357671875342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_9
+      rect:
+        serializedVersion: 2
+        x: 1492
+        y: 455
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ed16769b784e91a0800000000000000
+      internalID: -6800918691640369690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_10
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 0
+        width: 516
+        height: 493
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79fd4031ab9c1e530800000000000000
+      internalID: 3882606154790264727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_11
+      rect:
+        serializedVersion: 2
+        x: 1987
+        y: 259
+        width: 168
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 313eebc64db97e040800000000000000
+      internalID: 4676878074707370771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_12
+      rect:
+        serializedVersion: 2
+        x: 708
+        y: 240
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fd3afec7ea6a4a60800000000000000
+      internalID: 7659051660139445746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_13
+      rect:
+        serializedVersion: 2
+        x: 1367
+        y: 232
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c4eff6dfe1241ce0800000000000000
+      internalID: -1435485067236350775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_14
+      rect:
+        serializedVersion: 2
+        x: 1319
+        y: 176
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab21fadd8ecf38430800000000000000
+      internalID: 3784146189003199162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_15
+      rect:
+        serializedVersion: 2
+        x: 1355
+        y: 124
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1131e10b366915df0800000000000000
+      internalID: -193207954099530991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_16
+      rect:
+        serializedVersion: 2
+        x: 1463
+        y: 130
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf8fda690a838d590800000000000000
+      internalID: -7649301704714880772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_17
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 112
+        width: 16
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0558da25483c22d0800000000000000
+      internalID: -3302202557046696691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_18
+      rect:
+        serializedVersion: 2
+        x: 794
+        y: 114
+        width: 12
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecd2551a2cbbf4fe0800000000000000
+      internalID: -1202536130879869490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_19
+      rect:
+        serializedVersion: 2
+        x: 1359
+        y: 114
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0aa44899fa1aa7cf0800000000000000
+      internalID: -253712653426079072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_20
+      rect:
+        serializedVersion: 2
+        x: 802
+        y: 87
+        width: 14
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c8ea4738a7478a50800000000000000
+      internalID: 6523261373077186758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_21
+      rect:
+        serializedVersion: 2
+        x: 1518
+        y: 79
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 921134fbb61328060800000000000000
+      internalID: 6954175113453572393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_22
+      rect:
+        serializedVersion: 2
+        x: 633
+        y: 79
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 058432d04b32e1350800000000000000
+      internalID: 5989263810670839888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_23
+      rect:
+        serializedVersion: 2
+        x: 804
+        y: 39
+        width: 50
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebdd34131bd975450800000000000000
+      internalID: 6077499606521077182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DroneFighterBullets_24
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 72
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb0642250e65c85c0800000000000000
+      internalID: -4211896030047477572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      DroneFighterBullets_0: -7363098514458399976
+      DroneFighterBullets_1: 436483525029904113
+      DroneFighterBullets_10: 3882606154790264727
+      DroneFighterBullets_11: 4676878074707370771
+      DroneFighterBullets_12: 7659051660139445746
+      DroneFighterBullets_13: -1435485067236350775
+      DroneFighterBullets_14: 3784146189003199162
+      DroneFighterBullets_15: -193207954099530991
+      DroneFighterBullets_16: -7649301704714880772
+      DroneFighterBullets_17: -3302202557046696691
+      DroneFighterBullets_18: -1202536130879869490
+      DroneFighterBullets_19: -253712653426079072
+      DroneFighterBullets_2: 321241311268524981
+      DroneFighterBullets_20: 6523261373077186758
+      DroneFighterBullets_21: 6954175113453572393
+      DroneFighterBullets_22: 5989263810670839888
+      DroneFighterBullets_23: 6077499606521077182
+      DroneFighterBullets_24: -4211896030047477572
+      DroneFighterBullets_3: -1436478482666757895
+      DroneFighterBullets_4: -7175817635026403851
+      DroneFighterBullets_5: 2200266625102590948
+      DroneFighterBullets_6: -1743523777716738203
+      DroneFighterBullets_7: -4281165103323258410
+      DroneFighterBullets_8: 7822748357671875342
+      DroneFighterBullets_9: -6800918691640369690
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

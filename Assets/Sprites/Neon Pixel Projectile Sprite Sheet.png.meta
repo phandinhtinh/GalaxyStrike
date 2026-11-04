@@ -1,0 +1,373 @@
+fileFormatVersion: 2
+guid: fb4f4bc4f1a5c7247bcd82af31dd9ab0
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Neon Pixel Projectile Sprite Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 525
+        width: 127
+        height: 456
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 629fca3a0f7734d4ca02ea7696e7145c
+      internalID: 1195778379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Pixel Projectile Sprite Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 517
+        width: 106
+        height: 475
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 431845af01383ae4592a8920112f5567
+      internalID: 1412790124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Pixel Projectile Sprite Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 916
+        y: 524
+        width: 98
+        height: 454
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dfbf65095cec16f4588599e062474db6
+      internalID: 768687347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Pixel Projectile Sprite Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 1262
+        y: 522
+        width: 89
+        height: 450
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97f76147c76137f4098676b8322a95b3
+      internalID: 776422066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Pixel Projectile Sprite Sheet_51
+      rect:
+        serializedVersion: 2
+        x: 894
+        y: 29
+        width: 145
+        height: 456
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a43fc5237c435c64c8af9fa8ca0a3ad1
+      internalID: -192714299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Pixel Projectile Sprite Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 1229
+        y: 26
+        width: 166
+        height: 478
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0934ccde5ec6c74eae44489d0d9eda2
+      internalID: -598826089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Pixel Projectile Sprite Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 487
+        y: 30
+        width: 164
+        height: 468
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87374471aa8fa094ba42087c32c2a556
+      internalID: -548057458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Neon Pixel Projectile Sprite Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 23
+        width: 108
+        height: 473
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0744fab1daa5c10469cecf7d2e6ec421
+      internalID: 936010177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Neon Pixel Projectile Sprite Sheet_0: 1195778379
+      Neon Pixel Projectile Sprite Sheet_1: 936010177
+      Neon Pixel Projectile Sprite Sheet_10: -622495567
+      Neon Pixel Projectile Sprite Sheet_11: 1414114120
+      Neon Pixel Projectile Sprite Sheet_12: 1117514500
+      Neon Pixel Projectile Sprite Sheet_13: -1342495333
+      Neon Pixel Projectile Sprite Sheet_14: -1217127681
+      Neon Pixel Projectile Sprite Sheet_15: 480478966
+      Neon Pixel Projectile Sprite Sheet_16: 182413683
+      Neon Pixel Projectile Sprite Sheet_17: 1314148279
+      Neon Pixel Projectile Sprite Sheet_18: -1947095451
+      Neon Pixel Projectile Sprite Sheet_19: 1816316478
+      Neon Pixel Projectile Sprite Sheet_2: 1412790124
+      Neon Pixel Projectile Sprite Sheet_20: -1264904654
+      Neon Pixel Projectile Sprite Sheet_21: -1396953136
+      Neon Pixel Projectile Sprite Sheet_22: -2083373545
+      Neon Pixel Projectile Sprite Sheet_23: 109916117
+      Neon Pixel Projectile Sprite Sheet_24: -284365678
+      Neon Pixel Projectile Sprite Sheet_25: 121514652
+      Neon Pixel Projectile Sprite Sheet_26: 819250000
+      Neon Pixel Projectile Sprite Sheet_27: 461416153
+      Neon Pixel Projectile Sprite Sheet_28: 2080336034
+      Neon Pixel Projectile Sprite Sheet_29: 1376946163
+      Neon Pixel Projectile Sprite Sheet_3: 768687347
+      Neon Pixel Projectile Sprite Sheet_30: 772322295
+      Neon Pixel Projectile Sprite Sheet_31: 601550211
+      Neon Pixel Projectile Sprite Sheet_32: -1239565560
+      Neon Pixel Projectile Sprite Sheet_33: -1602370286
+      Neon Pixel Projectile Sprite Sheet_34: 1161127456
+      Neon Pixel Projectile Sprite Sheet_35: 1537929128
+      Neon Pixel Projectile Sprite Sheet_36: 1195336060
+      Neon Pixel Projectile Sprite Sheet_37: -1685150446
+      Neon Pixel Projectile Sprite Sheet_38: 697520434
+      Neon Pixel Projectile Sprite Sheet_39: 773559849
+      Neon Pixel Projectile Sprite Sheet_4: -598826089
+      Neon Pixel Projectile Sprite Sheet_40: -407341632
+      Neon Pixel Projectile Sprite Sheet_41: -783567231
+      Neon Pixel Projectile Sprite Sheet_42: 955261675
+      Neon Pixel Projectile Sprite Sheet_43: 178975563
+      Neon Pixel Projectile Sprite Sheet_44: 133936135
+      Neon Pixel Projectile Sprite Sheet_45: -63721466
+      Neon Pixel Projectile Sprite Sheet_46: -1534000039
+      Neon Pixel Projectile Sprite Sheet_47: 593430412
+      Neon Pixel Projectile Sprite Sheet_48: -316083984
+      Neon Pixel Projectile Sprite Sheet_49: -1630377125
+      Neon Pixel Projectile Sprite Sheet_5: 776422066
+      Neon Pixel Projectile Sprite Sheet_50: -1487167295
+      Neon Pixel Projectile Sprite Sheet_51: -192714299
+      Neon Pixel Projectile Sprite Sheet_52: 692479531
+      Neon Pixel Projectile Sprite Sheet_53: -1437204356
+      Neon Pixel Projectile Sprite Sheet_54: -1270066302
+      Neon Pixel Projectile Sprite Sheet_55: 633689598
+      Neon Pixel Projectile Sprite Sheet_56: -2117652117
+      Neon Pixel Projectile Sprite Sheet_57: -542900109
+      Neon Pixel Projectile Sprite Sheet_58: -1124341968
+      Neon Pixel Projectile Sprite Sheet_59: 1089009123
+      Neon Pixel Projectile Sprite Sheet_6: -548057458
+      Neon Pixel Projectile Sprite Sheet_60: 1673961338
+      Neon Pixel Projectile Sprite Sheet_61: -432492725
+      Neon Pixel Projectile Sprite Sheet_62: 1220319518
+      Neon Pixel Projectile Sprite Sheet_63: -581018707
+      Neon Pixel Projectile Sprite Sheet_64: -1856769428
+      Neon Pixel Projectile Sprite Sheet_7: -1008103666
+      Neon Pixel Projectile Sprite Sheet_8: 1981536304
+      Neon Pixel Projectile Sprite Sheet_9: 1616423919
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

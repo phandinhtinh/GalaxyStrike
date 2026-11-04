@@ -1,0 +1,694 @@
+﻿using System;
+using UnityEngine;
+using GalaxyStrike.Data;
+
+namespace GalaxyStrike.Save
+{
+    /// <summary>
+    /// Quản lý dữ liệu người chơi tập trung (Giai đoạn 2).
+    ///
+    /// Nhiệm vụ:
+    ///  - Hợp nhất Coin / Gem / Energy / Level / Tàu đã mở khóa / Cấp nâng cấp vào MỘT file save.
+    ///  - Mã hóa AES-256 + chữ ký HMAC -> người chơi không sửa được file trên Android.
+    ///  - Tự hồi 1 năng lượng mỗi <see cref="EnergyRefillMinutes"/> phút, tối đa <see cref="MaxEnergy"/>,
+    ///    kể cả khi đã tắt game (dựa trên DateTime.UtcNow).
+    ///  - Tự động chuyển dữ liệu PlayerPrefs cũ (bản trước Giai đoạn 2) sang save mới 1 lần duy nhất.
+    ///
+    /// Singleton tự sinh (DontDestroyOnLoad) nên dùng được ở cả HomeScene và GameScene.
+    /// </summary>
+    [DefaultExecutionOrder(-150)]
+    public sealed class SaveManager : MonoBehaviour
+    {
+        private const string SaveKey = "GalaxyStrike_SaveV2";
+        private const string LegacyMigrationKey = "GalaxyStrike_MigratedV2";
+
+        private static SaveManager instance;
+
+        public static SaveManager Instance
+        {
+            get
+            {
+                if (instance != null)
+                    return instance;
+
+                instance = FindObjectOfType<SaveManager>();
+                if (instance != null)
+                    return instance;
+
+                instance = new GameObject("[SaveManager]").AddComponent<SaveManager>();
+                return instance;
+            }
+        }
+
+        [Header("--- Energy ---")]
+        [Tooltip("Số phút để hồi 1 năng lượng")]
+        [SerializeField, Min(1)] private int energyRefillMinutes = 12;
+        [Tooltip("Năng lượng tối đa")]
+        [SerializeField, Min(1)] private int maxEnergy = 30;
+        [Tooltip("Chi phí năng lượng cho 1 lượt chơi")]
+        [SerializeField, Min(0)] private int energyCostPerRun = 5;
+
+        [Header("--- New Player Defaults ---")]
+        [SerializeField] private int startingCoins = 500;
+        [SerializeField] private int startingGems = 20;
+
+        private SaveData data;
+
+        /// <summary>Phát mỗi khi dữ liệu thay đổi (UI lắng nghe để refresh).</summary>
+        public event Action OnDataChanged;
+
+        public SaveData Data
+        {
+            get
+            {
+                EnsureLoaded();
+                return data;
+            }
+        }
+
+        public int EnergyRefillMinutes => energyRefillMinutes;
+        public int MaxEnergy => maxEnergy;
+        public int EnergyCostPerRun => energyCostPerRun;
+
+        /// <summary>Xoá tham chiếu tĩnh (gọi khi vào Play Mode để không giữ object của phiên trước).</summary>
+        public static void ResetStaticInstance()
+        {
+            instance = null;
+        }
+
+        private void Awake()
+        {
+            if (instance != null && instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+            EnsureLoaded();
+        }
+
+        private void OnDestroy()
+        {
+            if (instance == this)
+                instance = null;
+        }
+
+        private void OnApplicationPause(bool isPaused)
+        {
+            if (isPaused)
+            {
+                Flush();
+            }
+            else
+            {
+                // Quay lại từ nền: đồng hồ thực đã trôi, hồi năng lượng ngay.
+                ApplyEnergyRefill();
+                NotifyChanged();
+            }
+        }
+
+        private void OnApplicationQuit()
+        {
+            Flush();
+        }
+
+        private float energyTickTimer;
+
+        /// <summary>
+        /// Đếm ngược năng lượng theo thời gian thực mỗi giây.
+        /// Trước đây chỉ hồi khi mở HomeScene, nên ở Shop 10 phút sẽ không thấy thay đổi.
+        /// </summary>
+        private void Update()
+        {
+            if (data == null)
+                return;
+
+            if (data.energy >= data.maxEnergy)
+            {
+                energyTickTimer = 0f;
+                return;
+            }
+
+            energyTickTimer += Time.unscaledDeltaTime;
+            if (energyTickTimer < 1f)
+                return;
+
+            energyTickTimer = 0f;
+
+            int before = data.energy;
+            ApplyEnergyRefill();
+
+            if (data.energy != before)
+                NotifyChanged();
+        }
+
+        // =====================================================================
+        // NẠP / LƯU
+        // =====================================================================
+        private void EnsureLoaded()
+        {
+            if (data != null)
+                return;
+
+            data = LoadFromDisk() ?? CreateNewSave();
+
+            // Normalize cả save mới để chặn giá trị cấu hình bất thường trong Inspector.
+            Normalize(data);
+
+            // Ghi save mới ngay (lần đầu chơi) để lần sau không phải migrate lại.
+            if (!PlayerPrefs.HasKey(SaveKey))
+                Flush();
+
+            MigrateLegacyPlayerPrefs();
+            ApplyEnergyRefill();
+        }
+
+        private SaveData CreateNewSave()
+        {
+            var fresh = new SaveData
+            {
+                coins = startingCoins,
+                gems = startingGems,
+                energy = maxEnergy,
+                maxEnergy = maxEnergy,
+                lastEnergyRefillUnixTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+            };
+
+            fresh.UnlockShip(0);
+            return fresh;
+        }
+
+        private SaveData LoadFromDisk()
+        {
+            string stored = PlayerPrefs.GetString(SaveKey, string.Empty);
+            if (string.IsNullOrEmpty(stored))
+                return null;
+
+            if (!SaveCrypto.TryDecrypt(stored, out string json))
+            {
+                // File bị sửa hoặc hỏng -> ghi log và bắt đầu lại để không crash.
+                Debug.LogWarning("[SaveManager] File save không hợp lệ hoặc đã bị chỉnh sửa. Tạo dữ liệu mới.");
+                return null;
+            }
+
+            try
+            {
+                SaveData loaded = JsonUtility.FromJson<SaveData>(json);
+                if (loaded == null)
+                    return null;
+
+                Normalize(loaded);
+                return loaded;
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"[SaveManager] Không đọc được save: {e.Message}");
+                return null;
+            }
+        }
+
+        /// <summary>Chặn giá trị vô lý (âm, vượt trần) tránh lỗi UI và economy.</summary>
+        private void Normalize(SaveData save)
+        {
+            save.coins = Mathf.Max(0, save.coins);
+            save.gems = Mathf.Max(0, save.gems);
+            save.maxEnergy = Mathf.Max(1, maxEnergy);
+            save.energy = Mathf.Clamp(save.energy, 0, save.maxEnergy);
+            save.accountLevel = Mathf.Max(1, save.accountLevel);
+            save.highestLevel = Mathf.Max(1, save.highestLevel);
+            save.totalKills = Mathf.Max(0, save.totalKills);
+            save.bestScore = Mathf.Max(0, save.bestScore);
+            save.selectedShipIndex = Mathf.Max(0, save.selectedShipIndex);
+
+            save.maxHealthUpgrade = Mathf.Clamp(save.maxHealthUpgrade, 0, ShipUpgradeCatalog.MaxLevel);
+            save.fireRateUpgrade = Mathf.Clamp(save.fireRateUpgrade, 0, ShipUpgradeCatalog.MaxLevel);
+            save.moveSpeedUpgrade = Mathf.Clamp(save.moveSpeedUpgrade, 0, ShipUpgradeCatalog.MaxLevel);
+            save.damageUpgrade = Mathf.Clamp(save.damageUpgrade, 0, ShipUpgradeCatalog.MaxLevel);
+
+            if (save.unlockedShipIndices == null)
+                save.unlockedShipIndices = new System.Collections.Generic.List<int>();
+
+            // ownedItemIds có thể null khi nâng cấp từ save cũ (chưa có field này).
+            if (save.ownedItemIds == null)
+                save.ownedItemIds = new System.Collections.Generic.List<string>();
+
+            save.ownedItemIds.RemoveAll(string.IsNullOrEmpty);
+
+            // XP không được âm; level phải khớp với tổng XP (chống sửa tay).
+            // Giới hạn XP tối đa để vòng lặp bên dưới luôn kết thúc (chống file save bị chỉnh).
+            save.experience = Mathf.Clamp(save.experience, 0, MaxExperience);
+
+            int levelFromXp = 1;
+            while (save.experience >= GetTotalXpForLevel(levelFromXp + 1))
+                levelFromXp++;
+
+            if (save.accountLevel != levelFromXp)
+                save.accountLevel = levelFromXp;
+
+            save.UnlockShip(0);
+            save.unlockedShipIndices.RemoveAll(index => index < 0);
+
+            if (!save.HasShip(save.selectedShipIndex))
+                save.selectedShipIndex = 0;
+        }
+
+        /// <summary>Chuyển dữ liệu PlayerPrefs của bản cũ sang save mới, đúng 1 lần.</summary>
+        private void MigrateLegacyPlayerPrefs()
+        {
+            if (PlayerPrefs.GetInt(LegacyMigrationKey, 0) == 1)
+                return;
+
+            if (PlayerPrefs.HasKey("GalaxyStrike_Coins"))
+                data.coins = Mathf.Max(data.coins, PlayerPrefs.GetInt("GalaxyStrike_Coins", 0));
+
+            for (int i = 0; i < 8; i++)
+            {
+                if (PlayerPrefs.GetInt($"Ship_Unlocked_{i}", 0) == 1)
+                    data.UnlockShip(i);
+            }
+
+            data.selectedShipIndex = Mathf.Max(0, PlayerPrefs.GetInt("SelectedShipIndex", 0));
+            if (!data.HasShip(data.selectedShipIndex))
+                data.selectedShipIndex = 0;
+
+            if (PlayerPrefs.HasKey("GalaxyStrike_CurrentLevel"))
+                data.highestLevel = Mathf.Max(1, PlayerPrefs.GetInt("GalaxyStrike_CurrentLevel", 1));
+
+            PlayerPrefs.SetInt(LegacyMigrationKey, 1);
+            Debug.Log("[SaveManager] Đã chuyển dữ liệu PlayerPrefs cũ sang SaveV2.");
+        }
+
+        /// <summary>Ghi xuống máy ngay lập tức (mã hóa + chữ ký).</summary>
+        public void Flush()
+        {
+            if (data == null)
+                return;
+
+            try
+            {
+                string json = JsonUtility.ToJson(data);
+                PlayerPrefs.SetString(SaveKey, SaveCrypto.Encrypt(json));
+                PlayerPrefs.Save();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[SaveManager] Lỗi khi lưu dữ liệu: {e.Message}");
+            }
+        }
+
+        public void NotifyChanged()
+        {
+            OnDataChanged?.Invoke();
+        }
+
+        // =====================================================================
+        // NĂNG LƯỢNG
+        // =====================================================================
+        public int Energy => Data.energy;
+        public float EnergyProgress => data.maxEnergy > 0 ? (float)data.energy / data.maxEnergy : 0f;
+
+        /// <summary>
+        /// Hồi năng lượng theo thời gian thực đã trôi qua (kể cả khi thoát game).
+        /// Đồng hồ chỉ chạy khi chưa đầy năng lượng.
+        /// </summary>
+        public void ApplyEnergyRefill()
+        {
+            EnsureLoaded();
+
+            long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+            if (data.energy >= data.maxEnergy)
+            {
+                data.energy = data.maxEnergy;
+                data.lastEnergyRefillUnixTime = now;
+                return;
+            }
+
+            if (data.lastEnergyRefillUnixTime <= 0)
+            {
+                data.lastEnergyRefillUnixTime = now;
+                return;
+            }
+
+            long elapsed = now - data.lastEnergyRefillUnixTime;
+            long interval = Mathf.Max(1, energyRefillMinutes) * 60L;
+            if (elapsed < interval)
+                return;
+
+            int gained = (int)(elapsed / interval);
+            data.energy = Mathf.Min(data.maxEnergy, data.energy + gained);
+
+            // Giữ phần dư (giây lẻ) để nhịp hồi không bị trôi theo thời gian.
+            data.lastEnergyRefillUnixTime = data.energy >= data.maxEnergy
+                ? now
+                : data.lastEnergyRefillUnixTime + gained * interval;
+
+            Flush();
+            NotifyChanged();
+        }
+
+        /// <summary>Thời gian còn lại (giây) tới lần hồi năng lượng kế tiếp.</summary>
+        public int SecondsUntilNextEnergy()
+        {
+            EnsureLoaded();
+
+            if (data.energy >= data.maxEnergy)
+                return 0;
+
+            long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            long interval = Mathf.Max(1, energyRefillMinutes) * 60L;
+            long elapsed = now - data.lastEnergyRefillUnixTime;
+            long remaining = interval - (elapsed % interval);
+            return (int)Mathf.Max(0, remaining);
+        }
+
+        /// <summary>Kiểm tra và trừ năng lượng khi vào trận.</summary>
+        public bool TryConsumeEnergy(int amount = -1)
+        {
+            EnsureLoaded();
+            ApplyEnergyRefill();
+
+            int cost = amount >= 0 ? amount : energyCostPerRun;
+            if (data.energy < cost)
+                return false;
+
+            bool wasFull = data.energy >= data.maxEnergy;
+            data.energy -= cost;
+
+            // Vừa rời trạng thái đầy -> bắt đầu tính nhịp hồi từ bây giờ.
+            if (wasFull)
+                data.lastEnergyRefillUnixTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+            Flush();
+            NotifyChanged();
+            return true;
+        }
+
+        public void AddEnergy(int amount)
+        {
+            if (amount <= 0)
+                return;
+
+            EnsureLoaded();
+            int before = data.energy;
+            data.energy = Mathf.Min(data.maxEnergy, data.energy + amount);
+
+            if (before >= data.maxEnergy)
+                data.lastEnergyRefillUnixTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+            Flush();
+            NotifyChanged();
+        }
+
+        // =====================================================================
+        // TIỀN TỆ
+        // =====================================================================
+        public int Coins => Data.coins;
+        public int Gems => Data.gems;
+
+        public void AddCoins(int amount)
+        {
+            if (amount == 0)
+                return;
+
+            EnsureLoaded();
+            data.coins = Mathf.Max(0, data.coins + amount);
+            Flush();
+            NotifyChanged();
+        }
+
+        public void AddGems(int amount)
+        {
+            if (amount == 0)
+                return;
+
+            EnsureLoaded();
+            data.gems = Mathf.Max(0, data.gems + amount);
+            Flush();
+            NotifyChanged();
+        }
+
+        /// <summary>Trừ tiền nếu đủ. Trả false khi không đủ số dư (không trừ gì).</summary>
+        public bool TrySpendCurrency(CurrencyType currency, int amount)
+        {
+            if (amount <= 0)
+                return true;
+
+            EnsureLoaded();
+
+            if (currency == CurrencyType.Gem)
+            {
+                if (data.gems < amount)
+                    return false;
+
+                data.gems -= amount;
+            }
+            else
+            {
+                if (data.coins < amount)
+                    return false;
+
+                data.coins -= amount;
+            }
+
+            Flush();
+            NotifyChanged();
+            return true;
+        }
+
+        // =====================================================================
+        // TÀU
+        // =====================================================================
+        public int SelectedShipIndex => Data.selectedShipIndex;
+
+        public bool IsShipUnlocked(int shipIndex)
+        {
+            return shipIndex == 0 || Data.HasShip(shipIndex);
+        }
+
+        public void UnlockShip(int shipIndex)
+        {
+            EnsureLoaded();
+            data.UnlockShip(shipIndex);
+            Flush();
+            NotifyChanged();
+        }
+
+        /// <summary>
+        /// Mua tàu: kiểm tra số dư -> trừ tiền -> mở khóa. Không làm gì nếu đã sở hữu.
+        /// </summary>
+        public bool TryBuyShip(int shipIndex, CurrencyType currency, int price)
+        {
+            EnsureLoaded();
+            if (IsShipUnlocked(shipIndex))
+                return false;
+
+            if (!TrySpendCurrency(currency, price))
+                return false;
+
+            data.UnlockShip(shipIndex);
+            data.selectedShipIndex = shipIndex;
+            Flush();
+            NotifyChanged();
+            return true;
+        }
+
+        public void SelectShip(int shipIndex)
+        {
+            EnsureLoaded();
+            if (!IsShipUnlocked(shipIndex))
+                return;
+
+            data.selectedShipIndex = shipIndex;
+            Flush();
+            NotifyChanged();
+        }
+
+        // =====================================================================
+        // NÂNG CẤP CHỈ SỐ TÀU
+        // =====================================================================
+        public int GetUpgradeLevel(ShipUpgradeType type) => Data.GetUpgradeLevel(type);
+
+        public int GetUpgradeCost(ShipUpgradeType type)
+        {
+            return ShipUpgradeCatalog.GetCost(type, GetUpgradeLevel(type));
+        }
+
+        public bool IsUpgradeMaxed(ShipUpgradeType type)
+        {
+            return GetUpgradeLevel(type) >= ShipUpgradeCatalog.MaxLevel;
+        }
+
+        /// <summary>Nâng cấp 1 bậc bằng Coin. Trả false nếu đã tối đa hoặc thiếu Coin.</summary>
+        public bool TryUpgrade(ShipUpgradeType type)
+        {
+            EnsureLoaded();
+
+            if (IsUpgradeMaxed(type))
+                return false;
+
+            int cost = GetUpgradeCost(type);
+            if (!TrySpendCurrency(CurrencyType.Gold, cost))
+                return false;
+
+            data.SetUpgradeLevel(type, GetUpgradeLevel(type) + 1);
+            Flush();
+            NotifyChanged();
+            return true;
+        }
+
+        // =====================================================================
+        // TIẾN TRÌNH LEVEL
+        // =====================================================================
+        public int HighestLevel => Data.highestLevel;
+
+        // =====================================================================
+        // THÀNH TÍCH CHO BẢNG XẾP HẠNG
+        // =====================================================================
+        public int TotalKills => Data.totalKills;
+        public int BestScore => Data.bestScore;
+
+        /// <summary>Cộng dồn số quái đã hạ (GameManager gọi mỗi khi quái chết).</summary>
+        /// <summary>
+        /// Cộng dồn số quái đã hạ.
+        /// KHÔNG Flush mỗi lần gọi (quái chết liên tục sẽ ghi đĩa liên tục trên mobile);
+        /// dữ liệu được ghi khi kết thúc màn qua <see cref="FlushProgress"/>.
+        /// </summary>
+        public void AddTotalKills(int amount)
+        {
+            if (amount <= 0)
+                return;
+
+            EnsureLoaded();
+            data.totalKills += amount;
+        }
+
+        /// <summary>Ghi các thay đổi tích luỹ trong màn xuống đĩa (gọi cuối màn).</summary>
+        public void FlushProgress()
+        {
+            Flush();
+            NotifyChanged();
+        }
+
+        /// <summary>Cập nhật điểm cao nhất nếu vượt kỷ lục cũ.</summary>
+        public void ReportScore(int score)
+        {
+            if (score <= 0)
+                return;
+
+            EnsureLoaded();
+            if (score <= data.bestScore)
+                return;
+
+            data.bestScore = score;
+            Flush();
+            NotifyChanged();
+        }
+
+        public void ReportLevelCleared(int levelNumber)
+        {
+            EnsureLoaded();
+            if (levelNumber <= data.highestLevel)
+                return;
+
+            data.highestLevel = levelNumber;
+            Flush();
+            NotifyChanged();
+        }
+
+        // =====================================================================
+        // TRANG BỊ (Weapon / Booster)
+        // =====================================================================
+        public bool IsItemOwned(string itemId) => Data.HasItem(itemId);
+
+        /// <summary>Mua vật phẩm: trừ tiền rồi ghi nhận sở hữu. Trả false nếu đã có hoặc thiếu tiền.</summary>
+        public bool TryBuyItem(string itemId, CurrencyType currency, int price)
+        {
+            EnsureLoaded();
+
+            if (string.IsNullOrEmpty(itemId))
+                return false;
+
+            if (Data.HasItem(itemId))
+                return false;
+
+            if (!TrySpendCurrency(currency, price))
+                return false;
+
+            data.UnlockItem(itemId);
+            Flush();
+            NotifyChanged();
+            return true;
+        }
+
+        // =====================================================================
+        // KINH NGHIỆM & CẤP TÀI KHOẢN
+        // =====================================================================        public int Experience => Data.experience;
+        public int AccountLevel => Data.accountLevel;
+
+        /// <summary>XP cần để lên cấp tiếp theo (tăng dần theo cấp hiện tại).</summary>
+        public int XpForNextLevel => GetTotalXpForLevel(data.accountLevel + 1) - GetTotalXpForLevel(data.accountLevel);
+
+        /// <summary>XP đã tích luỹ trong cấp hiện tại.</summary>
+        public int XpInCurrentLevel
+        {
+            get
+            {
+                int floor = GetTotalXpForLevel(data.accountLevel);
+                return Mathf.Max(0, data.experience - floor);
+            }
+        }
+
+        /// <summary>Tiến độ 0..1 tới cấp kế tiếp (UI thanh XP).</summary>
+        public float AccountLevelProgress
+        {
+            get
+            {
+                int need = XpForNextLevel;
+                return need > 0 ? Mathf.Clamp01((float)XpInCurrentLevel / need) : 0f;
+            }
+        }
+
+        /// <summary>Trần XP (ứng với Lv.100) để chống file save bị chỉnh và giới hạn vòng lặp.</summary>
+        private const int MaxExperience = 495000;
+
+        /// <summary>Tổng XP cần để đạt một cấp: 100, 250, 450, 700... (100 * n * (n+1) / 2).</summary>
+        private static int GetTotalXpForLevel(int level)
+        {
+            int n = Mathf.Max(0, level - 1);
+            return 100 * n * (n + 1) / 2;
+        }
+
+        /// <summary>Cộng XP và tự nâng cấp khi vượt ngưỡng. Trả về số cấp đã tăng.</summary>
+        public int AddExperience(int amount)
+        {
+            if (amount <= 0)
+                return 0;
+
+            EnsureLoaded();
+
+            int before = data.experience;
+            data.experience = Mathf.Min(MaxExperience, data.experience + amount);
+
+            int gained = 0;
+            while (data.experience >= GetTotalXpForLevel(data.accountLevel + 1))
+            {
+                data.accountLevel++;
+                gained++;
+
+                // Thưởng lên cấp: thêm năng lượng.
+                data.energy = Mathf.Min(data.maxEnergy, data.energy + 3);
+            }
+
+            // Không có gì thay đổi (đã chạm trần) -> bỏ qua Flush để tránh ghi đĩa vô ích.
+            if (gained == 0 && data.experience == before)
+                return 0;
+
+            Flush();
+            NotifyChanged();
+            return gained;
+        }
+    }
+}
