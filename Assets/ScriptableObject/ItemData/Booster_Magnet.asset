@@ -15,7 +15,7 @@ MonoBehaviour:
   itemID: booster_magnet
   itemName: MAGNET
   description: Hut vat pham trong ban kinh rong
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 9278facc796e61b449f32a1e522f6e77, type: 2}
   itemType: 0
   currencyType: 0
   price: 300

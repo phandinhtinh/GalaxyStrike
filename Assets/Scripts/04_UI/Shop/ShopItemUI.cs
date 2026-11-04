@@ -21,6 +21,7 @@ public class ShopItemUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI priceText;
     [SerializeField] private Button buyButton;
+    [SerializeField] private GalaxyStrike.UI.Shop.ShopCardPresentation presentation;
 
     [Header("--- State Colours ---")]
     [SerializeField] private Color affordableColor = new Color(0.15f, 0.85f, 0.35f, 1f);
@@ -62,6 +63,7 @@ public class ShopItemUI : MonoBehaviour
 
         if (iconImage != null) iconImage.sprite = data.shipSprite;
         if (nameText != null) nameText.text = string.IsNullOrEmpty(data.shipName) ? $"SHIP {index + 1}" : data.shipName;
+        if (presentation != null) presentation.Configure(data, index);
 
         if (buyButton != null)
         {
@@ -84,6 +86,7 @@ public class ShopItemUI : MonoBehaviour
 
         if (iconImage != null) iconImage.sprite = data.itemIcon;
         if (nameText != null) nameText.text = data.itemName;
+        if (presentation != null) presentation.Configure(data);
 
         if (buyButton != null)
         {
@@ -123,8 +126,9 @@ public class ShopItemUI : MonoBehaviour
         // phải gộp vào cùng một chuỗi, không tách 2 lần ghi đè.
         if (owned)
         {
-            SetButtonText(selected ? "ĐANG DÙNG" : "CHỌN");
-            SetPriceColor(ownedColor);
+            SetButtonText(presentation != null ? (selected ? "EQUIPPED" : "SELECT") : (selected ? "ĐANG DÙNG" : "CHỌN"));
+            if (presentation != null) presentation.ShowCurrency(false);
+            SetPriceColor(presentation != null ? new Color32(7, 23, 48, 255) : ownedColor);
             buyButton.interactable = !selected;
             return;
         }
@@ -133,8 +137,9 @@ public class ShopItemUI : MonoBehaviour
         bool affordable = HasEnough(shipData.currencyType, price);
         string currency = shipData.currencyType == CurrencyType.Gem ? "GEM" : "COIN";
 
-        SetButtonText($"MUA {price:N0} {currency}");
-        SetPriceColor(affordable ? affordableColor : unaffordableColor);
+        SetButtonText(presentation != null ? $"{price:N0}" : $"MUA {price:N0} {currency}");
+        if (presentation != null) presentation.ShowCurrency(true);
+        SetPriceColor(presentation != null ? new Color32(37, 23, 0, 255) : (affordable ? affordableColor : unaffordableColor));
         buyButton.interactable = affordable;
     }
 
@@ -145,8 +150,9 @@ public class ShopItemUI : MonoBehaviour
         // Đã mua rồi: khoá nút, hiện "ĐÃ SỞ HỮU" (trang bị tự áp dụng trong trận).
         if (save.IsItemOwned(itemData.itemID))
         {
-            SetButtonText("ĐÃ SỞ HỮU");
-            SetPriceColor(ownedColor);
+            SetButtonText(presentation != null ? "OWNED" : "ĐÃ SỞ HỮU");
+            if (presentation != null) presentation.ShowCurrency(false);
+            SetPriceColor(presentation != null ? new Color32(7, 23, 48, 255) : ownedColor);
             buyButton.interactable = false;
             return;
         }
@@ -155,8 +161,9 @@ public class ShopItemUI : MonoBehaviour
         bool affordable = HasEnough(itemData.currencyType, price);
         string currency = itemData.currencyType == CurrencyType.Gem ? "GEM" : "COIN";
 
-        SetButtonText($"MUA {price:N0} {currency}");
-        SetPriceColor(affordable ? affordableColor : unaffordableColor);
+        SetButtonText(presentation != null ? $"{price:N0}" : $"MUA {price:N0} {currency}");
+        if (presentation != null) presentation.ShowCurrency(true);
+        SetPriceColor(presentation != null ? new Color32(37, 23, 0, 255) : (affordable ? affordableColor : unaffordableColor));
         buyButton.interactable = affordable;
     }
 

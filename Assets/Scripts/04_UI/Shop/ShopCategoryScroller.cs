@@ -27,6 +27,8 @@ namespace GalaxyStrike.UI.Shop
 
         [Tooltip("Khoảng đệm phía trên điểm đến để Header không sát mép")]
         [SerializeField] private float topPadding = 8f;
+        [SerializeField] private bool filterSections;
+        private int selectedCategory;
 
         [Header("--- Category Buttons ---")]
         [SerializeField] private Button shipsButton;
@@ -75,11 +77,38 @@ namespace GalaxyStrike.UI.Shop
             if (scrollRect != null)
                 scrollRect.content = content;
 
-            Register(shipsButton, () => ScrollTo(shipsTarget));
-            Register(weaponsButton, () => ScrollTo(weaponsTarget));
-            Register(itemsButton, () => ScrollTo(itemsTarget));
-            Register(gemsButton, () => ScrollTo(gemsTarget));
-            Register(coinsButton, () => ScrollTo(coinsTarget));
+            Register(shipsButton, () => SelectCategory(0));
+            Register(weaponsButton, () => SelectCategory(1));
+            Register(itemsButton, () => SelectCategory(2));
+            Register(gemsButton, () => SelectCategory(3));
+            Register(coinsButton, () => SelectCategory(4));
+            if (filterSections) SelectCategory(selectedCategory);
+        }
+
+        public void SelectCategory(int category)
+        {
+            selectedCategory = Mathf.Clamp(category, 0, 4);
+            RectTransform[] targets = { shipsTarget, weaponsTarget, itemsTarget, gemsTarget, coinsTarget };
+            Button[] buttons = { shipsButton, weaponsButton, itemsButton, gemsButton, coinsButton };
+            if (!filterSections) { ScrollTo(targets[selectedCategory]); return; }
+            if (scrollRoutine != null) { StopCoroutine(scrollRoutine); scrollRoutine = null; }
+            for (int i=0; i<targets.Length; i++)
+            {
+                if (targets[i] != null)
+                {
+                    targets[i].gameObject.SetActive(i == selectedCategory);
+                    int gridIndex = targets[i].GetSiblingIndex() + 1;
+                    if (gridIndex < content.childCount) content.GetChild(gridIndex).gameObject.SetActive(i == selectedCategory);
+                }
+                if (buttons[i] != null)
+                {
+                    Transform selected = buttons[i].transform.Find("Selected_Glow");
+                    if (selected != null) selected.gameObject.SetActive(i == selectedCategory);
+                }
+            }
+            Canvas.ForceUpdateCanvases();
+            if (content != null) LayoutRebuilder.ForceRebuildLayoutImmediate(content);
+            if (scrollRect != null) { scrollRect.StopMovement(); scrollRect.verticalNormalizedPosition = 1f; }
         }
 
         /// <summary>Gán lại điểm đến sau khi Shop dựng lại section (gọi lại từ ShopManager).</summary>
@@ -95,6 +124,7 @@ namespace GalaxyStrike.UI.Shop
             itemsTarget = itemsDest;
             gemsTarget = gemsDest;
             coinsTarget = coinsDest;
+            if (filterSections) SelectCategory(selectedCategory);
         }
 
         private void Awake()

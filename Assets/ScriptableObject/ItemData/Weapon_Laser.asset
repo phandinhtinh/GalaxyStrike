@@ -15,7 +15,7 @@ MonoBehaviour:
   itemID: weapon_laser
   itemName: LASER GUN
   description: Tia laser xuyen thau, sat thuong cao
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: f681441a670926c45a25c5e884fcc263, type: 2}
   itemType: 1
   currencyType: 0
   price: 500

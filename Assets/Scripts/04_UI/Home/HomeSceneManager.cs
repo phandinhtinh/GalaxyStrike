@@ -332,8 +332,11 @@ namespace GalaxyStrike.UI.Home
             if (challengeBtn) challengeBtn.transform.localScale = (currentMode == GameMode.Challenge) ? new Vector3(1.1f, 1.1f, 1f) : Vector3.one;
         }
 
-        private void OnTabSelected(string tabName)
+        public void OnTabSelected(string tabName)
         {
+            // Home actions are a sibling of the panels; transparent shop UI must hide them explicitly.
+            if (playBtn != null && playBtn.transform.parent != null)
+                playBtn.transform.parent.gameObject.SetActive(tabName == "Home");
             if (centerPanel) centerPanel.SetActive(false);
             if (shopPanel) shopPanel.SetActive(false);
             if (upgradePanel) upgradePanel.SetActive(false);

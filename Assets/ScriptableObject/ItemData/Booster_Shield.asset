@@ -15,7 +15,7 @@ MonoBehaviour:
   itemID: booster_shield
   itemName: ENERGY SHIELD
   description: Mien nhiem sat thuong 5 giay
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: db1b554037242e64da7b1e547dce0975, type: 2}
   itemType: 0
   currencyType: 1
   price: 25

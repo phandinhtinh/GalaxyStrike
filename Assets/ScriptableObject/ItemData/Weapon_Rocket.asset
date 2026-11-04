@@ -15,7 +15,7 @@ MonoBehaviour:
   itemID: weapon_rocket
   itemName: HOMING ROCKET
   description: Ten lua tu tim muc tieu
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 8f83896b6dabb0c41bdafe63894c70b6, type: 2}
   itemType: 1
   currencyType: 0
   price: 900

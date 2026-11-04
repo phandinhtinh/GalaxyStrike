@@ -14,15 +14,31 @@ namespace GalaxyStrike.UI.Shop
     public sealed class IapPackCardUI : MonoBehaviour
     {
         private IapProductDefinition definition;
-        private TextMeshProUGUI priceText;
-        private Button buyButton;
-        private Image iconImage;
+        [SerializeField] private TextMeshProUGUI priceText;
+        [SerializeField] private Button buyButton;
+        [SerializeField] private Image iconImage;
+        [SerializeField] private TextMeshProUGUI packAmount;
+        [SerializeField] private TextMeshProUGUI packName;
+        [SerializeField] private TextMeshProUGUI packBadge;
         private bool subscribed;
         private IapPurchaseService subscribedService;
 
         /// <summary>Dựng thẻ và gán gói cần hiển thị.</summary>
-        public static IapPackCardUI Create(IapProductDefinition definition, Color accent)
+        public static IapPackCardUI Create(IapProductDefinition definition, Color accent, IapPackCardUI template = null)
         {
+            if (template != null)
+            {
+                IapPackCardUI result = Instantiate(template);
+                result.definition = definition;
+                result.name = "IapPack_" + definition.productId;
+                if (result.iconImage) result.iconImage.sprite = definition.icon;
+                if (result.packAmount) result.packAmount.text = definition.rewardAmount.ToString("N0");
+                if (result.packName) result.packName.text = definition.displayName;
+                if (result.packBadge) result.packBadge.text = string.IsNullOrEmpty(definition.badge) ? "SUPPLY PACK" : definition.badge;
+                if (result.buyButton) result.buyButton.onClick.AddListener(result.OnClickBuy);
+                result.Refresh();
+                return result;
+            }
             var root = new GameObject($"IapPack_{definition.productId}", typeof(RectTransform));
             var rect = root.GetComponent<RectTransform>();
             rect.sizeDelta = new Vector2(200f, 280f);
@@ -162,6 +178,7 @@ namespace GalaxyStrike.UI.Shop
         /// <summary>Cập nhật giá bản địa hoá; gọi lại khi Store khởi tạo xong.</summary>
         public void Refresh()
         {
+            if (definition == null) return;
             IapPurchaseService service = IapPurchaseService.Instance;
 
             if (service == null)
@@ -175,7 +192,9 @@ namespace GalaxyStrike.UI.Shop
             bool ready = service.IsReady;
 
             if (priceText != null)
-                priceText.text = !string.IsNullOrEmpty(localized) ? localized : (ready ? "MUA" : "...");
+                priceText.text = !string.IsNullOrEmpty(localized) ? localized
+                    : !IapPurchaseService.IsPurchasingPackageInstalled ? (Application.isEditor ? "PREVIEW" : "UNAVAILABLE")
+                    : (ready ? "BUY" : "CONNECTING");
 
             if (buyButton != null)
                 buyButton.interactable = ready || Application.isEditor;

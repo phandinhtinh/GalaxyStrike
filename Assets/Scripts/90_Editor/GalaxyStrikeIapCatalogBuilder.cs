@@ -37,9 +37,9 @@ public static class GalaxyStrikeIapCatalogBuilder
         catalog.removeAdsProductId = $"{prefix}.remove_ads";
         catalog.legendaryShipProductId = $"{prefix}.legendary_ship";
 
-        const string folder = "Assets/ScriptableObject/IAP";
+        const string folder = "Assets/Resources/Config";
         if (!UnityEditor.AssetDatabase.IsValidFolder(folder))
-            UnityEditor.AssetDatabase.CreateFolder("Assets/ScriptableObject", "IAP");
+            UnityEditor.AssetDatabase.CreateFolder("Assets/Resources", "Config");
 
         const string path = folder + "/IapCatalog.asset";
         UnityEditor.AssetDatabase.CreateAsset(asset, path);

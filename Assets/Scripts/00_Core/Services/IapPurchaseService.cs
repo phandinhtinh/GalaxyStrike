@@ -62,7 +62,7 @@ namespace GalaxyStrike.IAP
         }
 
         [Header("--- Catalog ---")]
-        [Tooltip("Asset chứa danh sách gói (Assets/ScriptableObject/IAP/IapCatalog.asset). Để trống sẽ dùng catalog nhập tay bên dưới.")]
+        [Tooltip("Asset chứa danh sách gói. Bootstrap tự nạp Resources/Config/IapCatalog khi không được gán trong Inspector.")]
         [SerializeField] private IapCatalogAsset catalogAsset;
         [SerializeField] private IapCatalog catalog = new IapCatalog();
 
@@ -159,6 +159,8 @@ namespace GalaxyStrike.IAP
             }
 
             instance = this;
+            if (catalogAsset == null)
+                catalogAsset = Resources.Load<IapCatalogAsset>("Config/IapCatalog");
             DontDestroyOnLoad(gameObject);
         }
 

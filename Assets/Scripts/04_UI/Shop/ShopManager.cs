@@ -14,6 +14,8 @@ namespace GalaxyStrike.UI
     {
         [Header("--- Prefabs ---")]
         [SerializeField] private ShopItemUI itemCardPrefab;
+        [SerializeField] private IapPackCardUI packCardPrefab;
+        [SerializeField] private bool wideLayout;
 
         [Header("--- Grid Containers ---")]
         [SerializeField] private Transform shipGrid;
@@ -233,7 +235,12 @@ namespace GalaxyStrike.UI
                 gridLayout = grid.gameObject.AddComponent<GridLayoutGroup>();
 
             gridLayout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-            gridLayout.constraintCount = 3;
+            gridLayout.constraintCount = wideLayout ? 2 : 3;
+            if (wideLayout)
+            {
+                gridLayout.cellSize = new Vector2(474f, 340f);
+                gridLayout.spacing = new Vector2(24f, 24f);
+            }
         }
 
         /// <summary>Cập nhật lại chiều cao grid theo số hàng thẻ thực tế.</summary>
@@ -429,8 +436,11 @@ namespace GalaxyStrike.UI
             if (shipDataArray == null || shipGrid == null || itemCardPrefab == null)
                 return;
 
-            for (int i = 0; i < shipDataArray.Length; i++)
+            // Display the four featured fighters first, preserving the original save indices.
+            int[] order = wideLayout && shipDataArray.Length == 8 ? new[] { 1, 2, 3, 4, 0, 5, 6, 7 } : null;
+            for (int slot = 0; slot < shipDataArray.Length; slot++)
             {
+                int i = order != null ? order[slot] : slot;
                 ShipDataSO shipSO = shipDataArray[i];
                 if (shipSO == null)
                     continue;
@@ -513,9 +523,9 @@ namespace GalaxyStrike.UI
 
             var gridLayout = gridObj.AddComponent<GridLayoutGroup>();
             gridLayout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-            gridLayout.constraintCount = 3;
-            gridLayout.cellSize = new Vector2(200f, 280f);
-            gridLayout.spacing = new Vector2(15f, 20f);
+            gridLayout.constraintCount = wideLayout ? 2 : 3;
+            gridLayout.cellSize = wideLayout ? new Vector2(474f, 340f) : new Vector2(200f, 280f);
+            gridLayout.spacing = wideLayout ? new Vector2(24f, 24f) : new Vector2(15f, 20f);
 
             var fitter = gridObj.AddComponent<ContentSizeFitter>();
             fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
@@ -534,7 +544,7 @@ namespace GalaxyStrike.UI
                 if (pack == null || string.IsNullOrEmpty(pack.productId))
                     continue;
 
-                IapPackCardUI card = IapPackCardUI.Create(pack, accent);
+                IapPackCardUI card = IapPackCardUI.Create(pack, accent, wideLayout ? packCardPrefab : null);
                 card.transform.SetParent(gridObj.transform, false);
                 card.transform.localScale = Vector3.one;
                 iapCards.Add(card);
