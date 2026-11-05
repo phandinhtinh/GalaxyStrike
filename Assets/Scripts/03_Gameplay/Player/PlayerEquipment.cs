@@ -64,6 +64,7 @@ public class PlayerEquipment : MonoBehaviour
 
     private void Awake()
     {
+        // Bộ lọc va chạm cho phép dò cả collider trigger (dùng cho nam châm hút vật phẩm).
         pickupContactFilter = new ContactFilter2D
         {
             useLayerMask = false,
@@ -76,6 +77,11 @@ public class PlayerEquipment : MonoBehaviour
             originalColor = spriteRenderer.color;
     }
 
+    /// <summary>
+    /// Đọc save để biết người chơi đã mua trang bị nào rồi BẬT cờ tương ứng.
+    /// Nếu có Energy Shield thì kích hoạt bất tử ngay đầu màn.
+    /// Đã mua Rocket mà quên gán prefab thì cảnh báo và tắt rocket để không lỗi.
+    /// </summary>
     private void Start()
     {
         SaveManager save = SaveManager.Instance;
@@ -101,6 +107,11 @@ public class PlayerEquipment : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Mỗi frame cập nhật 3 trang bị có yếu tố thời gian: Shield (đếm ngược),
+    /// Rocket (bắn theo nhịp), Magnet (hút vật phẩm quanh player).
+    /// Laser không cần update vì chỉ nhân sát thương lúc bắn.
+    /// </summary>
     private void Update()
     {
         float dt = Time.deltaTime;
@@ -125,6 +136,11 @@ public class PlayerEquipment : MonoBehaviour
     // =====================================================================
     // HOMING ROCKET
     // =====================================================================
+
+    /// <summary>
+    /// Cứ mỗi rocketInterval giây (nếu đã mua Rocket) thì tạo 1 tên lửa phía trên tàu
+    /// và gán sát thương; tên lửa tự bay tìm mục tiêu qua HomingProjectile.
+    /// </summary>
     private void UpdateRocket(float dt)
     {
         if (!hasRocket || rocketPrefab == null || Time.timeScale <= 0f)
@@ -148,6 +164,13 @@ public class PlayerEquipment : MonoBehaviour
     // =====================================================================
     // PICKUP MAGNET
     // =====================================================================
+
+    /// <summary>
+    /// Quét các collider trong bán kính quanh player (không cấp phát bộ nhớ):
+    /// - Có Magnet: hút CẢ power-up lẫn coin với bán kính lớn.
+    /// - Không có Magnet: chỉ coin bị hút với bán kính nhỏ mặc định.
+    /// Vật phẩm bị hút do PlayerEquipment kéo về player mỗi frame.
+    /// </summary>
     private void UpdatePickupMagnet(float dt)
     {
         float radius = hasMagnet ? magnetRadius : coinMagnetRadius;
@@ -191,6 +214,11 @@ public class PlayerEquipment : MonoBehaviour
     // =====================================================================
     // ENERGY SHIELD
     // =====================================================================
+
+    /// <summary>
+    /// Đếm ngược thời gian khiên: tô màu xanh nhấp nháy cho tàu để biết đang được bảo vệ,
+    /// hết thời gian thì trả lại màu gốc.
+    /// </summary>
     private void UpdateShield(float dt)
     {
         if (shieldTimer <= 0f)

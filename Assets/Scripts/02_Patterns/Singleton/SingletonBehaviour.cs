@@ -35,11 +35,17 @@ public abstract class SingletonBehaviour<T> : MonoBehaviour where T : SingletonB
         }
     }
 
+    /// <summary>True nếu singleton đã có instance (dùng để kiểm tra trước khi gọi Instance).</summary>
     public static bool HasInstance => _instance != null;
 
     /// <summary>Bật để singleton sống qua các Scene (mặc định: bật cho service).</summary>
     protected virtual bool PersistAcrossScenes => true;
 
+    /// <summary>
+    /// Đăng ký instance, tự huỷ bản trùng, giữ object qua Scene (nếu PersistAcrossScenes)
+    /// rồi gọi hook OnSingletonAwake cho lớp con. Lớp con KHÔNG cần override Awake,
+    /// chỉ cần override OnSingletonAwake.
+    /// </summary>
     protected virtual void Awake()
     {
         if (_instance != null && _instance != this)
@@ -57,6 +63,10 @@ public abstract class SingletonBehaviour<T> : MonoBehaviour where T : SingletonB
         OnSingletonAwake();
     }
 
+    /// <summary>
+    /// Khi object bị hủy: nếu đây vẫn là instance hiện hành thì xóa tham chiếu
+    /// và gọi hook OnSingletonDestroyed cho lớp con.
+    /// </summary>
     protected virtual void OnDestroy()
     {
         if (_instance == this)
@@ -66,6 +76,10 @@ public abstract class SingletonBehaviour<T> : MonoBehaviour where T : SingletonB
         }
     }
 
+    /// <summary>
+    /// Unity gọi khi thoát Play Mode: bật cờ _isQuitting để Instance không
+    /// cố tìm/tạo object trong lúc Editor đang đóng (tránh cảnh báo/leak).
+    /// </summary>
     private void OnApplicationQuit()
     {
         // Tránh tự tạo lại instance trong lúc Unity đang đóng.

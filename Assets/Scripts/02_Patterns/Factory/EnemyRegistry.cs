@@ -20,6 +20,11 @@ public sealed class EnemyRegistry
     /// <summary>Số loại đã đăng ký được (có prefab khác null).</summary>
     public int Count => byKind.Count;
 
+    /// <summary>
+    /// Đăng ký prefab cho một loại quái.
+    /// Truyền prefab null sẽ GỠ ĐĂNG KÝ loại đó; đồng thời lưu bảng tra ngược
+    /// (prefab -> kind) để có thể hỏi "prefab này là quái loại gì".
+    /// </summary>
     public void Register(EnemyKind kind, GameObject prefab)
     {
         if (prefab == null)
@@ -40,6 +45,9 @@ public sealed class EnemyRegistry
         return byKind.TryGetValue(kind, out GameObject prefab) ? prefab : null;
     }
 
+    /// <summary>
+    /// Lấy prefab theo loại dạng try-get. Trả false nếu chưa đăng ký hoặc prefab đã bị xoá.
+    /// </summary>
     public bool TryGet(EnemyKind kind, out GameObject prefab)
     {
         return byKind.TryGetValue(kind, out prefab) && prefab != null;
@@ -75,6 +83,9 @@ public sealed class EnemyRegistry
         return loaded;
     }
 
+    /// <summary>
+    /// Xóa toàn bộ đăng ký (cả bảng thuận và bảng ngược).
+    /// </summary>
     public void Clear()
     {
         byKind.Clear();

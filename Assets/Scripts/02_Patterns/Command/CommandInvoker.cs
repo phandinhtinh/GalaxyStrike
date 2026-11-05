@@ -12,6 +12,10 @@ public sealed class CommandInvoker
     private readonly Queue<ICommand> pending = new Queue<ICommand>(16);
     private readonly List<ICommand> history = new List<ICommand>(64);
 
+    /// <summary>
+    /// Khởi tạo Invoker với giới hạn số command lưu trong lịch sử.
+    /// Giá trị âm được kẹp về 0 (0 = không ghi lịch sử).
+    /// </summary>
     public CommandInvoker(int historyLimit = 64)
     {
         HistoryLimit = Mathf.Max(0, historyLimit);
@@ -59,11 +63,18 @@ public sealed class CommandInvoker
     /// <summary>Danh sách command đã chạy (bản sao, an toàn để duyệt khi replay).</summary>
     public IReadOnlyList<ICommand> History => history;
 
+    /// <summary>
+    /// Xóa toàn bộ lịch sử command (không ảnh hưởng command đang chờ trong hàng đợi).
+    /// </summary>
     public void ClearHistory()
     {
         history.Clear();
     }
 
+    /// <summary>
+    /// Ghi command vào lịch sử sau khi đã thực thi. Nếu vượt giới hạn
+    /// thì xóa command CŨ NHẤT để bộ nhớ không phình trên mobile.
+    /// </summary>
     private void Remember(ICommand command)
     {
         if (HistoryLimit == 0)

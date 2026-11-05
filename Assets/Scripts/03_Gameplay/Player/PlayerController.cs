@@ -57,12 +57,17 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        // Singleton để các script khác (UI, pickup...) truy cập player.
         Instance = this;
         spriteRenderer = GetComponent<SpriteRenderer>();
         currentHealth = maxHealth;
         equipment = GetComponent<PlayerEquipment>();
     }
 
+    /// <summary>
+    /// Đầu màn: nạp dữ liệu tàu đang chọn (sprite + chỉ số + nâng cấp vĩnh viễn),
+    /// reset số tia đạn về 1 cho mỗi màn, và vẽ thanh máu trên HUD.
+    /// </summary>
     private void Start()
     {
         // 1. Đọc và nạp dữ liệu Máy bay đã chọn từ HomeScene
@@ -79,6 +84,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Áp dữ liệu của tàu đang chọn (từ SaveManager) lên player:
+    /// đổi sprite, lấy chỉ số gốc của tàu, rồi cộng nâng cấp vĩnh viễn
+    /// (HP / tốc độ bắn / tốc độ di chuyển / sát thương) qua ShipUpgradeCatalog.
+    /// </summary>
     private void LoadSelectedShipData()
     {
         // Chi so goc cua tau (dung de tinh diem nang cap).
@@ -123,6 +133,10 @@ public class PlayerController : MonoBehaviour
     /// <summary>Sat thuong hien tai cua 1 vien dan (da gom nang cap Damage).</summary>
     public int PlayerDamage => Mathf.Max(1, playerDamage);
 
+    /// <summary>
+    /// Vòng lặp chính mỗi frame: bỏ qua hoàn toàn khi game đang pause (timeScale = 0),
+    /// ngược lại xử lý di chuyển rồi bắn tự động.
+    /// </summary>
     private void Update()
     {
         // Nếu Game đang Pause (mở Settings), dừng toàn bộ cập nhật di chuyển và bắn
@@ -133,6 +147,11 @@ public class PlayerController : MonoBehaviour
     }
 
     // Prevent a drag from starting on a UI control.
+
+    /// <summary>
+    /// Kiểm tra điểm chạm có đang nằm lên một control UI tương tác (Button/Toggle/Slider...)
+    /// hay không. True thì bỏ qua việc kéo tàu, nên bấm nút UI không làm tàu giật.
+    /// </summary>
     private bool IsPointerOverInteractiveUI(Vector2 screenPosition)
     {
         if (EventSystem.current == null) return false;
@@ -155,6 +174,10 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Xử lý di chuyển theo ưu tiên: có cảm ứng thì dùng cảm ứng; không có thì dùng
+    /// chuột (editor) để kéo tàu; cuối cùng hỗ trợ bàn phím (WASD/mũi tên) để test.
+    /// </summary>
     private void HandleMovement()
     {
         if (Input.touchCount > 0)
@@ -191,6 +214,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Theo dõi ngón tay: ngón đầu tiên chạm (không chạm UI) thì bắt đầu kéo tàu,
+    /// các frame sau di chuyển tàu theo ngón đó, nhấc tay thì kết thúc kéo.
+    /// </summary>
     private void HandleTouchMovement()
     {
         bool activeTouchFound = false;
@@ -221,6 +248,10 @@ public class PlayerController : MonoBehaviour
             EndDrag();
     }
 
+    /// <summary>
+    /// Bắt đầu kéo tàu: bỏ qua nếu chạm phải UI; nếu hợp lệ thì nhớ ngón đang dùng
+    /// và lưu độ lệch giữa tàu và ngón để kéo tàu theo tương đối (không nhảy về ngón).
+    /// </summary>
     private bool TryBeginDrag(Vector2 screenPosition, int touchId)
     {
         if (IsPointerOverInteractiveUI(screenPosition))
@@ -233,12 +264,19 @@ public class PlayerController : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// Di chuyển tàu theo vị trí ngón tay hiện tại (cộng độ lệch lúc bắt đầu kéo),
+    /// sau đó kẹp trong vùng chơi.
+    /// </summary>
     private void MoveDraggedPointer(Vector2 screenPosition)
     {
         Vector3 target = ScreenPointerToShipPosition(screenPosition) + dragOffsetWorld;
         transform.position = ClampToPlayArea(target);
     }
 
+    /// <summary>
+    /// Kết thúc kéo: tắt trạng thái kéo và nhả ngón đang điều khiển.
+    /// </summary>
     private void EndDrag()
     {
         isDragging = false;
@@ -255,6 +293,10 @@ public class PlayerController : MonoBehaviour
         return world;
     }
 
+    /// <summary>
+    /// Đổi toạ độ màn hình (pixel) thành toạ độ world trên mặt phẳng z = 0,
+    /// dùng cho việc kéo thả tàu.
+    /// </summary>
     private Vector3 ScreenPositionToWorldPosition(Vector2 screenPosition)
     {
         Camera cam = Camera.main;
@@ -302,6 +344,10 @@ public class PlayerController : MonoBehaviour
         return ScreenPointerToShipPosition(screenPosition);
     }
 
+    /// <summary>
+    /// Bắn tự động: đếm thời gian, cứ đủ fireRate giây thì gọi FireBullets một lần
+    /// (không cần người chơi bấm nút bắn).
+    /// </summary>
     private void HandleShooting() 
     {
         // Đạn tự động phun liên tục theo thời gian
@@ -316,6 +362,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Bắn một loạt theo cấp đạn (bulletLevel):
+    /// - Cấp 1: 1 tia thẳng.
+    /// - Cấp 2+: nhiều tia dàn đều ngang theo bulletSpacing.
+    /// - Cấp 3+: thêm góc toả hình quạt để đạn xoè hình quạt.
+    /// Sau đó phát âm thanh bắn.
+    /// </summary>
     private void FireBullets()
     {
         if (bulletPrefab == null || firePoint == null)
@@ -359,6 +412,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Lấy 1 viên đạn từ BulletPool tại vị trí/hướng cho trước, gán sát thương
+    /// (nâng cấp vĩnh viễn × trang bị) và bật xuyên thấu nếu đang dùng Laser.
+    /// </summary>
     private void SpawnBullet(Vector3 position, Quaternion rotation)
     {
         // PATTERN: Object Pool — tái sử dụng đạn thay vì Instantiate/Destroy mỗi phát.
@@ -416,6 +473,11 @@ public class PlayerController : MonoBehaviour
 
     private float invulnerableUntil;
 
+    /// <summary>
+    /// Nhận sát thương: bỏ qua nếu đang bất tử; trừ máu, cập nhật thanh HP trên HUD.
+    /// Nếu máu về 0 thì hiện Game Over, báo GameManager và huỷ tàu;
+    /// ngược lại bắt đầu 1.5 giây bất tử (nhấp nháy) để tránh mất máu liên tục.
+    /// </summary>
     public void TakeDamage(int damage = 1)
     {
         // Shield / bất tử tạm thời -> không nhận sát thương.
@@ -449,6 +511,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Coroutine nhấp nháy sprite (alpha 0.25) trong thời gian invulnerabilityDuration,
+    /// biểu thị tàu đang bất tử tạm thời; kết thúc thì bật lại hitbox.
+    /// </summary>
     private IEnumerator InvulnerabilityRoutine()
     {
         isInvulnerable = true;
@@ -478,6 +544,11 @@ public class PlayerController : MonoBehaviour
         isInvulnerable = false;
     }
 
+    /// <summary>
+    /// Unity gọi khi va chạm trigger với quái hoặc đạn quái:
+    /// - Đang Shield/bất tử: chỉ xoá viên đạn, không mất máu.
+    /// - Bình thường: mất 1 máu và xoá viên đạn (đạn quái thì trả về pool).
+    /// </summary>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy") || collision.CompareTag("EnemyBullet"))

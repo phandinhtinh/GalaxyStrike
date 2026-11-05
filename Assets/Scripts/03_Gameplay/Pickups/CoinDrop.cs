@@ -17,11 +17,18 @@ public sealed class CoinDrop : MonoBehaviour
     private Transform attractionTarget;
     private float attractionSpeed;
 
+    /// <summary>
+    /// Ghi lại vị trí X lúc sinh ra, để hiệu ứng lắc ngang dao động quanh cột gốc.
+    /// </summary>
     private void Start()
     {
         spawnX = transform.position.x;
     }
 
+    /// <summary>
+    /// Mỗi frame: đang bị hút thì bay về player, không thì trôi xuống theo cột
+    /// + lắc ngang nhẹ, đồng thời xoay tròn. Rơi quá đáy thì tự huỷ.
+    /// </summary>
     private void Update()
     {
         if (!isActive)
@@ -56,6 +63,10 @@ public sealed class CoinDrop : MonoBehaviour
             Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Cho đồng xu bay về phía <paramref name="target"/> (player) với tốc độ
+    /// <paramref name="pullSpeed"/> — dùng cho trang bị Magnet / hút mặc định.
+    /// </summary>
     public void SetBeingAttracted(Transform target, float pullSpeed)
     {
         attractionTarget = target;
@@ -63,6 +74,10 @@ public sealed class CoinDrop : MonoBehaviour
         isBeingAttracted = target != null;
     }
 
+    /// <summary>
+    /// Va chạm player: tắt xu, phát âm nhặt coin. Coin THẬT đã được cộng lúc quái chết,
+    /// nên ở đây chỉ xoá object hiển thị.
+    /// </summary>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!isActive || !collision.CompareTag("Player"))

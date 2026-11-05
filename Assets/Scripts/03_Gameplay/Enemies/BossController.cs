@@ -36,11 +36,13 @@ public class BossController : MonoBehaviour
 
     private void Awake()
     {
+        // Cache Enemy và SpriteRenderer để Update không phải GetComponent mỗi frame.
         enemy = GetComponent<Enemy>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)
             originalColor = spriteRenderer.color;
 
+        // Đặt trạng thái ban đầu: chưa vào màn, chưa bay (movement chưa init).
         entryTimer = 0f;
         entryStartY = transform.position.y;
         currentEntryTargetY = entryTargetY;
@@ -48,6 +50,11 @@ public class BossController : MonoBehaviour
         movementInitialized = false;
     }
 
+    /// <summary>
+    /// Bắt đầu pha "chui xuống": ghi vị trí xuất phát (spawnPosition.y), tính đích
+    /// an toàn trong khung hình và reset bộ đếm/phase để Boss vào màn từ đầu.
+    /// Được Enemy.Initialize gọi khi tạo Boss.
+    /// </summary>
     public void BeginEntry(Vector3 spawnPosition)
     {
         entryStartY = spawnPosition.y;
@@ -58,6 +65,12 @@ public class BossController : MonoBehaviour
         currentPhase = 0;
     }
 
+    /// <summary>
+    /// Vòng lặp Boss chia 2 pha:
+    /// 1) ENTRY: trượt từ trên xuống độ cao chiến đấu (dùng easing smoothstep).
+    /// 2) FIGHT: dao động ngang/dọc quanh vị trí gốc, càng mất máu càng nhanh/to hơn
+    ///    (theo phase), đồng thời đổi màu sprite + tốc độ bắn qua ApplyPhase.
+    /// </summary>
     private void Update()
     {
         if (enemy == null || enemy.IsDead || Time.timeScale <= 0f)
@@ -111,6 +124,10 @@ public class BossController : MonoBehaviour
         transform.localPosition = baseLocalPosition + offset;
     }
 
+    /// <summary>
+    /// Xác định phase (1..3) dựa trên tỉ lệ máu còn lại:
+    /// càng ít máu thì phase càng cao (Boss càng hung hăng).
+    /// </summary>
     private int GetPhase(float healthRatio)
     {
         if (healthRatio <= phase3Threshold)
@@ -120,6 +137,10 @@ public class BossController : MonoBehaviour
         return 1;
     }
 
+    /// <summary>
+    /// Tính độ cao đích khi vào màn, đảm bảo Boss không trôi quá thấp:
+    /// nếu là camera orthographic thì lấy cao hơn mức y của "làn trên" màn hình.
+    /// </summary>
     private float GetSafeEntryTargetY()
     {
         float targetY = entryTargetY;
@@ -133,6 +154,11 @@ public class BossController : MonoBehaviour
         return targetY;
     }
 
+    /// <summary>
+    /// Áp hiệu ứng khi đổi phase: tăng tốc độ bắn (SetFireRateMultiplier),
+    /// báo Enemy dùng combo đạn của phase đó (SetBossPhase) và đổi màu sprite
+    /// (tím hồng ở phase 2, đỏ ở phase 3) để người chơi dễ nhận biết.
+    /// </summary>
     private void ApplyPhase(int phase)
     {
         if (enemy != null)

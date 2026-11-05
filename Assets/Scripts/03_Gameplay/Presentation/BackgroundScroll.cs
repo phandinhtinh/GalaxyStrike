@@ -26,6 +26,10 @@ public class BackgroundScroll : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Mỗi frame: cuộn nền xuống dưới; khi tấm nền đã trượt qua đáy thì "dịch" nó lên
+    /// đúng 2 lần chiều cao để nối vòng liền mạch (seamless loop) mà không hở mép.
+    /// </summary>
     private void Update()
     {
         // Trôi xuống theo scrollSpeed

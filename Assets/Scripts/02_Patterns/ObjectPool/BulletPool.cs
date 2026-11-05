@@ -61,15 +61,29 @@ public sealed class BulletPool : MonoBehaviour
 
     private sealed class PrefabPool
     {
+        /// <summary>Prefab gốc dùng để Instantiate thêm object cho pool này.</summary>
         public GameObject prefab;
+
+        /// <summary>Ngăn xếp các object đang rảnh, sẵn sàng được tái sử dụng.</summary>
         public readonly Stack<GameObject> idle = new Stack<GameObject>(32);
+
+        /// <summary>Tổng số object đã tạo cho prefab này (đã tạo - chưa huỷ).</summary>
         public int totalCreated;
     }
 
+    /// <summary>Danh sách pool theo từng prefab (mỗi prefab có một stack object rảnh riêng).</summary>
     private readonly Dictionary<GameObject, PrefabPool> pools = new Dictionary<GameObject, PrefabPool>(8);
+
+    /// <summary>Object cha chứa mọi object trong pool, để Hierarchy gọn và dễ Disable khi cần.</summary>
     private Transform poolRoot;
+
+    /// <summary>Tổng số object đang tồn tại trong TẤT CẢ các pool (để chặn trần cứng).</summary>
     private int totalObjects;
 
+    /// <summary>
+    /// Khởi tạo Singleton của pool và tạo object cha "Pooled" để chứa các object được tái sử dụng.
+    /// Bản trùng lặp (mỗi Scene có thể có 1 pool) bị huỷ component.
+    /// </summary>
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -84,6 +98,9 @@ public sealed class BulletPool : MonoBehaviour
         poolRoot.SetParent(transform, false);
     }
 
+    /// <summary>
+    /// Đăng ký sự kiện sceneUnloaded để dọn dữ liệu pool khi chuyển Scene.
+    /// </summary>
     private void Start()
     {
         // Object trong pool gắn với Scene tạo ra pool. Khi pool là object được đặt tay trong
@@ -91,6 +108,10 @@ public sealed class BulletPool : MonoBehaviour
         SceneManager.sceneUnloaded += HandleSceneUnloaded;
     }
 
+    /// <summary>
+    /// Callback khi một Scene bị gỡ: xoá các prefab key đã "chết" (Unity đã huỷ object)
+    /// khỏi từ điển, tránh giữ tham chiếu null làm rác bộ nhớ.
+    /// </summary>
     private void HandleSceneUnloaded(Scene scene)
     {
         // Xoá bản ghi prefab nếu prefab gốc thuộc Scene vừa unload (tránh giữ key null).
@@ -108,6 +129,9 @@ public sealed class BulletPool : MonoBehaviour
             pools.Remove(deadKeys[i]);
     }
 
+    /// <summary>
+    /// Dọn Singleton + huỷ đăng ký sự kiện sceneUnloaded khi pool bị huỷ.
+    /// </summary>
     private void OnDestroy()
     {
         if (instance == this)
@@ -191,6 +215,12 @@ public sealed class BulletPool : MonoBehaviour
     // =====================================================================
     // NỘI BỘ
     // =====================================================================
+
+    /// <summary>
+    /// Lấy pool của prefab; chưa có thì tạo mới và nạp sẵn (prewarm) vài object rảnh.
+    /// Đạn của quái (EnemyBullet) được giữ lượng dự trữ nhỏ hơn để tiết kiệm bộ nhớ
+    /// vì có nhiều biến thể đạn khác nhau, sau đó tự tăng khi cần.
+    /// </summary>
     private PrefabPool GetOrCreatePool(GameObject prefab)
     {
         // A large arsenal needs a small initial reserve per hostile variant.
@@ -209,6 +239,10 @@ public sealed class BulletPool : MonoBehaviour
         return pool;
     }
 
+    /// <summary>
+    /// Tạo thêm tối đa <paramref name="amount"/> object cho pool (đang tắt sẵn),
+    /// dừng lại nếu chạm trần mỗi prefab hoặc trần tổng.
+    /// </summary>
     private void Grow(PrefabPool pool, int amount)
     {
         for (int i = 0; i < amount; i++)

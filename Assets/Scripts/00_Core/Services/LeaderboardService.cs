@@ -39,6 +39,10 @@ namespace GalaxyStrike.Leaderboard
     {
         private static LeaderboardService instance;
 
+        /// <summary>
+        /// Singleton "lazy": lấy instance đang có, tìm trong Scene, hoặc tự tạo mới,
+        /// để UI Leaderboard ở bất kỳ Scene nào cũng truy cập được dịch vụ này.
+        /// </summary>
         public static LeaderboardService Instance
         {
             get
@@ -81,9 +85,16 @@ namespace GalaxyStrike.Leaderboard
             false;
 #endif
 
+        /// <summary>True khi đã đăng nhập Google Play Games và có thể dùng bảng online.</summary>
         public bool IsSignedIn => isSignedIn;
+
+        /// <summary>Cho phép truy cập cấu hình (Leaderboard ID, số dòng tối đa...) từ bên ngoài.</summary>
         public PlayGamesConfig Config => config;
 
+        /// <summary>
+        /// Singleton + giữ object qua các Scene. Bản trùng (nếu Scene khác cũng có)
+        /// thì tự hủy để chỉ còn 1 dịch vụ duy nhất.
+        /// </summary>
         private void Awake()
         {
             if (instance != null && instance != this)
@@ -96,17 +107,27 @@ namespace GalaxyStrike.Leaderboard
             DontDestroyOnLoad(gameObject);
         }
 
+        /// <summary>
+        /// Tự kích hoạt Play Games khi service xuất hiện.
+        /// </summary>
         private void Start()
         {
             InitializePlayGames();
         }
 
+        /// <summary>
+        /// Xóa tham chiếu static khi object bị hủy (để Instance được tạo lại sạch).
+        /// </summary>
         private void OnDestroy()
         {
             if (instance == this)
                 instance = null;
         }
 
+        /// <summary>
+        /// Xóa tham chiếu static khi vào Play Mode (gọi từ GameBootstrap),
+        /// tránh giữ object của phiên chạy trước.
+        /// </summary>
         public static void ResetStaticInstance()
         {
             instance = null;
@@ -115,6 +136,12 @@ namespace GalaxyStrike.Leaderboard
         // =====================================================================
         // KHỞI TẠO
         // =====================================================================
+
+        /// <summary>
+        /// Kích hoạt Play Games và (nếu bật autoSignIn) tự đăng nhập.
+        /// Chưa cài plugin hoặc chưa điền ID thì chuyển sang chế độ OFFLINE,
+        /// game vẫn chạy bình thường. Chống gọi trùng nhờ cờ isInitializing.
+        /// </summary>
         public void InitializePlayGames()
         {
             if (isInitializing)
@@ -148,6 +175,11 @@ namespace GalaxyStrike.Leaderboard
         // =====================================================================
         // ĐĂNG NHẬP
         // =====================================================================
+
+        /// <summary>
+        /// Đăng nhập Google Play Games (bất đồng bộ — kết quả về trong callback).
+        /// Sau khi xong sẽ cập nhật isSignedIn và phát OnSignInChanged cho UI.
+        /// </summary>
         public void SignIn()
         {
 #if !GOOGLE_PLAY_GAMES
@@ -171,6 +203,9 @@ namespace GalaxyStrike.Leaderboard
 #endif
         }
 
+        /// <summary>
+        /// Đăng xuất khỏi Play Games, đặt isSignedIn = false và thông báo cho UI.
+        /// </summary>
         public void SignOut()
         {
 #if GOOGLE_PLAY_GAMES
@@ -181,6 +216,10 @@ namespace GalaxyStrike.Leaderboard
             OnSignInChanged?.Invoke(false);
         }
 
+        /// <summary>
+        /// Lấy tên hiển thị: ưu tiên tên tài khoản Google (khi đã đăng nhập),
+        /// lỗi hoặc offline thì dùng tên lưu trong save (mặc định "You").
+        /// </summary>
         public string GetPlayerName()
         {
 #if GOOGLE_PLAY_GAMES
@@ -211,6 +250,10 @@ namespace GalaxyStrike.Leaderboard
             Submit(type, GetLocalScore(type));
         }
 
+        /// <summary>
+        /// Gửi điểm lên một bảng cụ thể (HighScore / HighestLevel / TotalKills).
+        /// Bỏ qua nếu điểm ≤ 0, chưa đăng nhập, hoặc thiếu Leaderboard ID.
+        /// </summary>
         public void Submit(LeaderboardType type, long score)
         {
             if (score <= 0)

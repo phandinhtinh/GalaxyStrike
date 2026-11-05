@@ -17,6 +17,7 @@ public static class PlayerCommands
         private readonly PlayerController _player;
         private readonly Vector3 _worldPosition;
 
+        /// <summary>Nhận player đích và vị trí world cần di chuyển tới (được "đóng gói" vào command).</summary>
         public MoveToWorldPosition(PlayerController player, Vector3 worldPosition)
         {
             _player = player;
@@ -25,6 +26,10 @@ public static class PlayerCommands
 
         public override string Name => "MoveToWorldPosition";
 
+        /// <summary>
+        /// Thực thi: bảo player đi tới vị trí đã lưu.
+        /// Kiểm tra null để command cũ không gọi vào player đã bị hủy.
+        /// </summary>
         public override void Execute()
         {
             if (_player != null)
@@ -39,6 +44,7 @@ public static class PlayerCommands
         private readonly Vector2 _axis;
         private readonly float _deltaTime;
 
+        /// <summary>Nhận player đích, hướng di chuyển (axis) và deltaTime của frame ghi command.</summary>
         public MoveByAxis(PlayerController player, Vector2 axis, float deltaTime)
         {
             _player = player;
@@ -48,6 +54,10 @@ public static class PlayerCommands
 
         public override string Name => "MoveByAxis";
 
+        /// <summary>
+        /// Thực thi: cho player dịch chuyển theo hướng và deltaTime đã lưu
+        /// (kết quả giống hệt lúc ghi command, hỗ trợ replay).
+        /// </summary>
         public override void Execute()
         {
             if (_player != null)

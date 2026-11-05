@@ -25,6 +25,10 @@ public class HomingProjectile : MonoBehaviour
         AcquireTarget();
     }
 
+    /// <summary>
+    /// Mỗi frame: tự huỷ khi hết lifetime; nếu mất mục tiêu thì thử tìm lại mỗi 0.25s
+    /// (tránh scan mỗi frame); có mục tiêu thì bẻ lái dần về phía nó rồi bay tới.
+    /// </summary>
     private void Update()
     {
         float dt = Time.deltaTime;
@@ -58,6 +62,10 @@ public class HomingProjectile : MonoBehaviour
         transform.position += transform.up * (speed * dt);
     }
 
+    /// <summary>
+    /// Tìm quái (Enemy) gần tên lửa nhất còn sống trong bán kính targetSearchRadius
+    /// và gán làm mục tiêu. Không tìm thấy thì để trống (Update sẽ thử lại sau).
+    /// </summary>
     private void AcquireTarget()
     {
         // Chỉ gọi khi mất mục tiêu (target chết hoặc chưa có), không chạy mỗi frame.
@@ -81,6 +89,9 @@ public class HomingProjectile : MonoBehaviour
         currentTarget = best;
     }
 
+    /// <summary>
+    /// Va chạm quái: gây sát thương rồi tự huỷ tên lửa (tên lửa không xuyên thấu).
+    /// </summary>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Enemy"))

@@ -32,6 +32,10 @@ public static class EnemyFactory
                              "Kiểm tra prefab có trong Assets/Resources/Prefabs.");
     }
 
+    /// <summary>
+    /// Xóa toàn bộ registry và đặt lại cờ để lần gọi EnsureRegistry tiếp theo
+    /// sẽ nạp lại từ Resources (dùng cho test hoặc khi đổi bộ prefab).
+    /// </summary>
     public static void ResetRegistry()
     {
         Registry.Clear();
@@ -60,6 +64,9 @@ public static class EnemyFactory
         return enemy;
     }
 
+    /// <summary>
+    /// Overload tiện dụng: tạo quái với rotation mặc định (không xoay).
+    /// </summary>
     public static Enemy Create(GameObject prefab, Vector3 position)
     {
         return Create(prefab, position, Quaternion.identity);

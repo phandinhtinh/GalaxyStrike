@@ -30,6 +30,11 @@ public class GameManager : MonoBehaviour
 
     private bool isLevelWon = false;
 
+    /// <summary>
+    /// Singleton của bộ điều khiển game trong GameScene.
+    /// Awake đảm bảo chỉ có một GameManager; nếu đã tồn tại thì object mới tự hủy.
+    /// Đồng thời tự gắn HUD_Panel nếu Scene thiếu.
+    /// </summary>
     private void Awake()
     {
         if (Instance == null)
@@ -49,6 +54,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Chạy đầu mỗi màn: bỏ dừng thời gian, nạp lại điểm từ PlayerPrefs,
+    /// lấy số Coin thật từ SaveManager rồi cập nhật HUD.
+    /// </summary>
     private void Start()
     {
         Time.timeScale = 1f;
@@ -62,6 +71,12 @@ public class GameManager : MonoBehaviour
     }
 
     // --- KHỞI TẠO MÀN CHƠI & THANH HP TỔNG ---
+
+    /// <summary>
+    /// Khởi tạo dữ liệu đầu màn: tổng HP, tổng số quái, reset quái đã hạ,
+    /// đẩy thanh HP tổng lên HUD và làm mới text điểm.
+    /// Tham số null/0 được kẹp tối thiểu là 1 để tránh chia cho 0.
+    /// </summary>
     public void InitializeLevel(int totalHP, int totalEnemies)
     {
         totalStageHP = Mathf.Max(1, totalHP);
@@ -79,6 +94,11 @@ public class GameManager : MonoBehaviour
     }
 
     // Trừ máu khi quái bị bắn trúng
+
+    /// <summary>
+    /// Trừ HP tổng của màn khi một con quái bị bắn trúng (không âm dưới 0)
+    /// và đồng bộ lại thanh HP trên HUD. Bỏ qua nếu màn đã thắng.
+    /// </summary>
     public void OnEnemyDamaged(int damage)
     {
         if (isLevelWon) return;
@@ -92,12 +112,20 @@ public class GameManager : MonoBehaviour
     }
 
     // --- QUẢN LÝ ĐIỂM, COIN & QUÁI ---
+
+    /// <summary>
+    /// Cộng thêm điểm trong màn hiện tại rồi refresh text điểm trên HUD.
+    /// </summary>
     public void AddScore(int amount)
     {
         score += amount;
         UpdateUI();
     }
 
+    /// <summary>
+    /// Cộng Coin vào biến local VÀ ghi ngay vào SaveManager (ghi bền ngay lập tức),
+    /// sau đó cập nhật HUD.
+    /// </summary>
     public void AddCoins(int amount)
     {
         coins += amount;
@@ -108,6 +136,11 @@ public class GameManager : MonoBehaviour
         UpdateUI();
     }
 
+    /// <summary>
+    /// Gọi mỗi khi hạ được 1 quái: tăng bộ đếm màn, cộng 1 vào tổng kills tích luỹ,
+    /// cập nhật HUD và kích hoạt thắng màn nếu đã hạ đủ số quái.
+    /// Tham số <paramref name="enemy"/> giữ lại để tương thích với chỗ gọi cũ.
+    /// </summary>
     public void AddEnemyDefeated(Enemy enemy = null)
     {
         if (isLevelWon) return;
@@ -125,18 +158,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Ghi đè tổng số quái của màn (thường do LevelManager/Spawner truyền vào)
+    /// và cập nhật lại text tiến độ trên HUD.
+    /// </summary>
     public void SetTotalEnemiesInLevel(int total)
     {
         totalEnemiesInLevel = total;
         UpdateUI();
     }
 
+    /// <summary>
+    /// Kiểm tra màn đã hoàn thành chưa: đã thắng hoặc đã hạ đủ số quái yêu cầu.
+    /// </summary>
     public bool IsLevelCompleted()
     {
         return isLevelWon || enemiesDefeated >= totalEnemiesInLevel;
     }
 
     // --- KẾT THÚC LEVEL VÀ HIỂN THỊ VICTORY PANEL ---
+
+    /// <summary>
+    /// Chốt thắng màn (chỉ chạy 1 lần nhờ cờ isLevelWon):
+    /// set HP tổng về 0, lưu điểm, ghi mốc level đã qua, cấp thưởng,
+    /// phát âm thắng rồi mở Victory Panel.
+    /// </summary>
     public void OnLevelCleared()
     {
         if (isLevelWon) return;
@@ -205,6 +251,10 @@ public class GameManager : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Cập nhật text điểm / coin / tiến độ quái trên HUD.
+    /// Bỏ qua field nào chưa được gán trong Inspector.
+    /// </summary>
     private void UpdateUI()
     {
         if (scoreText != null) scoreText.text = "SCORE: " + score;
@@ -213,11 +263,19 @@ public class GameManager : MonoBehaviour
     }
 
     // --- TRẠNG THÁI GAME & CHUYỂN GIAO DIỆN QUA PANELMANAGER ---
+
+    /// <summary>
+    /// Tạm dừng game bằng cách đặt Time.timeScale = 0 (mọi Update/animation theo deltaTime đều đứng).
+    /// </summary>
     public void PauseGame()
     {
         Time.timeScale = 0f;
     }
 
+    /// <summary>
+    /// Chạy lại game sau khi pause: đóng bảng Settings qua PanelManager
+    /// (PanelManager tự set timeScale = 1), nếu không có PanelManager thì tự set.
+    /// </summary>
     public void ResumeGame()
     {
         if (PanelManager.Instance != null)
@@ -230,6 +288,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Mở bảng Settings (thường gọi từ nút bấm); PanelManager sẽ tự pause game.
+    /// </summary>
     public void OpenSettings()
     {
         if (PanelManager.Instance != null)
@@ -238,6 +299,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Xử lý khi người chơi thua: cộng XP theo số quái đã hạ, lưu điểm,
+    /// gửi thành tích lên Leaderboard rồi mở màn hình Game Over.
+    /// </summary>
     public void GameOver()
     {
         // Coin/XP kiếm được trong màn vẫn thuộc về người chơi.
@@ -260,6 +325,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Hiển thị Victory Panel. PanelManager lo việc bật panel/dừng game,
+    /// còn VictoryPanelUI được truyền số level, điểm và phần thưởng của màn vừa qua.
+    /// </summary>
     public void Victory()
     {
         isLevelWon = true;
@@ -286,6 +355,12 @@ public class GameManager : MonoBehaviour
     }
 
     // --- CHUYỂN SCENE & TIẾN TRÌNH LEVEL ---
+
+    /// <summary>
+    /// Sang màn kế tiếp: lưu điểm, xóa cấp đạn (mỗi màn bắt đầu lại từ 1 tia),
+    /// tăng CurrentLevel rồi load lại GameScene. Nếu đã hết chiến dịch hoặc đang
+    /// ở chế độ Challenge thì quay về HomeScene thay vì chơi lại.
+    /// </summary>
     public void NextLevel()
     {
         Time.timeScale = 1f;
@@ -317,6 +392,9 @@ public class GameManager : MonoBehaviour
         LoadingSceneController.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    /// <summary>
+    /// Chơi lại đúng màn hiện tại: lưu điểm rồi load lại Scene đang hoạt động.
+    /// </summary>
     public void Replay()
     {
         Time.timeScale = 1f;
@@ -325,6 +403,9 @@ public class GameManager : MonoBehaviour
         LoadingSceneController.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    /// <summary>
+    /// Thoát về màn hình chính (HomeScene) sau khi đã lưu điểm.
+    /// </summary>
     public void LoadMainMenu()
     {
         Time.timeScale = 1f;

@@ -12,6 +12,11 @@ using UnityEngine;
 /// </summary>
 public class EnemySpawner : MonoBehaviour
 {
+    /// <summary>
+    /// Cấu hình cho MỘT wave: nguồn xuất hiện, đội hình, cơ chế đặc biệt,
+    /// số lượng, tốc độ/nhịp thả, prefab quái, kiểu bắn, giới hạn thời gian và tỉ lệ rơi item.
+    /// Ngoài ra còn các tooltip chi tiết cho từng field bên dưới.
+    /// </summary>
     [System.Serializable]
     public class WaveConfig
     {
@@ -76,9 +81,20 @@ public class EnemySpawner : MonoBehaviour
     private int currentWaveIndex;
     private int spawnedEnemiesInWave;
 
+    /// <summary>Tổng số wave hiện có (lấy từ LevelManager cho màn đang chơi).</summary>
     public int WaveCount => waves.Count;
+
+    /// <summary>Số thứ tự wave đang chạy (1-based, kẹp trong khoảng hợp lệ).</summary>
     public int CurrentWaveNumber => waves.Count == 0 ? 0 : Mathf.Min(currentWaveIndex + 1, waves.Count);
+
+    /// <summary>Đã báo thắng màn chưa.</summary>
     public bool IsStageComplete => isVictoryTriggered;
+
+    /// <summary>
+    /// Tiến độ 0..1 của toàn màn (dùng vẽ thanh tiến độ): số wave đã xong cộng phần
+    /// quái đã bị dọn trong wave hiện tại. Kẹp tối đa 0.995 để chỉ đạt 1 khi
+    /// spawner xác nhận dọn sạch (tránh nhảy về 1 sớm).
+    /// </summary>
     public float StageWaveProgress
     {
         get
@@ -102,18 +118,30 @@ public class EnemySpawner : MonoBehaviour
     private Enemy vLeader;
     private bool vLeaderBroken;
 
+    /// <summary>
+    /// Đăng ký lắng nghe 2 sự kiện tĩnh của Enemy:
+    /// - OnEnemyDied: biết quái đã bị hạ (để trừ bộ đếm và xử lý chữ V).
+    /// - HiveSpawned: tàu mẹ phóng tàu con (Carrier/Hive).
+    /// </summary>
     private void OnEnable()
     {
         Enemy.OnEnemyDied += HandleEnemyDied;
         Enemy.HiveSpawned += HandleHiveSpawn;
     }
 
+    /// <summary>
+    /// Hủy đăng ký sự kiện khi spawner bị tắt/hủy (tránh rò rỉ và callback vào object đã chết).
+    /// </summary>
     private void OnDisable()
     {
         Enemy.OnEnemyDied -= HandleEnemyDied;
         Enemy.HiveSpawned -= HandleHiveSpawn;
     }
 
+    /// <summary>
+    /// Khởi tạo màn: lấy danh sách wave theo LevelManager (nếu có), tính tổng quái,
+    /// đồng bộ tổng HP/số quái sang GameManager rồi bắt đầu vòng lặp wave.
+    /// </summary>
     private void Start()
     {
         isVictoryTriggered = false;
@@ -139,6 +167,9 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(WaveLoopRoutine());
     }
 
+    /// <summary>
+    /// Cộng dồn count của mọi wave (mỗi wave tối thiểu 1 con) để ra tổng quái CẦN HẠ.
+    /// </summary>
     private int CalculateTotalEnemies()
     {
         int sum = 0;
@@ -150,6 +181,12 @@ public class EnemySpawner : MonoBehaviour
     // =====================================================================
     // VÒNG LẶP WAVE
     // =====================================================================
+
+    /// <summary>
+    /// Coroutine duyệt các wave theo thứ tự: spawn wave -> chờ dọn sạch (hoặc hết
+    /// timeLimit) -> dọn quái thừa -> nghỉ delayBetweenWaves -> wave kế tiếp.
+    /// Dừng hẳn khi màn đã thắng hoặc hết wave.
+    /// </summary>
     private IEnumerator WaveLoopRoutine()
     {
         currentWaveIndex = 0;
@@ -192,11 +229,20 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Wave đã dọn sạch chưa: spawner đã thả hết VÀ không còn quái chính nào sống.
+    /// </summary>
     private bool IsWaveCleared() => !isSpawningWave && activeEnemiesInWave <= 0;
 
     // =====================================================================
     // SINH WAVE
     // =====================================================================
+
+    /// <summary>
+    /// Thả toàn bộ quái của một wave: reset bộ đếm, hiện cảnh báo (với Bottom Ambush
+    /// không phải quái khủng), xử lý riêng Pincer Cross, còn lại thả tuần tự
+    /// từng con với khoảng nghỉ ngẫu nhiên ±20% quanh spawnDelay.
+    /// </summary>
     private IEnumerator SpawnWaveRoutine(WaveConfig wave)
     {
         spawnedEnemiesInWave = 0;
@@ -245,6 +291,10 @@ public class EnemySpawner : MonoBehaviour
         isSpawningWave = false;
     }
 
+    /// <summary>
+    /// Thả wave Pincer Cross: chia quái thành 2 nửa, mỗi lần thả 1 con từ trái và
+    /// 1 con từ phải đối xứng, tạo hình chữ X cắt nhau giữa màn.
+    /// </summary>
     private IEnumerator SpawnPincerCrossRoutine(WaveConfig wave, GameObject prefab, int count)
     {
         int perSide = Mathf.Max(1, count / 2);
@@ -329,6 +379,11 @@ public class EnemySpawner : MonoBehaviour
     // =====================================================================
     // VỊ TRÍ XUẤT HIỆN & ĐIỂM NEO
     // =====================================================================
+
+    /// <summary>
+    /// Quái này có phải "mối đe dọa cao" không: Boss hoặc có HP gốc ≥ highThreatHealthThreshold.
+    /// Quái đe dọa cao luôn được bắn, bay làn trên và không phục kích từ đáy.
+    /// </summary>
     private bool IsHighThreatPrefab(GameObject prefab, bool isBoss)
     {
         if (isBoss)
@@ -338,6 +393,13 @@ public class EnemySpawner : MonoBehaviour
         return enemyStats != null && enemyStats.BaseHealth >= highThreatHealthThreshold;
     }
 
+    /// <summary>
+    /// Tính vị trí xuất hiện của từng con theo SpawnOrigin:
+    /// - TopCascade: rơi từ trên đỉnh, dàn đều ngang (hoặc forceTop = chuyển quái khủng về đỉnh).
+    /// - SideFlank: từ 2 mép trái/phải màn hình, độ cao giảm dần theo index.
+    /// - BottomAmbush: từ dưới đáy màn lao lên.
+    /// - WarpIn: hiện ra dần trong vùng gần giữa màn.
+    /// </summary>
     private Vector3 ResolveSpawnPosition(WaveConfig wave, int index, int total, float pincerSide, bool forceTop = false)
     {
         float camHalfWidth = GetCameraHalfWidth();
@@ -437,6 +499,10 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Tính nửa chiều ngang màn hình (đơn vị world) theo camera orthographic,
+    /// để spawner biết quái vào/ra đúng mép. Không có camera thì dùng giá trị 2.8 mặc định.
+    /// </summary>
     private float GetCameraHalfWidth()
     {
         Camera cam = Camera.main;
@@ -447,6 +513,10 @@ public class EnemySpawner : MonoBehaviour
         return cam.orthographicSize * aspect;
     }
 
+    /// <summary>
+    /// Độ cao world ứng với mép DƯỚI màn hình (hơi thấp hơn một chút)
+    /// để quái Bottom Ambush xuất phát ngoài khung hình.
+    /// </summary>
     private float GetBottomSpawnY()
     {
         Camera cam = Camera.main;
@@ -456,6 +526,9 @@ public class EnemySpawner : MonoBehaviour
         return cam.ViewportToWorldPoint(new Vector3(0.5f, -0.06f, Mathf.Abs(cam.transform.position.z))).y;
     }
 
+    /// <summary>
+    /// Tìm Transform của player (tag "Player") để truyền cho quái làm mục tiêu ngắm bắn.
+    /// </summary>
     private Transform ResolvePlayerTarget()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -465,6 +538,12 @@ public class EnemySpawner : MonoBehaviour
     // =====================================================================
     // SỰ KIỆN
     // =====================================================================
+
+    /// <summary>
+    /// Xử lý khi một con quái bị hạ (rời màn hoặc chết): giảm bộ đếm quái trong wave,
+    /// tách biệt quái con (không tính vào tiến trình màn), cho chữ V vỡ nếu leader chết,
+    /// và kích hoạt thắng màn khi đã hạ đủ tổng quái.
+    /// </summary>
     private void HandleEnemyDied(Enemy enemy)
     {
         if (enemy == null)
@@ -540,8 +619,15 @@ public class EnemySpawner : MonoBehaviour
     }
 
     private int hiveMinionsAlive;
+
+    /// <summary>Danh sách quái CON do tàu mẹ phóng ra (đếm riêng, không vào tiến trình màn).</summary>
     private readonly List<Enemy> hiveMinions = new List<Enemy>(16);
 
+    /// <summary>
+    /// Kết thúc một wave khi hết thời gian/chờ dọn sạch: cộng số quái chính còn sống
+    /// vào bộ đếm đã hạ (vì chúng bị huỷ để sang wave mới), huỷ mọi quái còn trên màn
+    /// và reset các bộ đếm của wave. Quái con không được cộng.
+    /// </summary>
     private void ClearRemainingEnemies()
     {
         // Chỉ quái CHÍNH còn sống mới tính vào tiến trình màn.
@@ -567,6 +653,10 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Chờ 1.5 giây (để hiệu ứng cuối chạy xong) rồi báo GameManager màn đã thắng
+    /// để mở Victory Panel.
+    /// </summary>
     private IEnumerator TriggerVictoryRoutine()
     {
         yield return new WaitForSeconds(1.5f);

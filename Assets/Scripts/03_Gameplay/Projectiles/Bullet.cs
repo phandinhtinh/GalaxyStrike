@@ -50,6 +50,7 @@ public class Bullet : MonoBehaviour, IPoolable
         pierceRemaining = Mathf.Max(0, maxTargets);
     }
 
+    /// <summary>Cache Transform để Update không phải truy cập component mỗi frame.</summary>
     private void Awake()
     {
         cachedTransform = transform;
@@ -67,6 +68,10 @@ public class Bullet : MonoBehaviour, IPoolable
         // damage giữ nguyên giá trị người gọi vừa SetDamage cho instance này.
     }
 
+    /// <summary>
+    /// Gọi khi đạn được TRẢ VỀ pool: đánh dấu không còn sống để Update/va chạm
+    /// không xử lý nữa cho tới lần được lấy ra kế tiếp.
+    /// </summary>
     public void OnDespawned()
     {
         isAlive = false;
@@ -77,6 +82,11 @@ public class Bullet : MonoBehaviour, IPoolable
     // =====================================================================
     // UPDATE
     // =====================================================================
+
+    /// <summary>
+    /// Mỗi frame: tăng tuổi đạn, dịch chuyển theo trục Y (kèm X nếu có horizontalSpeed,
+    /// dùng cho đạn xoè quạt), và tự trả về pool khi hết lifetime.
+    /// </summary>
     private void Update()
     {
         float deltaTime = Time.deltaTime;
@@ -95,6 +105,10 @@ public class Bullet : MonoBehaviour, IPoolable
             Recycle();
     }
 
+    /// <summary>
+    /// Va chạm quái (tag "Enemy"): gây sát thương, phát event onHitEnemy (VFX).
+    /// Nếu còn lượt xuyên thấu (Laser) thì bay tiếp, không thì trả đạn về pool.
+    /// </summary>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!isAlive)

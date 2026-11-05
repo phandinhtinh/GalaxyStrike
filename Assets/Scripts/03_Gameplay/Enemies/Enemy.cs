@@ -141,9 +141,11 @@ public class Enemy : MonoBehaviour
     // =====================================================================
     private void Awake()
     {
+        // Lưu HP gốc (dùng tính tỉ lệ máu) và tốc độ bắn gốc (để Boss đổi Phase nhân lại từ đây).
         maxHealth = Mathf.Max(1, health);
         initialFireRate = Mathf.Max(0.1f, fireRate);
 
+        // Cache các component để trong Update không phải GetComponent nhiều lần.
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)
             originalColor = spriteRenderer.color;
@@ -152,12 +154,21 @@ public class Enemy : MonoBehaviour
         bossController = GetComponent<BossController>();
     }
 
+    /// <summary>
+    /// Random thời điểm bắn đầu tiên và pha dao động ban đầu để các con trong cùng
+    /// wave không bắn/dao động giống hệt nhau (tránh nhìn "máy móc").
+    /// </summary>
     private void Start()
     {
         fireTimer = Random.Range(0f, Mathf.Max(0.1f, fireRate));
         phaseOffset = Random.Range(0f, Mathf.PI * 2f);
     }
 
+    /// <summary>
+    /// Vòng lặp chính mỗi frame (thứ tự quan trọng): cộng dồn thời gian sống ->
+    /// cập nhật phasing (warp-in) -> di chuyển theo đội hình -> nghiêng theo vận tốc ->
+    /// xử lý bắn -> cơ chế đặc biệt -> kiểm tra rời màn hình.
+    /// </summary>
     private void Update()
     {
         if (isDead)
@@ -177,6 +188,11 @@ public class Enemy : MonoBehaviour
     // =====================================================================
     // PHASING (Warp-in)
     // =====================================================================
+
+    /// <summary>
+    /// Hiệu ứng Warp-in: giảm dần độ mờ (alpha 0.25 -> 1) trong 1.5 giây,
+    /// trong lúc đó quái KHÔNG có hitbox (không thể bị bắn trúng).
+    /// </summary>
     private void UpdatePhasing(float dt)
     {
         if (!isPhasing)
@@ -205,6 +221,11 @@ public class Enemy : MonoBehaviour
     // =====================================================================
     // QUỸ ĐẠO BAY — điều phối theo FormationType
     // =====================================================================
+
+    /// <summary>
+    /// Chọn hàm bay theo đội hình: quái "trên cao" (quái khủng, không bay xuống)
+    /// dùng FlyUpperLane; còn lại switch theo FormationType (Snake/Wall/V/X/Anchor/Kamikaze/Boss).
+    /// </summary>
     private void UpdateFlight(float dt)
     {
         if (staysInUpperLane && formation != FormationType.Boss)
@@ -458,6 +479,10 @@ public class Enemy : MonoBehaviour
     // =====================================================================
     // CƠ CHẾ ĐẶC BIỆT (NHÓM III)
     // =====================================================================
+
+    /// <summary>
+    /// Xử lý cơ chế đặc biệt theo SpecialSpawnType (hiện chỉ có Carrier/Hive).
+    /// </summary>
     private void UpdateSpecials(float dt)
     {
         if (specialSpawn == SpecialSpawnType.CarrierHive)
@@ -484,6 +509,12 @@ public class Enemy : MonoBehaviour
     // =====================================================================
     // NGHIÊNG THEO VẬN TỐC
     // =====================================================================
+
+    /// <summary>
+    /// Tạo cảm giác "nghiêng khi lượn": tính vận tốc ngang từ chênh lệch vị trí
+    /// giữa 2 frame, rồi xoay sprite quanh trục Z tỉ lệ với vận tốc đó (có giới hạn
+    /// và làm mượt). Boss và trụ pháo đã neo thì không nghiêng.
+    /// </summary>
     private void UpdateBankAngle(float dt)
     {
         if (formation == FormationType.Boss ||
@@ -516,6 +547,12 @@ public class Enemy : MonoBehaviour
     // =====================================================================
     // XẢ ĐẠN
     // =====================================================================
+
+    /// <summary>
+    /// Điều khiển bắn: chưa thể bắn thì bỏ qua; đang trong loạt burst thì bắn từng
+    /// viên theo burstInterval; bình thường đếm fireTimer, hiện tia cảnh báo ngắm
+    /// (aimWarning) trước khi bắn rồi gọi FireVolley đúng nhịp fireRate.
+    /// </summary>
     private void UpdateShooting()
     {
         if (aimWarning != null) aimWarning.enabled = false;
@@ -590,6 +627,10 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Quái có đang nằm trong vùng nhìn của camera không (có tính margin nhỏ).
+    /// Dùng để không bắn và không tính va chạm khi còn ở ngoài màn.
+    /// </summary>
     private bool IsVisibleOnScreen()
     {        Camera cam = Camera.main;
         if (cam == null)
@@ -604,6 +645,10 @@ public class Enemy : MonoBehaviour
                viewport.y >= -margin && viewport.y <= 1f + margin;
     }
 
+    /// <summary>
+    /// Bắn một "loạt" theo pattern hiện tại: Burst/AimedBurst/FanBurst bắn viên đầu
+    /// rồi để UpdateShooting bắn tiếp các viên còn lại; các pattern khác gọi ngay hàm xả tương ứng.
+    /// </summary>
     private void FireVolley()
     {
         firePattern = GetNextVolleyPattern();
@@ -638,6 +683,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Chọn pattern cho loạt đạn kế tiếp. Khó hơn thì luân phiên nhiều pattern hơn:
+    /// - Boss: theo bossPhase (1..3), phase càng cao càng nhiều pattern.
+    /// - Quái thường: dựa trên HP tối đa (quái trâu bắn đa dạng hơn).
+    /// </summary>
     private EnemyFirePattern GetNextVolleyPattern()
     {
         int index = volleyPatternIndex++;
@@ -693,6 +743,11 @@ public class Enemy : MonoBehaviour
         return baseFirePattern;
     }
 
+    /// <summary>
+    /// Chọn hình dạng viên đạn kế tiếp từ bulletVariants (xoay vòng).
+    /// Số loại được dùng tăng theo độ mạnh (Boss Phase / HP tối đa).
+    /// Không có biến thể thì trả về bulletPrefab mặc định.
+    /// </summary>
     private GameObject GetNextBulletVariant()
     {
         if (bulletVariants == null || bulletVariants.Length == 0)
@@ -727,6 +782,9 @@ public class Enemy : MonoBehaviour
         return bulletPrefab;
     }
 
+    /// <summary>
+    /// Đếm số loại đạn KHÁC NHAU trong bulletVariants (bỏ qua phần tử trùng và null).
+    /// </summary>
     private int CountDistinctBulletVariants()
     {
         int count = 0;
@@ -739,6 +797,10 @@ public class Enemy : MonoBehaviour
         return count;
     }
 
+    /// <summary>
+    /// Kiểm tra phần tử thứ <paramref name="index"/> của bulletVariants đã xuất hiện
+    /// ở vị trí trước đó chưa (để chỉ dùng mỗi prefab đạn một lần).
+    /// </summary>
     private bool IsDuplicateBulletVariant(int index, GameObject candidate)
     {
         for (int i = 0; i < index; i++)
@@ -750,6 +812,15 @@ public class Enemy : MonoBehaviour
         return false;
     }
 
+    // =====================================================================
+    // XẢ ĐẠN
+    // =====================================================================
+
+    /// <summary>
+    /// Bắn TỪNG viên trong loạt burst (UpdateShooting gọi lại mỗi burstInterval).
+    /// FanBurst: mỗi viên lệch dần sang hai bên theo spreadAngle (hình quạt).
+    /// Các loại burst khác: bắn theo hướng player (hoặc thẳng xuống).
+    /// </summary>
     private void FireBurstStep()
     {
         if (firePattern == EnemyFirePattern.FanBurst)
@@ -767,6 +838,11 @@ public class Enemy : MonoBehaviour
         burstShotIndex++;
     }
 
+    /// <summary>
+    /// Vector đơn vị chỉ từ quái tới player (đã chuẩn hoá).
+    /// Đang "charge" thì dùng hướng đã chốt trước đó (để tia cảnh báo khớp với đạn thật).
+    /// Không có player thì bắn thẳng xuống.
+    /// </summary>
     private Vector3 GetDirectionToPlayer()
     {
         if (shotCharging) return chargedDirection;
@@ -778,11 +854,18 @@ public class Enemy : MonoBehaviour
         return dir.sqrMagnitude > 0.001f ? dir : Vector3.down;
     }
 
+    /// <summary>
+    /// Bắn đúng 1 viên theo hướng cho trước.
+    /// </summary>
     private void FireSingle(Vector3 direction)
     {
         SpawnBullet(direction);
     }
 
+    /// <summary>
+    /// Bắn hình quạt: chia đều <see cref="spreadCount"/> viên trong góc <see cref="spreadAngle"/>,
+    /// lấy hướng player (hoặc xuống) làm trục giữa.
+    /// </summary>
     private void FireSpread()
     {
         Vector3 baseDir = aimAtPlayer ? GetDirectionToPlayer() : Vector3.down;
@@ -796,6 +879,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Bắn toả tròn 360 độ đều nhau (tối thiểu 6 viên), mỗi loạt xoay lệch theo thời gian
+    /// để không trùng hướng cũ.
+    /// </summary>
     private void FireRadialBloom()
     {
         int count = Mathf.Max(6, radialCount);
@@ -807,6 +894,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Bắn xoắn ốc: mỗi viên tăng thêm <see cref="spiralStep"/> độ so với viên trước,
+    /// tạo vệt xoáy tròn.
+    /// </summary>
     private void FireSpiral()
     {
         spiralAngle += spiralStep;
@@ -814,6 +905,10 @@ public class Enemy : MonoBehaviour
         SpawnBullet(new Vector3(Mathf.Cos(rad), Mathf.Sin(rad), 0f));
     }
 
+    /// <summary>
+    /// Tạo viên đạn thật qua BulletPool (tái sử dụng object) tại họng súng,
+    /// rồi gán hướng bay. twinMuzzles = true thì bắn 2 nòng lệch nhau.
+    /// </summary>
     private void SpawnBullet(Vector3 direction)
     {
         GameObject projectile = GetNextBulletVariant();
@@ -830,6 +925,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Tìm và cache Transform của player (theo tag "Player") để quái ngắm bắn/lao tới.
+    /// Đã có thì không tìm lại (tiết kiệm FindGameObjectWithTag).
+    /// </summary>
     private void ResolvePlayerTarget()
     {
         if (playerTarget != null)
@@ -843,6 +942,12 @@ public class Enemy : MonoBehaviour
     // =====================================================================
     // RỜI MÀN HÌNH
     // =====================================================================
+
+    /// <summary>
+    /// Kiểm tra quái đã bay ra khỏi mép màn (trái/phải/trên/dưới, có biên rộng tay).
+    /// Nếu có thì đánh dấu đã rời, tính vào tiến trình màn rồi tự huỷ.
+    /// Boss và trụ pháo đã neo thì bỏ qua.
+    /// </summary>
     private void CheckScreenExit()
     {
         // Boss và trụ pháo neo lại thì không bao giờ "rời màn".
@@ -879,6 +984,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Xử lý khi quái rời màn (không bị giết): tắt collider, bắn event OnEnemyDied
+    /// và báo GameManager đã "xử lý" xong con này (để tiến độ màn vẫn tăng).
+    /// </summary>
     private void NotifyEscaped()
     {
         if (isDead)
@@ -984,6 +1093,10 @@ public class Enemy : MonoBehaviour
     }
 
     /// <summary>Overload tương thích cũ.</summary>
+    /// <summary>
+    /// Khôi phục lại nhịp bắn/trạng thái về tốc độ gốc của prefab (chỉ 1 tia).
+    /// Dùng khi đổi màn mà không muốn giữ cấp đạn của màn trước.
+    /// </summary>
     public void InitializeEntry(Vector3 targetLocalPos, float speed)
     {
         Initialize(SpawnOrigin.TopCascade, FormationType.Wall, SpecialSpawnType.None,
@@ -993,16 +1106,27 @@ public class Enemy : MonoBehaviour
     // =====================================================================
     // CẤU HÌNH PHỤ (Spawner gọi)
     // =====================================================================
+
+    /// <summary>
+    /// Đặt hướng bay ngang khi Pincer/SideFlank (âm = trái, còn lại = phải).
+    /// </summary>
     public void SetFlankDirection(float direction)
     {
         flankDirection = direction < 0f ? -1f : 1f;
     }
 
+    /// <summary>
+    /// Đặt thời gian lượn vòng trước khi Kamikaze khoá mục tiêu (tối thiểu 0.4s).
+    /// </summary>
     public void SetKamikazeOrbitTime(float seconds)
     {
         kamikazeOrbitTime = Mathf.Max(0.4f, seconds);
     }
 
+    /// <summary>
+    /// Cấu hình kiểu bắn: base pattern (ưu tiên archetype nếu prefab bật cờ),
+    /// số tia quạt (1..9), góc quạt (5..140 độ) và số tia toả tròn (6..24).
+    /// </summary>
     public void SetFirePattern(EnemyFirePattern pattern, int spread = 3, float angle = 35f, int radial = 8)
     {
         baseFirePattern = useArchetypeFirePattern ? archetypeFirePattern : pattern;
@@ -1012,11 +1136,20 @@ public class Enemy : MonoBehaviour
         radialCount = Mathf.Clamp(radial, 6, 24);
     }
 
+    /// <summary>
+    /// Bật/tắt chế độ quái chỉ bay và đánh ở "làn trên" màn hình (không bay xuống).
+    /// Thường dùng cho quái tầm xa / quái khủng.
+    /// </summary>
     public void SetStaysInUpperLane(bool stays)
     {
         staysInUpperLane = stays;
     }
 
+    /// <summary>
+    /// Quyết định quái có được bắn hay không cho wave này:
+    /// - Quái "nguy hiểm cao" (isHighThreat) luôn bắn và luôn ngắm player.
+    /// - Quái thường chỉ bắn theo xác suất regularEnemyFireChance (giảm tải đạn trên mobile).
+    /// </summary>
     public void ConfigureFormationShooting(bool isHighThreat, float regularEnemyFireChance)
     {
         if (isHighThreat)
@@ -1031,16 +1164,26 @@ public class Enemy : MonoBehaviour
         aimAtPlayer = isHighThreat || preferAimedShots;
     }
 
+    /// <summary>
+    /// Đặt giai đoạn Boss (1..3) — quyết định GetNextVolleyPattern dùng combo đạn nào.
+    /// </summary>
     public void SetBossPhase(int phase)
     {
         bossPhase = Mathf.Clamp(phase, 1, 3);
     }
 
+    /// <summary>
+    /// Đặt tỉ lệ rơi item tăng đạn (0..1) cho quái này.
+    /// </summary>
     public void SetDropChance(float chance)
     {
         bulletUpgradeDropChance = Mathf.Clamp01(chance);
     }
 
+    /// <summary>
+    /// Đổi tốc độ bắn theo hệ số: multiplier &gt; 1 = bắn nhanh hơn, &lt; 1 = chậm hơn.
+    /// Luôn tính từ tốc độ gốc (initialFireRate) nên gọi nhiều lần không bị cộng dồn.
+    /// </summary>
     public void SetFireRateMultiplier(float multiplier)
     {
         float safeMultiplier = Mathf.Max(0.1f, multiplier);
@@ -1057,6 +1200,12 @@ public class Enemy : MonoBehaviour
     // =====================================================================
     // SÁT THƯƠNG / CHẾT
     // =====================================================================
+
+    /// <summary>
+    /// Bị đạn của player bắn trúng: trừ HP, trừ HP tổng của màn (GameManager),
+    /// rồi chết nếu HP ≤ 0, ngược lại nháy đỏ để báo trúng đạn.
+    /// Bỏ qua khi đã chết, damage ≤ 0 hoặc đang phasing (warp-in chưa có hitbox).
+    /// </summary>
     public void TakeDamage(int damage)
     {
         if (isDead || damage <= 0 || isPhasing)
@@ -1079,6 +1228,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Hiệu ứng nháy đỏ khi trúng đạn: đổi màu sprite sang đỏ 0.08 giây rồi trả lại
+    /// màu gốc (nếu quái chưa chết).
+    /// </summary>
     private IEnumerator DamageFlashRoutine()
     {
         if (spriteRenderer != null)
@@ -1090,6 +1243,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Quái chết vì bị hạ: tắt collider, nếu là loại Splitting thì tách thành nhiều
+    /// quái con, rơi power-up/đồng xu, phát âm nổ, cộng điểm/coin/tiến độ qua GameManager,
+    /// rồi tự huỷ object.
+    /// </summary>
     private void Die()
     {
         if (isDead)
@@ -1135,6 +1293,10 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Tạo hiệu ứng đồng xu bay ra tại vị trí quái chết (nạp prefab Coin từ Resources).
+    /// Chỉ để hiển thị; Coin thật đã được cộng qua GameManager.AddCoins.
+    /// </summary>
     private void DropCoinVisual()
     {
         GameObject coinPrefab = Resources.Load<GameObject>("Prefabs/Coin");
@@ -1142,6 +1304,12 @@ public class Enemy : MonoBehaviour
             Instantiate(coinPrefab, transform.position, Quaternion.identity);
     }
 
+    /// <summary>
+    /// Xác suất rơi item tăng đạn (gắn thêm power-up khi quái chết):
+    /// - Boss: tối thiểu 60% (thưởng phải đáng giá).
+    /// - Quái thường: xác suất cơ bản tăng theo độ trâu bệnh, nhưng chặn trần 15%.
+    /// Nếu trúng xác suất thì tạo prefab power-up tại vị trí quái.
+    /// </summary>
     private void TryDropPowerUp()
     {
         bool isBoss = enemyName.Contains("Boss");

@@ -46,6 +46,10 @@ namespace GalaxyStrike.IAP
     {
         private static IapPurchaseService instance;
 
+        /// <summary>
+        /// Singleton "lazy": lấy instance đang có, tìm trong Scene, hoặc tự tạo mới.
+        /// Nhờ vậy UI Shop có thể gọi IAP từ bất kỳ Scene nào mà không cần gắn tay.
+        /// </summary>
         public static IapPurchaseService Instance
         {
             get
@@ -104,6 +108,10 @@ namespace GalaxyStrike.IAP
             false;
 #endif
 
+        /// <summary>
+        /// Danh mục sản phẩm để mua. Ưu tiên ScriptableObject (cấu hình trong Inspector);
+        /// nếu không có thì dùng list mặc định trên component.
+        /// </summary>
         public IapCatalog Catalog
         {
             get
@@ -121,6 +129,10 @@ namespace GalaxyStrike.IAP
             instance = null;
         }
 
+        /// <summary>
+        /// Kiểm tra có controller của Store hay không (chỉ đúng khi đã cài package IAP
+        /// và khởi tạo thành công). Dùng nội bộ cho thuộc tính IsReady.
+        /// </summary>
         private bool HasStoreController
         {
             get
@@ -159,16 +171,23 @@ namespace GalaxyStrike.IAP
             }
 
             instance = this;
+            // Không gán tay thì tự nạp danh mục gói mua từ Resources.
             if (catalogAsset == null)
                 catalogAsset = Resources.Load<IapCatalogAsset>("Config/IapCatalog");
             DontDestroyOnLoad(gameObject);
         }
 
+        /// <summary>
+        /// Tự khởi động Unity IAP ngay khi service xuất hiện trong Scene.
+        /// </summary>
         private void Start()
         {
             Initialize();
         }
 
+        /// <summary>
+        /// Xóa tham chiếu static khi object bị hủy, để lần sau Instance tạo lại sạch.
+        /// </summary>
         private void OnDestroy()
         {
             if (instance == this)
@@ -178,6 +197,12 @@ namespace GalaxyStrike.IAP
         // =====================================================================
         // KHỞI TẠO STORE
         // =====================================================================
+
+        /// <summary>
+        /// Khởi tạo Unity Purchasing: đăng ký toàn bộ gói trong catalog với Store rồi
+        /// gọi UnityPurchasing.Initialize. Nếu chưa cài package IAP thì chuyển sang
+        /// chế độ mô phỏng. Chống gọi 2 lần bằng cờ isInitialized/isInitializing.
+        /// </summary>
         public void Initialize()
         {
             if (isInitialized || isInitializing)
@@ -226,6 +251,11 @@ namespace GalaxyStrike.IAP
         }
 
 #if GALAXYSTRIKE_IAP_READY
+        /// <summary>
+        /// Đăng ký một mảng gói sản phẩm vào ConfigurationBuilder.
+        /// Bỏ qua phần tử null hoặc thiếu productId; trả về số sản phẩm đã thêm
+        /// và ghi ID vào danh sách registeredProductIds để tra giá sau này.
+        /// </summary>
         private int RegisterProducts(ConfigurationBuilder builder, IapProductDefinition[] source, ProductType type)
         {
             if (source == null)
@@ -249,6 +279,11 @@ namespace GalaxyStrike.IAP
         // =====================================================================
         // CALLBACK KHỞI TẠO
         // =====================================================================
+
+        /// <summary>
+        /// Callback của Unity IAP khi khởi tạo THÀNH CÔNG: giữ controller/extensions,
+        /// cache các Product (để lấy giá bản địa hoá), rồi báo UI qua OnStoreReady.
+        /// </summary>
         public void OnInitialized(IStoreController storeController, IExtensionProvider storeExtensions)
         {
             controller = storeController;
@@ -269,11 +304,19 @@ namespace GalaxyStrike.IAP
             OnStoreReady?.Invoke();
         }
 
+        /// <summary>
+        /// Callback khi khởi tạo THẤT BẠI (không kèm message).
+        /// Chỉ chuyển tiếp sang overload có message để log chung một chỗ.
+        /// </summary>
         public void OnInitializeFailed(InitializationFailureReason error)
         {
             OnInitializeFailed(error, string.Empty);
         }
 
+        /// <summary>
+        /// Callback khởi tạo thất bại có message chi tiết: reset trạng thái về "chưa sẵn sàng"
+        /// và log cảnh báo.
+        /// </summary>
         public void OnInitializeFailed(InitializationFailureReason error, string message)
         {
             isInitializing = false;
@@ -284,6 +327,12 @@ namespace GalaxyStrike.IAP
         // =====================================================================
         // MUA HÀNG
         // =====================================================================
+
+        /// <summary>
+        /// Điểm vào để mua một gói. Nếu Store chưa sẵn sàng thì chạy chế độ mô phỏng;
+        /// nếu sản phẩm không có/không mua được thì báo lỗi; ngược lại gọi InitiatePurchase.
+        /// Kết quả trả về qua event OnPurchaseFinished.
+        /// </summary>
         public void Purchase(string productId)
         {
             if (string.IsNullOrEmpty(productId))
@@ -309,6 +358,11 @@ namespace GalaxyStrike.IAP
             controller.InitiatePurchase(product);
         }
 
+        /// <summary>
+        /// Callback của Store khi một giao dịch MUA THÀNH CÔNG:
+        /// tra gói trong catalog, cộng thưởng vào save, phát event, rồi trả Complete
+        /// để Google Play/App Store xác nhận đã giao hàng (tránh trừ tiền mà không có hàng).
+        /// </summary>
         public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args)
         {
             Product product = args.purchasedProduct;
@@ -331,6 +385,10 @@ namespace GalaxyStrike.IAP
             return PurchaseProcessingResult.Complete;
         }
 
+        /// <summary>
+        /// Callback mua thất bại (API cũ, chỉ có reason): đóng gói thành
+        /// PurchaseFailureDescription rồi gọi overload mới để xử lý chung.
+        /// </summary>
         public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
         {
             OnPurchaseFailed(product, new PurchaseFailureDescription(
@@ -339,6 +397,10 @@ namespace GalaxyStrike.IAP
                 failureReason.ToString()));
         }
 
+        /// <summary>
+        /// Callback mua thất bại: log lý do và báo UI qua OnPurchaseFinished(success = false).
+        /// Không cộng thưởng trong trường hợp này.
+        /// </summary>
         public void OnPurchaseFailed(Product product, PurchaseFailureDescription failureDescription)
         {
             string productId = failureDescription != null ? failureDescription.productId : null;
@@ -358,6 +420,12 @@ namespace GalaxyStrike.IAP
         // =====================================================================
         // MÔ PHỎNG (khi chưa có Store thật)
         // =====================================================================
+
+        /// <summary>
+        /// "Mua giả" khi chưa có Store (Editor/CI): chỉ log và báo lỗi cho UI,
+        /// KHÔNG cộng Coin/Gem thật. Nếu đã tắt allowSimulationOutsideStore thì
+        /// trả về thông báo "cửa hàng chưa sẵn sàng".
+        /// </summary>
         private void SimulatePurchase(string productId)
         {
             if (!allowSimulationOutsideStore)
@@ -377,6 +445,11 @@ namespace GalaxyStrike.IAP
         // =====================================================================
         // CẤP THƯỞNG
         // =====================================================================
+
+        /// <summary>
+        /// Cộng phần thưởng của gói vừa mua vào save (Coin / Gem / Energy)
+        /// thông qua SaveManager, tuỳ theo rewardType của gói.
+        /// </summary>
         private static void GrantReward(IapProductDefinition definition)
         {
             var save = GalaxyStrike.Save.SaveManager.Instance;
@@ -402,12 +475,18 @@ namespace GalaxyStrike.IAP
             }
         }
 
+        /// <summary>
+        /// Log cảnh báo lỗi mua và phát event thất bại cho UI (success = false).
+        /// </summary>
         private void NotifyFailure(string productId, string message)
         {
             Debug.LogWarning($"[IAP] {message} ({productId})");
             OnPurchaseFinished?.Invoke(productId, false, message);
         }
 
+        /// <summary>
+        /// Log có tiền tố [IAP], bị bỏ qua khi verboseLogging đang tắt.
+        /// </summary>
         private void Log(string message)
         {
             if (!verboseLogging)

@@ -12,6 +12,11 @@ using GalaxyStrike.Leaderboard;
 [DefaultExecutionOrder(-200)]
 public static class GameBootstrap
 {
+    /// <summary>
+    /// Được Unity tự gọi lại mỗi khi bật Play Mode (trước khi tạo object nào).
+    /// Mục đích: xóa các biến static (Instance) còn sót của phiên chạy trước,
+    /// tránh Singleton trỏ tới object "đã chết" khi tắt Domain Reload.
+    /// </summary>
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetStatics()
     {
@@ -21,6 +26,11 @@ public static class GameBootstrap
         LeaderboardService.ResetStaticInstance();
     }
 
+    /// <summary>
+    /// Unity tự gọi một lần trước khi Scene đầu tiên được load.
+    /// Tại đây "chạm" vào Instance của 3 service để chúng tự tạo DontDestroyOnLoad,
+    /// nhờ vậy mọi Scene đều có sẵn SaveManager / IAP / Leaderboard.
+    /// </summary>
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Initialize()
     {

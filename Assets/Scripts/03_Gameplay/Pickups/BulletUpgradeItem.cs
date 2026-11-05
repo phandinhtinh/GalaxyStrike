@@ -31,11 +31,18 @@ public class BulletUpgradeItem : MonoBehaviour
         isBeingAttracted = attracted;
     }
 
+    /// <summary>
+    /// Ghi lại vị trí X lúc sinh ra để vật phẩm đung đưa quanh cột gốc.
+    /// </summary>
     private void Start()
     {
         spawnX = transform.position.x;
     }
 
+    /// <summary>
+    /// Mỗi frame: trôi xuống, đung đưa ngang, tự xoay; ra khỏi đáy màn thì tự huỷ.
+    /// Đang bị hút (Magnet) thì bỏ qua vì PlayerEquipment đang điều khiển vị trí.
+    /// </summary>
     private void Update()
     {
         if (!isActive || isBeingAttracted)
@@ -59,6 +66,10 @@ public class BulletUpgradeItem : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Va chạm player: tăng số tia đạn cho tàu (+1, có giới hạn), phát âm thanh
+    /// (dùng pickupSFX riêng, không có thì dùng tiếng coin) rồi tự huỷ.
+    /// </summary>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!isActive)

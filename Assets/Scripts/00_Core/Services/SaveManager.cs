@@ -24,6 +24,11 @@ namespace GalaxyStrike.Save
 
         private static SaveManager instance;
 
+        /// <summary>
+        /// Singleton "lazy": trả về instance đang có, nếu chưa có thì tìm trong Scene,
+        /// cuối cùng mới tạo object mới. Nhờ vậy mọi script đều gọi được mà không cần
+        /// đảm bảo thứ tự Awake. (Object tạo ra sẽ DontDestroyOnLoad trong Awake.)
+        /// </summary>
         public static SaveManager Instance
         {
             get
@@ -57,6 +62,10 @@ namespace GalaxyStrike.Save
         /// <summary>Phát mỗi khi dữ liệu thay đổi (UI lắng nghe để refresh).</summary>
         public event Action OnDataChanged;
 
+        /// <summary>
+        /// Truy cập dữ liệu save. Lần đầu được gọi sẽ tự nạp từ đĩa (EnsureLoaded),
+        /// nên không bao giờ trả về null.
+        /// </summary>
         public SaveData Data
         {
             get
@@ -76,6 +85,10 @@ namespace GalaxyStrike.Save
             instance = null;
         }
 
+        /// <summary>
+        /// Khởi tạo Singleton + giữ object qua các Scene + nạp save ngay từ đầu.
+        /// Bản trùng lặp (nếu Scene khác cũng có SaveManager) tự hủy.
+        /// </summary>
         private void Awake()
         {
             if (instance != null && instance != this)
@@ -89,12 +102,21 @@ namespace GalaxyStrike.Save
             EnsureLoaded();
         }
 
+        /// <summary>
+        /// Khi object bị hủy: nếu đây vẫn là instance hiện hành thì xóa tham chiếu static
+        /// để lần truy cập sau sẽ tạo lại.
+        /// </summary>
         private void OnDestroy()
         {
             if (instance == this)
                 instance = null;
         }
 
+        /// <summary>
+        /// Android/iOS gọi khi app bị đưa xuống nền:
+        /// - Bị pause -> Flush() để không mất dữ liệu nếu hệ điều hành kill app.
+        /// - Quay lại -> tính năng lượng đã hồi trong lúc ở nền rồi báo UI refresh.
+        /// </summary>
         private void OnApplicationPause(bool isPaused)
         {
             if (isPaused)
@@ -109,6 +131,9 @@ namespace GalaxyStrike.Save
             }
         }
 
+        /// <summary>
+        /// Ghi dữ liệu xuống đĩa lần cuối trước khi thoát game.
+        /// </summary>
         private void OnApplicationQuit()
         {
             Flush();
@@ -147,6 +172,12 @@ namespace GalaxyStrike.Save
         // =====================================================================
         // NẠP / LƯU
         // =====================================================================
+
+        /// <summary>
+        /// Đảm bảo dữ liệu đã được nạp (chỉ nạp 1 lần):
+        /// đọc save từ đĩa hoặc tạo save mới, chuẩn hoá dữ liệu, ghi lần đầu,
+        /// migrate dữ liệu PlayerPrefs cũ và áp năng lượng đã hồi.
+        /// </summary>
         private void EnsureLoaded()
         {
             if (data != null)
@@ -165,6 +196,10 @@ namespace GalaxyStrike.Save
             ApplyEnergyRefill();
         }
 
+        /// <summary>
+        /// Tạo save cho người chơi mới: coin/gem khởi điểm, năng lượng đầy,
+        /// mốc thời gian hồi = hiện tại, và mở khóa sẵn tàu đầu tiên (index 0).
+        /// </summary>
         private SaveData CreateNewSave()
         {
             var fresh = new SaveData
@@ -180,6 +215,11 @@ namespace GalaxyStrike.Save
             return fresh;
         }
 
+        /// <summary>
+        /// Đọc chuỗi save từ PlayerPrefs, giải mã (kiểm tra chữ ký HMAC), rồi parse JSON
+        /// thành SaveData. Trả null nếu chưa có save, bị chỉnh sửa, hoặc JSON hỏng
+        /// (khi đó game sẽ tạo save mới thay vì crash).
+        /// </summary>
         private SaveData LoadFromDisk()
         {
             string stored = PlayerPrefs.GetString(SaveKey, string.Empty);
@@ -298,6 +338,10 @@ namespace GalaxyStrike.Save
             }
         }
 
+        /// <summary>
+        /// Phát sự kiện OnDataChanged để mọi UI đang đăng ký tự refresh
+        /// (ví dụ số Coin trên HUD, danh sách tàu...).
+        /// </summary>
         public void NotifyChanged()
         {
             OnDataChanged?.Invoke();
@@ -408,6 +452,10 @@ namespace GalaxyStrike.Save
         public int Coins => Data.coins;
         public int Gems => Data.gems;
 
+        /// <summary>
+        /// Cộng/trừ Coin và lưu ngay. Giá trị không bao giờ xuống dưới 0.
+        /// Truyền số âm để trừ tiền (dùng khi chắc chắn đã kiểm tra đủ tiền).
+        /// </summary>
         public void AddCoins(int amount)
         {
             if (amount == 0)
@@ -419,6 +467,9 @@ namespace GalaxyStrike.Save
             NotifyChanged();
         }
 
+        /// <summary>
+        /// Cộng/trừ Gem và lưu ngay. Giá trị không bao giờ xuống dưới 0.
+        /// </summary>
         public void AddGems(int amount)
         {
             if (amount == 0)
@@ -463,11 +514,18 @@ namespace GalaxyStrike.Save
         // =====================================================================
         public int SelectedShipIndex => Data.selectedShipIndex;
 
+        /// <summary>
+        /// Tàu index 0 luôn miễn phí/mặc định; các tàu khác phải có trong danh sách đã mở khóa.
+        /// </summary>
         public bool IsShipUnlocked(int shipIndex)
         {
             return shipIndex == 0 || Data.HasShip(shipIndex);
         }
 
+        /// <summary>
+        /// Mở khóa tàu (không trừ tiền) rồi lưu ngay.
+        /// Thường dùng khi nhận tàu từ IAP hoặc phần thưởng.
+        /// </summary>
         public void UnlockShip(int shipIndex)
         {
             EnsureLoaded();
@@ -495,6 +553,9 @@ namespace GalaxyStrike.Save
             return true;
         }
 
+        /// <summary>
+        /// Chọn tàu để sử dụng. Bỏ qua nếu tàu chưa được mở khóa.
+        /// </summary>
         public void SelectShip(int shipIndex)
         {
             EnsureLoaded();
@@ -511,11 +572,15 @@ namespace GalaxyStrike.Save
         // =====================================================================
         public int GetUpgradeLevel(ShipUpgradeType type) => Data.GetUpgradeLevel(type);
 
+        /// <summary>
+        /// Giá Coin của lần nâng cấp kế tiếp (tra bảng giá trong ShipUpgradeCatalog).
+        /// </summary>
         public int GetUpgradeCost(ShipUpgradeType type)
         {
             return ShipUpgradeCatalog.GetCost(type, GetUpgradeLevel(type));
         }
 
+        /// <summary>Chỉ số nâng cấp đã đạt cấp tối đa (MaxLevel) hay chưa.</summary>
         public bool IsUpgradeMaxed(ShipUpgradeType type)
         {
             return GetUpgradeLevel(type) >= ShipUpgradeCatalog.MaxLevel;
@@ -550,9 +615,8 @@ namespace GalaxyStrike.Save
         public int TotalKills => Data.totalKills;
         public int BestScore => Data.bestScore;
 
-        /// <summary>Cộng dồn số quái đã hạ (GameManager gọi mỗi khi quái chết).</summary>
         /// <summary>
-        /// Cộng dồn số quái đã hạ.
+        /// Cộng dồn số quái đã hạ (GameManager gọi mỗi khi quái chết).
         /// KHÔNG Flush mỗi lần gọi (quái chết liên tục sẽ ghi đĩa liên tục trên mobile);
         /// dữ liệu được ghi khi kết thúc màn qua <see cref="FlushProgress"/>.
         /// </summary>
@@ -587,6 +651,10 @@ namespace GalaxyStrike.Save
             NotifyChanged();
         }
 
+        /// <summary>
+        /// Được GameManager gọi khi người chơi vượt qua một màn mới.
+        /// Chỉ cập nhật nếu màn đó cao hơn kỷ lục hiện tại, rồi lưu ngay.
+        /// </summary>
         public void ReportLevelCleared(int levelNumber)
         {
             EnsureLoaded();
@@ -625,7 +693,12 @@ namespace GalaxyStrike.Save
 
         // =====================================================================
         // KINH NGHIỆM & CẤP TÀI KHOẢN
-        // =====================================================================        public int Experience => Data.experience;
+        // =====================================================================
+
+        /// <summary>Tổng XP đã tích luỹ của tài khoản.</summary>
+        public int Experience => Data.experience;
+
+        /// <summary>Cấp tài khoản hiện tại (luôn được đồng bộ lại theo XP trong Normalize).</summary>
         public int AccountLevel => Data.accountLevel;
 
         /// <summary>XP cần để lên cấp tiếp theo (tăng dần theo cấp hiện tại).</summary>

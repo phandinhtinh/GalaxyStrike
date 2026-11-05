@@ -17,7 +17,10 @@ public sealed class EnemyStateMachine
     private bool _isTicking;
     private bool _initialized;
 
+    /// <summary>Tên state hiện tại (để debug/log). Chưa có state thì trả "(none)".</summary>
     public string CurrentName => _current != null ? _current.Name : "(none)";
+
+    /// <summary>State hiện tại (chỉ đọc) để nơi khác kiểm tra quái đang ở trạng thái nào.</summary>
     public IEnemyState Current => _current;
 
     /// <summary>Đặt state ban đầu. Khi đã Tick lần nào thì phải qua <see cref="ChangeState"/>.</summary>
@@ -64,6 +67,10 @@ public sealed class EnemyStateMachine
         }
     }
 
+    /// <summary>
+    /// Áp state mới: thoát state cũ (Exit), gán state mới rồi gọi Enter.
+    /// Luôn chạy SAU khi Tick() đã kết thúc nên không phá vỡ vòng lặp thực thi.
+    /// </summary>
     private void ApplyState(IEnemyState next, EnemyContext ctx)
     {
         _current?.Exit(this, ctx);

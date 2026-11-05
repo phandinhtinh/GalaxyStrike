@@ -10,6 +10,10 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     private static LevelManager _instance;
+    /// <summary>
+    /// Singleton "lazy": nếu Scene chưa có LevelManager thì tự tạo object mới,
+    /// nên bất kỳ script nào cũng dùng được LevelManager.Instance mà không cần lo thứ tự.
+    /// </summary>
     public static LevelManager Instance
     {
         get
@@ -27,6 +31,10 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Dữ liệu mô tả 1 màn chơi: số màn, tên màn, khu vực, thưởng và danh sách Wave.
+    /// Được sinh ra bằng thuật toán trong GenerateLevelData thay vì gõ tay từng màn.
+    /// </summary>
     [System.Serializable]
     public class LevelData
     {
@@ -36,6 +44,10 @@ public class LevelManager : MonoBehaviour
         public int rewardCoins = 50;
         public List<EnemySpawner.WaveConfig> waves = new List<EnemySpawner.WaveConfig>();
 
+        /// <summary>
+        /// Tổng số quái của màn = cộng dồn count của tất cả wave
+        /// (mỗi wave tối thiểu tính là 1 con).
+        /// </summary>
         public int GetTotalEnemies()
         {
             int sum = 0;
@@ -44,6 +56,10 @@ public class LevelManager : MonoBehaviour
             return sum;
         }
 
+        /// <summary>
+        /// Tổng HP của màn = với từng wave: số quái × HP của prefab quái đó.
+        /// Prefab không có component Enemy thì coi HP = 1. Kết quả 0 thì fallback về tổng số quái.
+        /// </summary>
         public int GetTotalHealth()
         {
             int sum = 0;
@@ -91,6 +107,10 @@ public class LevelManager : MonoBehaviour
     public bool IsChallengeMode =>
         PlayerPrefs.GetString("SelectedGameMode", "Campaign") == "Challenge";
 
+    /// <summary>
+    /// Khởi tạo LevelManager: đảm bảo Singleton, gỡ khỏi parent và giữ qua các Scene,
+    /// tải prefab quái từ Resources, rồi nạp màn hiện tại từ PlayerPrefs (nếu bật).
+    /// </summary>
     private void Awake()
     {
         if (_instance == null)
@@ -117,11 +137,18 @@ public class LevelManager : MonoBehaviour
         currentLevel = Mathf.Clamp(currentLevel, 1, maxLevels);
     }
 
+    /// <summary>
+    /// Đăng ký sự kiện SceneManager.sceneLoaded để bắt lúc chuyển Scene.
+    /// </summary>
     private void OnEnable()
     {
         SceneManager.sceneLoaded += HandleSceneLoaded;
     }
 
+    /// <summary>
+    /// Hủy đăng ký sự kiện sceneLoaded khi object bị disable/hủy
+    /// (tránh gọi vào object đã chết và tránh đăng ký trùng).
+    /// </summary>
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= HandleSceneLoaded;
@@ -145,6 +172,10 @@ public class LevelManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    /// <summary>
+    /// Nếu prefab quái chưa được gán trong Inspector thì tự nạp từ Resources/Prefabs,
+    /// giúp Scene cấu hình tối thiểu vẫn chạy được.
+    /// </summary>
     private void LoadPrefabsIfNull()
     {
         if (scoutPrefab == null) scoutPrefab = Resources.Load<GameObject>("Prefabs/Enemy_Scout");
@@ -158,6 +189,9 @@ public class LevelManager : MonoBehaviour
         if (bossPrefab == null) bossPrefab = Resources.Load<GameObject>("Prefabs/Enemy_Boss");
     }
 
+    /// <summary>
+    /// Trả về dữ liệu của màn đang chơi (gọi GenerateLevelData cho currentLevel).
+    /// </summary>
     public LevelData GetCurrentLevelData()
     {
         return GenerateLevelData(currentLevel);
@@ -345,6 +379,11 @@ public class LevelManager : MonoBehaviour
         return waveList;
     }
 
+    /// <summary>
+    /// Trả về prefab Boss "hành tinh" riêng của từng Zone (Enemy_Boss_Zone01..05).
+    /// Ở màn cuối của Zone 5 dùng Boss cuối (Enemy_Boss_Final).
+    /// Không tìm thấy thì trả về bossPrefab mặc định.
+    /// </summary>
     private GameObject GetPlanetBossPrefab(int zone, int level)
     {
         string prefabName;
@@ -363,6 +402,10 @@ public class LevelManager : MonoBehaviour
 
         return Resources.Load<GameObject>("Prefabs/" + prefabName);
     }
+    /// <summary>
+    /// Hàm tiện ích tạo một WaveConfig từ tham số truyền vào,
+    /// giúp BuildWavesForLevel viết ngắn gọn và không lặp code khởi tạo.
+    /// </summary>
     private EnemySpawner.WaveConfig MakeWave(
         string name,
         SpawnOrigin origin,
@@ -397,6 +440,13 @@ public class LevelManager : MonoBehaviour
     }
 
     // Deterministic variety preserves the authored wave counts and formations.
+
+    /// <summary>
+    /// Trộn thêm loại quái đặc biệt (Swarmer, Wasp, TwinCannon, Shield, MissileShip)
+    /// vào một số wave để đa dạng hoá kẻ địch. Việc chọn dựa trên (chỉ số wave + level)
+    /// nên MANG TÍNH XÁC ĐỊNH: chơi lại cùng màn sẽ gặp đúng thứ tự quái như trước.
+    /// Không đụng vào wave Boss.
+    /// </summary>
     private void ApplyArsenalVariety(List<EnemySpawner.WaveConfig> waves, int level, int zone)
     {
         var candidates = new List<string>();
@@ -416,6 +466,10 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Chọn prefab quái theo Zone và "tier" (mức mạnh 1..3):
+    /// Zone càng cao thì cùng một tier sẽ ra quái mạnh hơn (scout → fighter → striker...).
+    /// </summary>
     private GameObject GetEnemyByTier(int zone, int tier)
     {
         switch (zone)
@@ -483,12 +537,18 @@ public class LevelManager : MonoBehaviour
         return currentLevel >= maxLevels;
     }
 
+    /// <summary>
+    /// Gán màn chơi trực tiếp (ví dụ chọn màn từ bản đồ) rồi lưu lại tiến trình.
+    /// </summary>
     public void SetLevel(int level)
     {
         currentLevel = Mathf.Clamp(level, 1, maxLevels);
         SaveCurrentLevel();
     }
 
+    /// <summary>
+    /// Ghi currentLevel xuống PlayerPrefs, flush, và báo HUD cập nhật số màn đang chơi.
+    /// </summary>
     private void SaveCurrentLevel()
     {
         PlayerPrefs.SetInt(LEVEL_SAVE_KEY, currentLevel);

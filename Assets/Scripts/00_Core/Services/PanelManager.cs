@@ -11,6 +11,10 @@ public class PanelManager : MonoBehaviour
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject victoryPanel;
 
+    /// <summary>
+    /// Khởi tạo Singleton cho PanelManager và tắt raycastTarget của ảnh nền HUD
+    /// để nền HUD không "nuốt" thao tác kéo/click của người chơi.
+    /// </summary>
     private void Awake()
     {
         // Khởi tạo Singleton để các script khác có thể gọi PanelManager dễ dàng
@@ -32,6 +36,9 @@ public class PanelManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Khi Scene vừa vào: chỉ bật HUD, ẩn Settings/GameOver/Victory.
+    /// </summary>
     private void Start()
     {
         // Mới vào game: Chỉ hiện HUD, ẩn tất cả panel khác

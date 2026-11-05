@@ -7,6 +7,12 @@ public sealed class AmbushWarning : MonoBehaviour
     private float duration;
     private float elapsed;
 
+    /// <summary>
+    /// Tạo một vạch cảnh báo đỏ tại vị trí cho trước (dùng cho quái phục kích từ đáy):
+    /// tạo object, gắn SpriteRenderer dùng sprite vuông dựng runtime, kéo dài theo
+    /// <paramref name="width"/>, đặt trên UI (sortingOrder cao) và lưu thời gian tồn tại.
+    /// Trả về component vừa tạo.
+    /// </summary>
     public static AmbushWarning Create(Vector3 position, float warningTime, float width)
     {
         GameObject obj = new GameObject("AmbushWarning");
@@ -24,6 +30,10 @@ public sealed class AmbushWarning : MonoBehaviour
         return warning;
     }
 
+    /// <summary>
+    /// Mỗi frame: làm vạch nhấp nháy (thay đổi độ mờ) để gây chú ý,
+    /// hết thời gian cảnh báo thì tự huỷ.
+    /// </summary>
     private void Update()
     {
         elapsed += Time.deltaTime;
