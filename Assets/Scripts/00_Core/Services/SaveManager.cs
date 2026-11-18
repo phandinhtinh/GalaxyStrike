@@ -17,33 +17,10 @@ namespace GalaxyStrike.Save
     /// Singleton tự sinh (DontDestroyOnLoad) nên dùng được ở cả HomeScene và GameScene.
     /// </summary>
     [DefaultExecutionOrder(-150)]
-    public sealed class SaveManager : MonoBehaviour
+    public sealed class SaveManager : SingletonBehaviour<SaveManager>
     {
         private const string SaveKey = "GalaxyStrike_SaveV2";
         private const string LegacyMigrationKey = "GalaxyStrike_MigratedV2";
-
-        private static SaveManager instance;
-
-        /// <summary>
-        /// Singleton "lazy": trả về instance đang có, nếu chưa có thì tìm trong Scene,
-        /// cuối cùng mới tạo object mới. Nhờ vậy mọi script đều gọi được mà không cần
-        /// đảm bảo thứ tự Awake. (Object tạo ra sẽ DontDestroyOnLoad trong Awake.)
-        /// </summary>
-        public static SaveManager Instance
-        {
-            get
-            {
-                if (instance != null)
-                    return instance;
-
-                instance = FindObjectOfType<SaveManager>();
-                if (instance != null)
-                    return instance;
-
-                instance = new GameObject("[SaveManager]").AddComponent<SaveManager>();
-                return instance;
-            }
-        }
 
         [Header("--- Energy ---")]
         [Tooltip("Số phút để hồi 1 năng lượng")]
@@ -79,37 +56,13 @@ namespace GalaxyStrike.Save
         public int MaxEnergy => maxEnergy;
         public int EnergyCostPerRun => energyCostPerRun;
 
-        /// <summary>Xoá tham chiếu tĩnh (gọi khi vào Play Mode để không giữ object của phiên trước).</summary>
-        public static void ResetStaticInstance()
-        {
-            instance = null;
-        }
-
         /// <summary>
-        /// Khởi tạo Singleton + giữ object qua các Scene + nạp save ngay từ đầu.
-        /// Bản trùng lặp (nếu Scene khác cũng có SaveManager) tự hủy.
+        /// Callback của <see cref="SingletonBehaviour{T}"/>: nạp save ngay từ đầu.
+        /// Việc giữ object qua Scene và huỷ bản trùng đã do base class lo.
         /// </summary>
-        private void Awake()
+        protected override void OnSingletonAwake()
         {
-            if (instance != null && instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            instance = this;
-            DontDestroyOnLoad(gameObject);
             EnsureLoaded();
-        }
-
-        /// <summary>
-        /// Khi object bị hủy: nếu đây vẫn là instance hiện hành thì xóa tham chiếu static
-        /// để lần truy cập sau sẽ tạo lại.
-        /// </summary>
-        private void OnDestroy()
-        {
-            if (instance == this)
-                instance = null;
         }
 
         /// <summary>
@@ -323,18 +276,25 @@ namespace GalaxyStrike.Save
         /// <summary>Ghi xuống máy ngay lập tức (mã hóa + chữ ký).</summary>
         public void Flush()
         {
+            TryFlush();
+        }
+
+        private bool TryFlush()
+        {
             if (data == null)
-                return;
+                return false;
 
             try
             {
                 string json = JsonUtility.ToJson(data);
                 PlayerPrefs.SetString(SaveKey, SaveCrypto.Encrypt(json));
                 PlayerPrefs.Save();
+                return true;
             }
             catch (Exception e)
             {
                 Debug.LogError($"[SaveManager] Lỗi khi lưu dữ liệu: {e.Message}");
+                return false;
             }
         }
 
@@ -451,6 +411,57 @@ namespace GalaxyStrike.Save
         // =====================================================================
         public int Coins => Data.coins;
         public int Gems => Data.gems;
+
+        public const int WelcomeGiftCoins = 100;
+
+        public bool IsBattlePassTierClaimed(int index)
+        {
+            return index >= 0 && index < BattlePassRewards.Tiers.Count &&
+                   (Data.battlePassClaimedTiers & (1 << index)) != 0;
+        }
+
+        public bool TryClaimBattlePassTier(int index)
+        {
+            if (index < 0 || index >= BattlePassRewards.Tiers.Count || IsBattlePassTierClaimed(index))
+                return false;
+
+            BattlePassRewards.Tier tier = BattlePassRewards.Tiers[index];
+            SaveData save = Data;
+            if (save.experience < tier.RequiredExperience || save.coins > int.MaxValue - tier.Coins)
+                return false;
+
+            int claim = 1 << index;
+            save.battlePassClaimedTiers |= claim;
+            save.coins += tier.Coins;
+            if (!TryFlush())
+            {
+                save.battlePassClaimedTiers &= ~claim;
+                save.coins -= tier.Coins;
+                return false;
+            }
+
+            NotifyChanged();
+            return true;
+        }
+
+        public bool TryClaimWelcomeGift()
+        {
+            SaveData save = Data;
+            if (save.welcomeGiftClaimed || save.coins > int.MaxValue - WelcomeGiftCoins)
+                return false;
+
+            save.welcomeGiftClaimed = true;
+            save.coins += WelcomeGiftCoins;
+            if (!TryFlush())
+            {
+                save.welcomeGiftClaimed = false;
+                save.coins -= WelcomeGiftCoins;
+                return false;
+            }
+
+            NotifyChanged();
+            return true;
+        }
 
         /// <summary>
         /// Cộng/trừ Coin và lưu ngay. Giá trị không bao giờ xuống dưới 0.

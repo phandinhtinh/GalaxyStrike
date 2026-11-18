@@ -1277,8 +1277,17 @@ public class Enemy : MonoBehaviour
         }
 
         TryDropPowerUp();
-        DropCoinVisual();
+        DropCoinVisual(coinValue);
         OnEnemyDied?.Invoke(this);
+
+        // VFX: nổ theo kích thước quái; Boss nổ to hơn + rung camera mạnh.
+        bool isBossHull = enemyName != null && enemyName.Contains("Boss");
+        VfxSpawner.SpawnExplosion(
+            transform.position,
+            isBossHull ? 2.4f : 1f,
+            isBossHull ? new Color(1f, 0.4f, 0.15f, 1f) : (Color?)null);
+        CameraShake.Play(isBossHull ? 0.75f : 0.12f);
+        Haptics.Vibrate(isBossHull ? 1f : 0.45f);
 
         if (AudioManager.Instance != null && AudioManager.Instance.enemyExplodeSFX != null)
             AudioManager.Instance.PlaySFX(AudioManager.Instance.enemyExplodeSFX);
@@ -1286,7 +1295,6 @@ public class Enemy : MonoBehaviour
         if (GameManager.Instance != null)
         {
             GameManager.Instance.AddScore(scoreValue);
-            GameManager.Instance.AddCoins(coinValue);
             GameManager.Instance.AddEnemyDefeated(this);
         }
 
@@ -1294,14 +1302,22 @@ public class Enemy : MonoBehaviour
     }
 
     /// <summary>
-    /// Tạo hiệu ứng đồng xu bay ra tại vị trí quái chết (nạp prefab Coin từ Resources).
-    /// Chỉ để hiển thị; Coin thật đã được cộng qua GameManager.AddCoins.
+    /// Tạo một đồng xu rơi ra tại vị trí quái chết (nạp prefab Coin từ Resources).
+    /// Coin chỉ được cộng khi Player thật sự nhặt (CoinDrop.OnTriggerEnter2D).
     /// </summary>
-    private void DropCoinVisual()
+    private void DropCoinVisual(int value)
     {
+        if (value <= 0)
+            return;
+
         GameObject coinPrefab = Resources.Load<GameObject>("Prefabs/Coin");
-        if (coinPrefab != null)
-            Instantiate(coinPrefab, transform.position, Quaternion.identity);
+        if (coinPrefab == null)
+            return;
+
+        GameObject coinObject = Instantiate(coinPrefab, transform.position, Quaternion.identity);
+        CoinDrop coin = coinObject.GetComponent<CoinDrop>();
+        if (coin != null)
+            coin.SetValue(value);
     }
 
     /// <summary>

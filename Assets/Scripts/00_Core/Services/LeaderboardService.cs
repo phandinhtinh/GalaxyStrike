@@ -35,29 +35,8 @@ namespace GalaxyStrike.Leaderboard
     /// Tự submit điểm mỗi khi hoàn thành màn (GameManager gọi).
     /// </summary>
     [DefaultExecutionOrder(-130)]
-    public sealed class LeaderboardService : MonoBehaviour
+    public sealed class LeaderboardService : SingletonBehaviour<LeaderboardService>
     {
-        private static LeaderboardService instance;
-
-        /// <summary>
-        /// Singleton "lazy": lấy instance đang có, tìm trong Scene, hoặc tự tạo mới,
-        /// để UI Leaderboard ở bất kỳ Scene nào cũng truy cập được dịch vụ này.
-        /// </summary>
-        public static LeaderboardService Instance
-        {
-            get
-            {
-                if (instance != null)
-                    return instance;
-
-                instance = FindObjectOfType<LeaderboardService>();
-                if (instance == null)
-                    instance = new GameObject("[LeaderboardService]").AddComponent<LeaderboardService>();
-
-                return instance;
-            }
-        }
-
         [Header("--- Google Play Games Config ---")]
         [SerializeField] private PlayGamesConfig config = new PlayGamesConfig();
 
@@ -92,45 +71,11 @@ namespace GalaxyStrike.Leaderboard
         public PlayGamesConfig Config => config;
 
         /// <summary>
-        /// Singleton + giữ object qua các Scene. Bản trùng (nếu Scene khác cũng có)
-        /// thì tự hủy để chỉ còn 1 dịch vụ duy nhất.
-        /// </summary>
-        private void Awake()
-        {
-            if (instance != null && instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-
-        /// <summary>
         /// Tự kích hoạt Play Games khi service xuất hiện.
         /// </summary>
         private void Start()
         {
             InitializePlayGames();
-        }
-
-        /// <summary>
-        /// Xóa tham chiếu static khi object bị hủy (để Instance được tạo lại sạch).
-        /// </summary>
-        private void OnDestroy()
-        {
-            if (instance == this)
-                instance = null;
-        }
-
-        /// <summary>
-        /// Xóa tham chiếu static khi vào Play Mode (gọi từ GameBootstrap),
-        /// tránh giữ object của phiên chạy trước.
-        /// </summary>
-        public static void ResetStaticInstance()
-        {
-            instance = null;
         }
 
         // =====================================================================

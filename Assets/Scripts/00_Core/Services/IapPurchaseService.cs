@@ -39,32 +39,11 @@ namespace GalaxyStrike.IAP
     /// Script tự sinh (DontDestroyOnLoad) nên dùng được ở mọi Scene.
     /// </summary>
     [DefaultExecutionOrder(-140)]
-    public sealed class IapPurchaseService : MonoBehaviour
+    public sealed class IapPurchaseService : SingletonBehaviour<IapPurchaseService>
 #if GALAXYSTRIKE_IAP_READY
         , IDetailedStoreListener
 #endif
     {
-        private static IapPurchaseService instance;
-
-        /// <summary>
-        /// Singleton "lazy": lấy instance đang có, tìm trong Scene, hoặc tự tạo mới.
-        /// Nhờ vậy UI Shop có thể gọi IAP từ bất kỳ Scene nào mà không cần gắn tay.
-        /// </summary>
-        public static IapPurchaseService Instance
-        {
-            get
-            {
-                if (instance != null)
-                    return instance;
-
-                instance = FindObjectOfType<IapPurchaseService>();
-                if (instance == null)
-                    instance = new GameObject("[IapPurchaseService]").AddComponent<IapPurchaseService>();
-
-                return instance;
-            }
-        }
-
         [Header("--- Catalog ---")]
         [Tooltip("Asset chứa danh sách gói. Bootstrap tự nạp Resources/Config/IapCatalog khi không được gán trong Inspector.")]
         [SerializeField] private IapCatalogAsset catalogAsset;
@@ -123,12 +102,6 @@ namespace GalaxyStrike.IAP
             }
         }
 
-        /// <summary>Xoá tham chiếu tĩnh (gọi khi vào Play Mode để không giữ object của phiên trước).</summary>
-        public static void ResetStaticInstance()
-        {
-            instance = null;
-        }
-
         /// <summary>
         /// Kiểm tra có controller của Store hay không (chỉ đúng khi đã cài package IAP
         /// và khởi tạo thành công). Dùng nội bộ cho thuộc tính IsReady.
@@ -162,19 +135,15 @@ namespace GalaxyStrike.IAP
         // =====================================================================
         // VÒNG ĐỜI
         // =====================================================================
-        private void Awake()
-        {
-            if (instance != null && instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
 
-            instance = this;
-            // Không gán tay thì tự nạp danh mục gói mua từ Resources.
+        /// <summary>
+        /// Callback của <see cref="SingletonBehaviour{T}"/>: không gán tay thì tự nạp
+        /// danh mục gói mua từ Resources. Việc giữ object qua Scene đã do base class lo.
+        /// </summary>
+        protected override void OnSingletonAwake()
+        {
             if (catalogAsset == null)
                 catalogAsset = Resources.Load<IapCatalogAsset>("Config/IapCatalog");
-            DontDestroyOnLoad(gameObject);
         }
 
         /// <summary>
@@ -183,15 +152,6 @@ namespace GalaxyStrike.IAP
         private void Start()
         {
             Initialize();
-        }
-
-        /// <summary>
-        /// Xóa tham chiếu static khi object bị hủy, để lần sau Instance tạo lại sạch.
-        /// </summary>
-        private void OnDestroy()
-        {
-            if (instance == this)
-                instance = null;
         }
 
         // =====================================================================

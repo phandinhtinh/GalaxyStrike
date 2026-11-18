@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 using System;
 using System.Linq;
+using GalaxyStrike.UI;
 using GalaxyStrike.UI.Tasks;
 using TMPro;
 using UnityEditor;
@@ -60,11 +61,14 @@ public static class GalaxyStrikeTaskPopupBuilder
 
         Undo.RegisterFullObjectHierarchyUndo(canvas.gameObject, "Build Task Popup UI");
         Selection.activeGameObject = canvas.gameObject;
-        Transform oldPopup = canvas.Find(PopupName);
+        Transform safeArea = canvas.Find("SafeArea_Container");
+        Transform popupParent = canvas.Find("Home_Popups") ?? safeArea ?? canvas;
+        Transform oldPopup = popupParent.Find(PopupName) ?? safeArea?.Find(PopupName)
+            ?? safeArea?.Find("UI_Panels/" + PopupName) ?? canvas.Find(PopupName);
         if (oldPopup != null)
             Undo.DestroyObjectImmediate(oldPopup.gameObject);
 
-        GameObject popupRoot = CreateRect(canvas, PopupName, Vector2.zero, Vector2.one,
+        GameObject popupRoot = CreateRect(popupParent, PopupName, Vector2.zero, Vector2.one,
             new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero).gameObject;
         popupRoot.SetActive(false);
 
@@ -75,14 +79,15 @@ public static class GalaxyStrikeTaskPopupBuilder
 
         Image panel = CreateImage(popupRoot.transform, "TaskPopup_Frame", frameSprite,
             new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f),
-            Vector2.zero, new Vector2(1024f, 1536f), Color.white, false);
+            Vector2.zero, new Vector2(1024f, 1690f), Color.white, false);
         panel.preserveAspect = false;
+        panel.gameObject.AddComponent<PopupFrameFitter>().SetWidthFraction(0.98f);
 
         TMP_Text title = CreateText(panel.transform, "Title", "TASK", 88f,
             TextAlignmentOptions.Center, Color.white);
         title.fontStyle = FontStyles.Bold;
         AddOutline(title, new Color32(0, 24, 85, 255), 2.5f);
-        SetRect(title.rectTransform, new Vector2(0.23f, 0.85f), new Vector2(0.77f, 0.98f),
+        SetRect(title.rectTransform, new Vector2(0.23f, 0.81f), new Vector2(0.77f, 0.94f),
             new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
 
         Button closeButton = CreateButton(panel.transform, "Close_Button", BuiltinUiSprite(),

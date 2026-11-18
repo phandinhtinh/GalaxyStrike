@@ -19,8 +19,9 @@ public abstract class SingletonBehaviour<T> : MonoBehaviour where T : SingletonB
     private static bool _isQuitting;
 
     /// <summary>
-    /// Instance đang sống. KHÔNG tự tạo mới: service tự sinh nên được tạo bởi
-    /// <see cref="GameBootstrap"/> để thứ tự khởi tạo luôn xác định.
+    /// Instance đang sống. KHÔNG tự tạo trong getter.
+    /// - Service toàn cục tự sinh bởi <see cref="GameBootstrap"/> (thứ tự khởi tạo xác định).
+    /// - Singleton gắn trong Scene getter chỉ tìm object có sẵn (trả null nếu Scene chưa có).
     /// </summary>
     public static T Instance
     {
@@ -37,6 +38,22 @@ public abstract class SingletonBehaviour<T> : MonoBehaviour where T : SingletonB
 
     /// <summary>True nếu singleton đã có instance (dùng để kiểm tra trước khi gọi Instance).</summary>
     public static bool HasInstance => _instance != null;
+
+    /// <summary>
+    /// Tạo instance nếu chưa có (dùng cho service toàn cục cần tồn tại ở mọi Scene).
+    /// Khác với getter <see cref="Instance"/>: hàm này CHỦ ĐỘNG tạo object mới.
+    /// </summary>
+    public static T CreateIfMissing()
+    {
+        if (_instance != null)
+            return _instance;
+
+        T found = FindObjectOfType<T>();
+        if (found != null)
+            return found;
+
+        return new GameObject($"[{typeof(T).Name}]").AddComponent<T>();
+    }
 
     /// <summary>Bật để singleton sống qua các Scene (mặc định: bật cho service).</summary>
     protected virtual bool PersistAcrossScenes => true;

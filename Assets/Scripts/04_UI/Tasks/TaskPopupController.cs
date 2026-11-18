@@ -113,6 +113,7 @@ namespace GalaxyStrike.UI.Tasks
             if (popupRoot == null)
                 return;
 
+            popupRoot.transform.SetAsLastSibling();
             popupRoot.SetActive(true);
             SelectTab(0);
         }

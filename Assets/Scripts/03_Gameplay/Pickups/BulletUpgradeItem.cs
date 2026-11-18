@@ -97,6 +97,10 @@ public class BulletUpgradeItem : MonoBehaviour
                 AudioManager.Instance.PlaySFX(sfxToPlay);
             }
 
+            // "Juice": flash nhẹ camera + tia lửa xanh tại chỗ nhặt.
+            CameraShake.Play(0.08f);
+            VfxSpawner.SpawnHitSpark(transform.position, new Color(0.5f, 1f, 0.6f, 1f));
+
             Destroy(gameObject);
         }
     }

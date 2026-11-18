@@ -34,8 +34,9 @@ public class PlayerEquipment : MonoBehaviour
     [Tooltip("Bán kính hút vật phẩm (đơn vị world)")]
     [SerializeField] private float magnetRadius = 3.5f;
     [SerializeField] private float magnetPullSpeed = 9f;
-    [Tooltip("Bán kính hút coin luôn bật quanh Player (vùng vô hình, đơn vị world)")]
-    [SerializeField] private float coinMagnetRadius = 1.75f;
+    [Tooltip("Bán kính hút coin luôn bật quanh Player (vùng vô hình, đơn vị world). " +
+             "Coin ngoài vùng này không bay lại nên không được cộng điểm.")]
+    [SerializeField] private float coinMagnetRadius = 3.5f;
     [SerializeField] private float coinMagnetPullSpeed = 8f;
 
     [Header("--- Energy Shield ---")]
@@ -61,6 +62,35 @@ public class PlayerEquipment : MonoBehaviour
     public bool HasMagnet => hasMagnet;
     public int LaserDamageMultiplier => Mathf.Max(1, laserDamageMultiplier);
     public bool IsShielded => shieldTimer > 0f;
+
+    [Header("--- Active Boosters (runtime) ---")]
+    [Tooltip("Thời gian Magnet cưỡng bức khi dùng Hyper Magnet booster")]
+    [SerializeField] private float hyperMagnetDuration = 10f;
+
+    /// <summary>Bán kính hút của Magnet vĩnh viễn (đã mua) — Booster Hyper Magnet dùng chung.</summary>
+    public float MagnetRadius => magnetRadius;
+
+    /// <summary>Thời gian cưỡng bức Hyper Magnet còn lại (giây).</summary>
+    public float HyperMagnetTimeLeft { get; private set; }
+
+    /// <summary>
+    /// Bật cưỡng bức Hyper Magnet trong <paramref name="seconds"/> giây, bất kể
+    /// người chơi có trang bị Magnet hay không.
+    /// </summary>
+    public void ActivateHyperMagnet(float seconds)
+    {
+        HyperMagnetTimeLeft = Mathf.Max(HyperMagnetTimeLeft, seconds);
+    }
+
+    /// <summary>
+    /// Kích hoạt Energy Shield tức thời (dùng cho Booster Shield / hồi sinh).
+    /// </summary>
+    public void ActivateShield(float seconds)
+    {
+        shieldTimer = Mathf.Max(shieldTimer, seconds);
+        if (player != null)
+            player.GrantInvulnerability(seconds);
+    }
 
     private void Awake()
     {
@@ -119,6 +149,10 @@ public class PlayerEquipment : MonoBehaviour
         UpdateShield(dt);
         UpdateRocket(dt);
         UpdatePickupMagnet(dt);
+
+        // Hyper Magnet có thời hạn: đếm ngược khi đang bật.
+        if (HyperMagnetTimeLeft > 0f)
+            HyperMagnetTimeLeft = Mathf.Max(0f, HyperMagnetTimeLeft - dt);
     }
 
     // =====================================================================
@@ -173,8 +207,10 @@ public class PlayerEquipment : MonoBehaviour
     /// </summary>
     private void UpdatePickupMagnet(float dt)
     {
-        float radius = hasMagnet ? magnetRadius : coinMagnetRadius;
-        float pullSpeed = hasMagnet ? magnetPullSpeed : coinMagnetPullSpeed;
+        // Booster Hyper Magnet (có thời hạn) hành xử như đã trang bị Magnet vĩnh viễn.
+        bool magnetActive = hasMagnet || HyperMagnetTimeLeft > 0f;
+        float radius = magnetActive ? magnetRadius : coinMagnetRadius;
+        float pullSpeed = magnetActive ? magnetPullSpeed : coinMagnetPullSpeed;
 
         // NonAlloc: tránh cấp phát mảng mỗi khung hình (GC spike trên mobile).
         int count = Physics2D.OverlapCircle(transform.position, radius, pickupContactFilter, magnetBuffer);
@@ -191,8 +227,8 @@ public class PlayerEquipment : MonoBehaviour
                 continue;
 
             // Coin có vùng hút cơ bản luôn bật. Các PowerUp khác chỉ bị hút
-            // khi Player đã trang bị Magnet.
-            if (coin == null && !hasMagnet)
+            // khi Player có Magnet hoặc đang bật Hyper Magnet.
+            if (coin == null && !magnetActive)
                 continue;
 
             if (item != null)

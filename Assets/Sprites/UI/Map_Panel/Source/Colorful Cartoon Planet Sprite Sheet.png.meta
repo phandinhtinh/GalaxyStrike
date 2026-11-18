@@ -1,0 +1,1428 @@
+fileFormatVersion: 2
+guid: 3e0feea692ef7994baee528b92e120e1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5158645656091499044
+    second: Colorful Cartoon Planet Sprite Sheet_0
+  - first:
+      213: -2472988864043214773
+    second: Colorful Cartoon Planet Sprite Sheet_1
+  - first:
+      213: -1382566934507717549
+    second: Colorful Cartoon Planet Sprite Sheet_2
+  - first:
+      213: 7510039538854751940
+    second: Colorful Cartoon Planet Sprite Sheet_3
+  - first:
+      213: -4063083239067346193
+    second: Colorful Cartoon Planet Sprite Sheet_4
+  - first:
+      213: 6395838848862159512
+    second: Colorful Cartoon Planet Sprite Sheet_5
+  - first:
+      213: -4252712080922467289
+    second: Colorful Cartoon Planet Sprite Sheet_6
+  - first:
+      213: -8854208423876134096
+    second: Colorful Cartoon Planet Sprite Sheet_7
+  - first:
+      213: -5842059238350408336
+    second: Colorful Cartoon Planet Sprite Sheet_8
+  - first:
+      213: 492431193698027782
+    second: Colorful Cartoon Planet Sprite Sheet_9
+  - first:
+      213: -798933292124043692
+    second: Colorful Cartoon Planet Sprite Sheet_10
+  - first:
+      213: 8987066485318516412
+    second: Colorful Cartoon Planet Sprite Sheet_11
+  - first:
+      213: 29598228873710030
+    second: Colorful Cartoon Planet Sprite Sheet_12
+  - first:
+      213: 683943072860442846
+    second: Colorful Cartoon Planet Sprite Sheet_13
+  - first:
+      213: 7919959644215392736
+    second: Colorful Cartoon Planet Sprite Sheet_14
+  - first:
+      213: -2885091460614354616
+    second: Colorful Cartoon Planet Sprite Sheet_15
+  - first:
+      213: -4571965031415544916
+    second: Colorful Cartoon Planet Sprite Sheet_16
+  - first:
+      213: 454220934341114504
+    second: Colorful Cartoon Planet Sprite Sheet_17
+  - first:
+      213: 1311402847643282345
+    second: Colorful Cartoon Planet Sprite Sheet_18
+  - first:
+      213: -1310192941526220924
+    second: Colorful Cartoon Planet Sprite Sheet_19
+  - first:
+      213: -1979639170990232282
+    second: Colorful Cartoon Planet Sprite Sheet_20
+  - first:
+      213: -7975810719672443177
+    second: Colorful Cartoon Planet Sprite Sheet_21
+  - first:
+      213: -5688541425276430936
+    second: Colorful Cartoon Planet Sprite Sheet_22
+  - first:
+      213: -7792159268791611457
+    second: Colorful Cartoon Planet Sprite Sheet_23
+  - first:
+      213: 3925875744920720309
+    second: Colorful Cartoon Planet Sprite Sheet_24
+  - first:
+      213: 5897837648293777462
+    second: Colorful Cartoon Planet Sprite Sheet_25
+  - first:
+      213: 4094157906024399744
+    second: Colorful Cartoon Planet Sprite Sheet_26
+  - first:
+      213: -1842528821268596536
+    second: Colorful Cartoon Planet Sprite Sheet_27
+  - first:
+      213: -2843301003858725247
+    second: Colorful Cartoon Planet Sprite Sheet_28
+  - first:
+      213: 2676638998339589286
+    second: Colorful Cartoon Planet Sprite Sheet_29
+  - first:
+      213: -6319591030196897236
+    second: Colorful Cartoon Planet Sprite Sheet_30
+  - first:
+      213: 4215970434395924122
+    second: Colorful Cartoon Planet Sprite Sheet_31
+  - first:
+      213: -3267311005833029318
+    second: Colorful Cartoon Planet Sprite Sheet_32
+  - first:
+      213: -4067506195673442588
+    second: Colorful Cartoon Planet Sprite Sheet_33
+  - first:
+      213: -4483788106495560082
+    second: Colorful Cartoon Planet Sprite Sheet_34
+  - first:
+      213: -481814944065075531
+    second: Colorful Cartoon Planet Sprite Sheet_35
+  - first:
+      213: -8984387380951925378
+    second: Colorful Cartoon Planet Sprite Sheet_36
+  - first:
+      213: -3737893047140837758
+    second: Colorful Cartoon Planet Sprite Sheet_37
+  - first:
+      213: 1537048684801466261
+    second: Colorful Cartoon Planet Sprite Sheet_38
+  - first:
+      213: -8674704350145427339
+    second: Colorful Cartoon Planet Sprite Sheet_39
+  - first:
+      213: -6122921680236832343
+    second: Colorful Cartoon Planet Sprite Sheet_40
+  - first:
+      213: -2373230089466368076
+    second: Colorful Cartoon Planet Sprite Sheet_41
+  - first:
+      213: 6747252884528094938
+    second: Colorful Cartoon Planet Sprite Sheet_42
+  - first:
+      213: -6330073625338796734
+    second: Colorful Cartoon Planet Sprite Sheet_43
+  - first:
+      213: -2968016224542560474
+    second: Colorful Cartoon Planet Sprite Sheet_44
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CampaignPlanet_01
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 676
+        width: 169
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb6a1c0ebc92c414ea1e9e2e61e6b531
+      internalID: -406907992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_02
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 676
+        width: 172
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f3d2768d8b90bb48ae5ae2173ccacd1
+      internalID: -894911325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_03
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 676
+        width: 172
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f15e7263dad3257458998dd63973581f
+      internalID: 1648526036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_04
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 675
+        width: 173
+        height: 133
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fadee1c2c5ebf8e4f8220eaa3de0cda2
+      internalID: 343238879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_05
+      rect:
+        serializedVersion: 2
+        x: 705
+        y: 675
+        width: 171
+        height: 133
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d84c99408936def409e3a99f8439fa28
+      internalID: -1402873791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_06
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 675
+        width: 173
+        height: 131
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f791ef5c5a9d874c9335dbe36d395d7
+      internalID: -154815482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_07
+      rect:
+        serializedVersion: 2
+        x: 1049
+        y: 675
+        width: 174
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6283ecc952f1b4f4a9616ad0de453937
+      internalID: -232415172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_08
+      rect:
+        serializedVersion: 2
+        x: 1225
+        y: 675
+        width: 176
+        height: 131
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f329844c08ce044fbb3443d641a2abd
+      internalID: -1488735076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_09
+      rect:
+        serializedVersion: 2
+        x: 1402
+        y: 675
+        width: 176
+        height: 132
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6dbab6aabf39abc41b6d712ae6afb1dc
+      internalID: -323010306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_10
+      rect:
+        serializedVersion: 2
+        x: 1578
+        y: 675
+        width: 179
+        height: 132
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4267dc0da03f77a47b7003306b2ef8eb
+      internalID: 578093067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_11
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 517
+        width: 171
+        height: 131
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd8388c4c74581c47b5c66b06f230a3b
+      internalID: -1582462158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_12
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 517
+        width: 172
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f919e7465024a0e41975ac7f769a7fa2
+      internalID: -1634392028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_13
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 517
+        width: 171
+        height: 131
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1922e9d10fdead946ba5a4e9d88bf5d6
+      internalID: -333021570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_14
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 518
+        width: 172
+        height: 129
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c2a256bcff266a46a303444379e8da9
+      internalID: -1829343612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_15
+      rect:
+        serializedVersion: 2
+        x: 701
+        y: 517
+        width: 174
+        height: 131
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca5e79f9f84bee247839edb7942d6afc
+      internalID: -764424679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_16
+      rect:
+        serializedVersion: 2
+        x: 875
+        y: 518
+        width: 174
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3febc488ea7bca47b1183683e5572df
+      internalID: -1283970197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_17
+      rect:
+        serializedVersion: 2
+        x: 1049
+        y: 516
+        width: 176
+        height: 132
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d4ccbee9a4237f489b8586ca993dc6f
+      internalID: -1635034930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_18
+      rect:
+        serializedVersion: 2
+        x: 1226
+        y: 517
+        width: 175
+        height: 131
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91b1368908be720469ab5b6f2598199d
+      internalID: 1147134073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_19
+      rect:
+        serializedVersion: 2
+        x: 1402
+        y: 518
+        width: 175
+        height: 129
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63a877f27a0d3cf4facda37b76175d84
+      internalID: 1249497605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_20
+      rect:
+        serializedVersion: 2
+        x: 1578
+        y: 517
+        width: 179
+        height: 132
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1e8a25b6af76784bacd319780664a11
+      internalID: 74446480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_21
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 352
+        width: 170
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bb3afd1e7a7ea546b709538e90b4621
+      internalID: 2012137625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_22
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 351
+        width: 170
+        height: 127
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8a4a40d9190be14ebed43ae5102cf6c
+      internalID: -458031179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_23
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 349
+        width: 170
+        height: 141
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b3cae94ac025b34b85119367719358f
+      internalID: 1851800590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_24
+      rect:
+        serializedVersion: 2
+        x: 527
+        y: 352
+        width: 171
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32e4721a21aec6542bb1fd0f0e0b5d04
+      internalID: -1985008793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_25
+      rect:
+        serializedVersion: 2
+        x: 699
+        y: 352
+        width: 173
+        height: 133
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edd60ebd6a1ae0f4a82d3318e07b8faf
+      internalID: -1337087764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_26
+      rect:
+        serializedVersion: 2
+        x: 874
+        y: 351
+        width: 174
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57911bbb0c66d2446afbf92785d1f7db
+      internalID: 1898823111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_27
+      rect:
+        serializedVersion: 2
+        x: 1048
+        y: 350
+        width: 177
+        height: 129
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34bd5eea727b13c4ba8c72595f3bcb75
+      internalID: 108496922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_28
+      rect:
+        serializedVersion: 2
+        x: 1225
+        y: 351
+        width: 176
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac869f3be87bb7f4493a02ac219421c1
+      internalID: 1700360762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_29
+      rect:
+        serializedVersion: 2
+        x: 1402
+        y: 352
+        width: 173
+        height: 126
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eed9548d186053547a6a3f57b7f0488d
+      internalID: 194582119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_30
+      rect:
+        serializedVersion: 2
+        x: 1578
+        y: 349
+        width: 183
+        height: 134
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d0cc91a95cf50145b547c7ef374a8b7
+      internalID: -134241396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_31
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 191
+        width: 170
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be51289fd1f1dce4cac5385e198190e9
+      internalID: 1878295743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_32
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 188
+        width: 172
+        height: 134
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c24bad3fb10f2134980388bcf21caa04
+      internalID: 1359063653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_33
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 185
+        width: 171
+        height: 141
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73b6dcfaefe14684db314949a278e53e
+      internalID: -1658883914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_34
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 189
+        width: 173
+        height: 131
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf408b8a9380e584585713153b177228
+      internalID: -1552457604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_35
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 190
+        width: 173
+        height: 131
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 185f0bea8c40a564493378eff8f34ae4
+      internalID: 283572766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_36
+      rect:
+        serializedVersion: 2
+        x: 875
+        y: 183
+        width: 175
+        height: 144
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d26d4f1d4ecaef14296ed670374183ec
+      internalID: -1955678356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_37
+      rect:
+        serializedVersion: 2
+        x: 1051
+        y: 189
+        width: 175
+        height: 131
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 734be24ce168e3844857c53e46f3d041
+      internalID: 1683789237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_38
+      rect:
+        serializedVersion: 2
+        x: 1227
+        y: 189
+        width: 174
+        height: 131
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 773c246fe2ea66147895279cc7133a4a
+      internalID: 1116655186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_39
+      rect:
+        serializedVersion: 2
+        x: 1403
+        y: 188
+        width: 173
+        height: 132
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a8058a9703649b4c86fa5e035740174
+      internalID: -152297520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_40
+      rect:
+        serializedVersion: 2
+        x: 1578
+        y: 190
+        width: 179
+        height: 132
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 546876b68a3584f46a62ea67486a194e
+      internalID: -1541034733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_41
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 32
+        width: 170
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc7d15959fa191646b4d026f911f533f
+      internalID: 1561617965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_42
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 30
+        width: 172
+        height: 132
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1806786c513a39f4b9fc834e6e8ca7d0
+      internalID: 803009313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_43
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 31
+        width: 174
+        height: 129
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d5ff88e30815f042b4e304ac70a868e
+      internalID: -2069822012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_44
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 29
+        width: 175
+        height: 131
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 898a9e7ef1dc59b429d6c1dff7002066
+      internalID: 1408377770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_45
+      rect:
+        serializedVersion: 2
+        x: 705
+        y: 30
+        width: 172
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f72765df788b63147930ba28e234df3f
+      internalID: -1150926983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_46
+      rect:
+        serializedVersion: 2
+        x: 877
+        y: 30
+        width: 171
+        height: 131
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17e33e6a27ce47643a1d999b50997e58
+      internalID: -1802207579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_47
+      rect:
+        serializedVersion: 2
+        x: 1048
+        y: 30
+        width: 177
+        height: 131
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93fadd7b535ce774382ec68b77a46a65
+      internalID: -1951422080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_48
+      rect:
+        serializedVersion: 2
+        x: 1227
+        y: 30
+        width: 174
+        height: 131
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0811b6fa8a584314f8ccfa966cb3cc2a
+      internalID: 296848029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_49
+      rect:
+        serializedVersion: 2
+        x: 1402
+        y: 29
+        width: 176
+        height: 132
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c91e3e4941af47d40bdb4aad58c89993
+      internalID: -181723251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CampaignPlanet_50
+      rect:
+        serializedVersion: 2
+        x: 1579
+        y: 27
+        width: 181
+        height: 139
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c0075e4652e052478bc03206f0cbe78
+      internalID: -2081955451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: f2f62d91a38c73547adafc0646ba5387
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      CampaignPlanet_01: -406907992
+      CampaignPlanet_02: -894911325
+      CampaignPlanet_03: 1648526036
+      CampaignPlanet_04: 343238879
+      CampaignPlanet_05: -1402873791
+      CampaignPlanet_06: -154815482
+      CampaignPlanet_07: -232415172
+      CampaignPlanet_08: -1488735076
+      CampaignPlanet_09: -323010306
+      CampaignPlanet_10: 578093067
+      CampaignPlanet_11: -1582462158
+      CampaignPlanet_12: -1634392028
+      CampaignPlanet_13: -333021570
+      CampaignPlanet_14: -1829343612
+      CampaignPlanet_15: -764424679
+      CampaignPlanet_16: -1283970197
+      CampaignPlanet_17: -1635034930
+      CampaignPlanet_18: 1147134073
+      CampaignPlanet_19: 1249497605
+      CampaignPlanet_20: 74446480
+      CampaignPlanet_21: 2012137625
+      CampaignPlanet_22: -458031179
+      CampaignPlanet_23: 1851800590
+      CampaignPlanet_24: -1985008793
+      CampaignPlanet_25: -1337087764
+      CampaignPlanet_26: 1898823111
+      CampaignPlanet_27: 108496922
+      CampaignPlanet_28: 1700360762
+      CampaignPlanet_29: 194582119
+      CampaignPlanet_30: -134241396
+      CampaignPlanet_31: 1878295743
+      CampaignPlanet_32: 1359063653
+      CampaignPlanet_33: -1658883914
+      CampaignPlanet_34: -1552457604
+      CampaignPlanet_35: 283572766
+      CampaignPlanet_36: -1955678356
+      CampaignPlanet_37: 1683789237
+      CampaignPlanet_38: 1116655186
+      CampaignPlanet_39: -152297520
+      CampaignPlanet_40: -1541034733
+      CampaignPlanet_41: 1561617965
+      CampaignPlanet_42: 803009313
+      CampaignPlanet_43: -2069822012
+      CampaignPlanet_44: 1408377770
+      CampaignPlanet_45: -1150926983
+      CampaignPlanet_46: -1802207579
+      CampaignPlanet_47: -1951422080
+      CampaignPlanet_48: 296848029
+      CampaignPlanet_49: -181723251
+      CampaignPlanet_50: -2081955451
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

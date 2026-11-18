@@ -23,8 +23,8 @@ public class PlayerController : MonoBehaviour
     [Header("Movement Bounds")]
     [SerializeField] private float minMoveX = -2.0f;
     [SerializeField] private float maxMoveX =  2.0f;
-    [SerializeField] private float minMoveY = -4.0f;
-    [SerializeField] private float maxMoveY = -1.2f;
+    [SerializeField, Range(0f, 1f)] private float maxViewportY = 0.75f;
+    [SerializeField, Range(0f, 0.1f)] private float viewportPadding = 0.035f;
 
     [Header("Shooting & Upgrades")]
     [SerializeField] private GameObject bulletPrefab;
@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
 
     private int currentHealth;
     private bool isInvulnerable = false;
+    private bool isDowned = false;
     private SpriteRenderer spriteRenderer;
     private float fireTimer;
     private bool isDragging = false;
@@ -62,6 +63,35 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         currentHealth = maxHealth;
         equipment = GetComponent<PlayerEquipment>();
+
+        EnsureEngineTrail();
+    }
+
+    /// <summary>
+    /// Tự gắn vệt lửa động cơ phía sau tàu (không cần author tay trong Scene).
+    /// Chỉ tạo 1 lần; nếu đã có EngineTrail trên object/child thì thôi.
+    /// </summary>
+    private void EnsureEngineTrail()
+    {
+        if (GetComponentInChildren<EngineTrail>(true) != null)
+            return;
+
+        var trailGo = new GameObject("EngineTrail");
+        trailGo.transform.SetParent(transform, false);
+        // Gắn dưới đuôi tàu (tàu nhìn lên trên).
+        trailGo.transform.localPosition = new Vector3(0f, -0.42f, 0f);
+        trailGo.AddComponent<ParticleSystem>();
+        trailGo.AddComponent<EngineTrail>();
+    }
+
+    /// <summary>
+    /// Xoá tham chiếu tĩnh khi tàu bị huỷ, để code khác gọi <see cref="Instance"/>
+    /// nhận null thay vì một object đã chết (tránh MissingReferenceException).
+    /// </summary>
+    private void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
     }
 
     /// <summary>
@@ -143,6 +173,7 @@ public class PlayerController : MonoBehaviour
         if (Time.timeScale == 0f) return;
 
         HandleMovement();
+        transform.position = ClampToPlayArea(transform.position);
         HandleShooting();
     }
 
@@ -209,7 +240,7 @@ public class PlayerController : MonoBehaviour
             if (moveX != 0f || moveY != 0f)
             {
                 Vector3 next = transform.position + new Vector3(moveX, moveY, 0f) * (moveSpeed * Time.deltaTime);
-                transform.position = ClampToPlayArea(next);
+                transform.position = next;
             }
         }
     }
@@ -270,8 +301,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void MoveDraggedPointer(Vector2 screenPosition)
     {
-        Vector3 target = ScreenPointerToShipPosition(screenPosition) + dragOffsetWorld;
-        transform.position = ClampToPlayArea(target);
+        transform.position = ScreenPointerToShipPosition(screenPosition) + dragOffsetWorld;
     }
 
     /// <summary>
@@ -313,9 +343,48 @@ public class PlayerController : MonoBehaviour
     private Vector3 ClampToPlayArea(Vector3 position)
     {
         position.x = Mathf.Clamp(position.x, minMoveX, maxMoveX);
-        position.y = Mathf.Clamp(position.y, minMoveY, maxMoveY);
         position.z = 0f;
-        return position;
+
+        Camera cam = Camera.main;
+        if (cam == null)
+            return position;
+
+        Rect safeArea = UnityEngine.Device.Screen.safeArea;
+        if (safeArea.width <= 0f || safeArea.height <= 0f)
+            safeArea = cam.pixelRect;
+
+        Vector3 safeMin = cam.ScreenToViewportPoint(safeArea.min);
+        Vector3 safeMax = cam.ScreenToViewportPoint(safeArea.max);
+        Vector3 viewport = cam.WorldToViewportPoint(position);
+        Vector3 shipPosition = transform.position;
+        Bounds hull = spriteRenderer != null
+            ? spriteRenderer.bounds
+            : new Bounds(shipPosition, Vector3.zero);
+        Vector3 hullCenter = cam.WorldToViewportPoint(hull.center);
+        Vector3 centerOffset = hullCenter - cam.WorldToViewportPoint(shipPosition);
+        Vector3 hullWidth = cam.WorldToViewportPoint(hull.center + Vector3.right * hull.extents.x) - hullCenter;
+        Vector3 hullHeight = cam.WorldToViewportPoint(hull.center + Vector3.up * hull.extents.y) - hullCenter;
+        float halfWidth = Mathf.Abs(hullWidth.x) + Mathf.Abs(hullHeight.x);
+        float halfHeight = Mathf.Abs(hullWidth.y) + Mathf.Abs(hullHeight.y);
+
+        float minX = Mathf.Clamp01(safeMin.x) + viewportPadding + halfWidth - centerOffset.x;
+        float maxX = Mathf.Clamp01(safeMax.x) - viewportPadding - halfWidth - centerOffset.x;
+        float minY = Mathf.Clamp01(safeMin.y) + viewportPadding + halfHeight - centerOffset.y;
+        float maxY = Mathf.Min(maxViewportY, Mathf.Clamp01(safeMax.y) - viewportPadding - halfHeight - centerOffset.y);
+        float x = ClampViewportAxis(viewport.x, minX, maxX);
+        float y = ClampViewportAxis(viewport.y, minY, maxY);
+
+        if (x == viewport.x && y == viewport.y)
+            return position;
+
+        Vector3 clamped = cam.ViewportToWorldPoint(new Vector3(x, y, viewport.z));
+        clamped.z = 0f;
+        return clamped;
+    }
+
+    private static float ClampViewportAxis(float value, float min, float max)
+    {
+        return min <= max ? Mathf.Clamp(value, min, max) : (min + max) * 0.5f;
     }
 
     // =====================================================================
@@ -456,6 +525,24 @@ public class PlayerController : MonoBehaviour
     public int CurrentBulletLevel => bulletLevel;
     public int CurrentHealth => currentHealth;
     public int MaxHealth => maxHealth;
+    public int MaxBulletLevel => maxBulletLevel;
+
+    /// <summary>
+    /// Đặt thẳng cấp hỏa lực (dùng cho Booster Overdrive: nhảy tới 5 tia).
+    /// Cấp được kẹp trong 1..<see cref="maxBulletLevel"/>.
+    /// </summary>
+    public void SetBulletLevel(int level)
+    {
+        bulletLevel = Mathf.Clamp(level, 1, maxBulletLevel);
+    }
+
+    /// <summary>Đặt thẳng máu hiện tại (kẹp 0..maxHealth) — dùng khi nạp lại trạng thái.</summary>
+    public void SetHealth(int health)
+    {
+        currentHealth = Mathf.Clamp(health, 0, maxHealth);
+        if (HUD_Panel.Instance != null)
+            HUD_Panel.Instance.UpdatePlayerHPBar(currentHealth, maxHealth);
+    }
 
     /// <summary>
     /// Cấp miễn nhiễm tức thời (dùng cho Energy Shield).
@@ -467,7 +554,6 @@ public class PlayerController : MonoBehaviour
         if (duration <= 0f)
             return;
 
-        isInvulnerable = true;
         invulnerableUntil = Mathf.Max(invulnerableUntil, Time.time + duration);
     }
 
@@ -486,6 +572,11 @@ public class PlayerController : MonoBehaviour
 
         currentHealth -= damage;
 
+        // "Juice": rung camera nhẹ + haptic + tia lửa tại vị trí tàu.
+        CameraShake.Play(0.32f);
+        Haptics.Light();
+        VfxSpawner.SpawnHitSpark(transform.position, new Color(1f, 0.45f, 0.35f, 1f));
+
         if (HUD_Panel.Instance != null)
         {
             HUD_Panel.Instance.UpdatePlayerHPBar(currentHealth, maxHealth);
@@ -493,23 +584,69 @@ public class PlayerController : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            if (GameOverPanelUI.Instance != null)
-            {
-                GameOverPanelUI.Instance.ShowGameOver();
-            }
+            // Fatal: rung mạnh hơn để người chơi cảm nhận rõ khoảnh khắc gục.
+            CameraShake.Play(0.45f);
+            Haptics.Heavy();
 
-            if (GameManager.Instance != null)
-            {
-                GameManager.Instance.GameOver();
-            }
-
-            Destroy(gameObject);
+            // KHÔNG Destroy ngay: giữ tàu để có thể hồi sinh tại chỗ (Revive).
+            EnterDownedState();
         }
         else
         {
             StartCoroutine(InvulnerabilityRoutine());
         }
     }
+
+    /// <summary>
+    /// Chuyển tàu sang trạng thái "gục" (HP = 0): tắt collider + renderer để
+    /// không trúng đạn thêm, rồi nhờ GameManager quyết định hồi sinh hay Game Over.
+    /// </summary>
+    private void EnterDownedState()
+    {
+        // Chống vào lại: nhiều nguồn sát thương cùng frame không được đẩy 2 lần
+        // qua luồng Game Over/Revive.
+        if (isDowned)
+            return;
+
+        isDowned = true;
+
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = false;
+
+        if (spriteRenderer != null) spriteRenderer.enabled = false;
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnPlayerDefeated();
+        }
+    }
+
+    /// <summary>
+    /// Hồi sinh tàu tại chỗ: đầy máu, bật lại collider/renderer và bất tử tạm thời.
+    /// Trả về false nếu tàu không ở trạng thái gục (tránh hồi sinh 2 lần).
+    /// </summary>
+    public bool Revive(float shieldSeconds)
+    {
+        if (!isDowned)
+            return false;
+
+        isDowned = false;
+        currentHealth = maxHealth;
+
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null) col.enabled = true;
+
+        if (spriteRenderer != null) spriteRenderer.enabled = true;
+
+        if (HUD_Panel.Instance != null)
+            HUD_Panel.Instance.UpdatePlayerHPBar(currentHealth, maxHealth);
+
+        GrantInvulnerability(Mathf.Max(0.1f, shieldSeconds));
+        return true;
+    }
+
+    /// <summary>Tàu đã cạn máu và đang chờ hồi sinh / Game Over.</summary>
+    public bool IsDowned => isDowned;
 
     /// <summary>
     /// Coroutine nhấp nháy sprite (alpha 0.25) trong thời gian invulnerabilityDuration,

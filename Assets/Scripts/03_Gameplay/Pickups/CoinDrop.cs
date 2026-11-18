@@ -1,6 +1,6 @@
 using UnityEngine;
 
-/// <summary>Visual coin reward dropped when an enemy is defeated.</summary>
+/// <summary>Coin dropped when an enemy is defeated. Reward is credited only when the player picks it up.</summary>
 public sealed class CoinDrop : MonoBehaviour
 {
     [Header("Fall Settings")]
@@ -10,6 +10,9 @@ public sealed class CoinDrop : MonoBehaviour
     [Tooltip("Tốc độ xoay quanh trục dọc Y của coin")]
     [SerializeField] private float rotateSpeed = 240f;
     [SerializeField] private float bottomDespawnY = -6.5f;
+
+    [Tooltip("Số Coin cộng vào khi Player nhặt được đồng xu này")]
+    [SerializeField] private int coinValue = 1;
 
     private float spawnX;
     private bool isActive = true;
@@ -75,8 +78,15 @@ public sealed class CoinDrop : MonoBehaviour
     }
 
     /// <summary>
-    /// Va chạm player: tắt xu, phát âm nhặt coin. Coin THẬT đã được cộng lúc quái chết,
-    /// nên ở đây chỉ xoá object hiển thị.
+    /// Gán số Coin của đồng xu (do Enemy truyền vào lúc chết).
+    /// </summary>
+    public void SetValue(int value)
+    {
+        coinValue = Mathf.Max(0, value);
+    }
+
+    /// <summary>
+    /// Va chạm player: cộng Coin thật vào GameManager rồi phát âm nhặt coin và xoá đồng xu.
     /// </summary>
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -84,10 +94,16 @@ public sealed class CoinDrop : MonoBehaviour
             return;
 
         isActive = false;
+
+        if (coinValue > 0 && GameManager.Instance != null)
+            GameManager.Instance.AddCoins(coinValue);
+
         if (AudioManager.Instance != null && AudioManager.Instance.coinCollectSFX != null)
             AudioManager.Instance.PlaySFX(AudioManager.Instance.coinCollectSFX);
 
-        // Enemy coinValue is credited on defeat; this pickup only represents that reward visually.
+        CameraShake.Play(0.05f);
+        VfxSpawner.SpawnHitSpark(transform.position, new Color(1f, 0.9f, 0.35f, 1f));
+
         Destroy(gameObject);
     }
 }

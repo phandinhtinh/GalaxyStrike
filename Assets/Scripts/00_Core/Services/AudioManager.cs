@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.Audio;
 
-public class AudioManager : MonoBehaviour
+public sealed class AudioManager : SingletonBehaviour<AudioManager>
 {
-    public static AudioManager Instance { get; private set; }
-
     [Header("--- Audio Mixer ---")]
     [SerializeField] private AudioMixer mainMixer;
 
@@ -26,21 +24,10 @@ public class AudioManager : MonoBehaviour
     private const string SFX_MUTE_KEY = "SFX_Mute";
 
     /// <summary>
-    /// Singleton bền vững giữa các Scene: bản đầu tiên được giữ lại và
-    /// DontDestroyOnLoad; các bản trùng (khi chuyển Scene) tự hủy.
+    /// Singleton bền vững giữa các Scene do <see cref="SingletonBehaviour{T}"/> lo:
+    /// bản đầu tiên được giữ lại và DontDestroyOnLoad; các bản trùng tự hủy.
     /// </summary>
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+    protected override void OnSingletonAwake() { }
 
     /// <summary>
     /// Lúc khởi động: nạp lại âm lượng/mute đã lưu, sau đó phát nhạc nền nếu có clip.

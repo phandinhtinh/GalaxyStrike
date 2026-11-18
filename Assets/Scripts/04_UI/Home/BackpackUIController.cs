@@ -119,7 +119,9 @@ namespace GalaxyStrike.UI.Home
 
         private bool BuildOverlayFromPrefab(Transform canvasTransform)
         {
-            Transform sceneOverlay = canvasTransform.Find("SafeArea_Container/UI_Panels/BackpackPanel");
+            Transform sceneOverlay = canvasTransform.Find("Home_Popups/BackpackPanel")
+                ?? canvasTransform.Find("SafeArea_Container/BackpackPanel")
+                ?? canvasTransform.Find("SafeArea_Container/UI_Panels/BackpackPanel");
             GameObject instance;
             if (sceneOverlay != null)
             {
@@ -181,6 +183,7 @@ namespace GalaxyStrike.UI.Home
             {
                 closeImage.sprite = closeButtonSprite;
                 closeImage.type = Image.Type.Simple;
+                closeImage.preserveAspect = true;
                 closeImage.color = Color.white;
             }
             closeButton.onClick.RemoveAllListeners();
@@ -277,9 +280,9 @@ namespace GalaxyStrike.UI.Home
 
         private void BuildUiSprites()
         {
-            activeTabSprite = LoadUiSprite("BackpackTabActive", 0.12f, 0.22f, 10f);
-            inactiveTabSprite = LoadUiSprite("BackpackTabInactive", 0.12f, 0.22f, 10f);
-            itemSlotSprite = LoadUiSprite("BackpackItemSlot", 0.15f, 0.15f, 10f);
+            activeTabSprite = LoadUiSprite("BackpackTabActive", 0.12f, 0.22f, 500f);
+            inactiveTabSprite = LoadUiSprite("BackpackTabInactive", 0.12f, 0.22f, 500f);
+            itemSlotSprite = LoadUiSprite("BackpackItemSlot", 0.15f, 0.15f, 500f);
             closeButtonSprite = LoadUiSprite("BackpackCloseButton", 0f, 0f, 100f);
         }
 
@@ -332,12 +335,14 @@ namespace GalaxyStrike.UI.Home
             overlay = CreateRect(canvasTransform, "Backpack_Overlay");
             Stretch(overlay, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
             Image dimmer = overlay.gameObject.AddComponent<Image>();
-            dimmer.color = new Color(0.002f, 0.008f, 0.03f, 0.82f);
+            dimmer.color = new Color32(3, 8, 19, 218);
             dimmer.raycastTarget = true;
 
             RectTransform panel = CreateRect(overlay, "Backpack_Panel");
-            // The Backpack is a centered modal popup, not a full-screen panel.
-            Stretch(panel, new Vector2(0.05f, 0.25f), new Vector2(0.95f, 0.75f), Vector2.zero, Vector2.zero);
+            panel.anchorMin = panel.anchorMax = panel.pivot = new Vector2(0.5f, 0.5f);
+            panel.anchoredPosition = Vector2.zero;
+            panel.sizeDelta = new Vector2(1050f, 1670f);
+            panel.gameObject.AddComponent<PopupFrameFitter>().SetWidthFraction(0.98f);
             Image panelImage = panel.gameObject.AddComponent<Image>();
             panelImage.color = PanelColor;
             panelImage.raycastTarget = true;
@@ -372,21 +377,21 @@ namespace GalaxyStrike.UI.Home
         private void BuildHeader(RectTransform panel)
         {
             Image header = AddImage(panel, "Header_Controls", new Color(0.018f, 0.10f, 0.28f, 0f));
-            // The generated popup frame has a transparent top margin and its title plate sits below it.
-            Stretch(header.rectTransform, new Vector2(0.018f, 0.82f), new Vector2(0.982f, 0.92f), Vector2.zero, Vector2.zero);
+            Stretch(header.rectTransform, new Vector2(0.02f, 0.902f), new Vector2(0.98f, 0.978f), Vector2.zero, Vector2.zero);
 
-            TextMeshProUGUI title = AddText(header.rectTransform, "Title", "BACKPACK", 60f, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
+            TextMeshProUGUI title = AddText(header.rectTransform, "Title", "BACKPACK", 58f, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
             Stretch(title.rectTransform, new Vector2(0.25f, 0.05f), new Vector2(0.75f, 0.95f), Vector2.zero, Vector2.zero);
             title.outlineWidth = 0.18f;
             title.outlineColor = new Color(0.01f, 0.34f, 0.95f, 1f);
 
             Button close = AddButton(header.rectTransform, "Close_Button", closeButtonSprite != null ? Color.white : new Color(0.72f, 0.055f, 0.12f, 1f));
-            Stretch(close.GetComponent<RectTransform>(), new Vector2(0.88f, 0.05f), new Vector2(0.97f, 0.95f), Vector2.zero, Vector2.zero);
+            Stretch(close.GetComponent<RectTransform>(), new Vector2(0.88f, 0.05f), new Vector2(0.99f, 0.95f), Vector2.zero, Vector2.zero);
             Image closeImage = close.GetComponent<Image>();
             if (closeButtonSprite != null)
             {
                 closeImage.sprite = closeButtonSprite;
                 closeImage.type = Image.Type.Simple;
+                closeImage.preserveAspect = true;
             }
             else
             {
@@ -402,7 +407,7 @@ namespace GalaxyStrike.UI.Home
         private void BuildCurrencySummary(RectTransform panel)
         {
             RectTransform summary = CreateRect(panel, "Currency_Summary");
-            Stretch(summary, new Vector2(0.13f, 0.725f), new Vector2(0.87f, 0.805f), Vector2.zero, Vector2.zero);
+            Stretch(summary, new Vector2(0.06f, 0.80f), new Vector2(0.94f, 0.887f), Vector2.zero, Vector2.zero);
 
             string[] labels = { "COINS", "GEMS", "ENERGY" };
             for (int i = 0; i < labels.Length; i++)
@@ -423,7 +428,7 @@ namespace GalaxyStrike.UI.Home
                 Stretch(icon.rectTransform, new Vector2(0.03f, 0.1f), new Vector2(0.30f, 0.9f), Vector2.zero, Vector2.zero);
                 icon.raycastTarget = false;
 
-                TextMeshProUGUI label = AddText(pill.rectTransform, "Value", labels[i] + " 0", 27f, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
+                TextMeshProUGUI label = AddText(pill.rectTransform, "Value", labels[i] + " 0", 34f, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
                 Stretch(label.rectTransform, new Vector2(0.28f, 0.08f), new Vector2(0.98f, 0.92f), Vector2.zero, Vector2.zero);
             }
         }
@@ -431,7 +436,7 @@ namespace GalaxyStrike.UI.Home
         private void BuildCategoryTabs(RectTransform panel)
         {
             RectTransform tabs = CreateRect(panel, "Category_Tabs");
-            Stretch(tabs, new Vector2(0.13f, 0.625f), new Vector2(0.87f, 0.715f), Vector2.zero, Vector2.zero);
+            Stretch(tabs, new Vector2(0.06f, 0.705f), new Vector2(0.94f, 0.79f), Vector2.zero, Vector2.zero);
 
             for (int i = 0; i < CategoryNames.Length; i++)
             {
@@ -452,7 +457,7 @@ namespace GalaxyStrike.UI.Home
                     outline.effectDistance = new Vector2(2f, -2f);
                 }
 
-                TextMeshProUGUI label = AddText(tab.transform, "Label", CategoryNames[i], 32f, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
+                TextMeshProUGUI label = AddText(tab.transform, "Label", CategoryNames[i], 39f, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
                 Stretch(label.rectTransform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
 
                 Category category = Categories[i];
@@ -464,7 +469,7 @@ namespace GalaxyStrike.UI.Home
         private void BuildDetails(RectTransform panel)
         {
             RectTransform bar = CreateRect(panel, "Item_Details_Bar");
-            Stretch(bar, new Vector2(0.13f, 0.565f), new Vector2(0.87f, 0.615f), Vector2.zero, Vector2.zero);
+            Stretch(bar, new Vector2(0.06f, 0.635f), new Vector2(0.94f, 0.69f), Vector2.zero, Vector2.zero);
             Image background = bar.gameObject.AddComponent<Image>();
             background.color = inactiveTabSprite != null ? Color.white : new Color(0.018f, 0.065f, 0.17f, 0.8f);
             if (inactiveTabSprite != null)
@@ -474,22 +479,22 @@ namespace GalaxyStrike.UI.Home
             }
             background.raycastTarget = false;
 
-            detailsText = AddText(bar, "Item_Details", "Select an item to view its details.", 22f, FontStyles.Normal, TextAlignmentOptions.Left, MutedText);
-            Stretch(detailsText.rectTransform, new Vector2(0.025f, 0.04f), new Vector2(0.975f, 0.96f), Vector2.zero, Vector2.zero);
+            detailsText = AddText(bar, "Item_Details", "Select an item to view its details.", 29f, FontStyles.Normal, TextAlignmentOptions.Left, MutedText);
+            Stretch(detailsText.rectTransform, new Vector2(0f, 0f), Vector2.one, new Vector2(24f, 6f), new Vector2(-24f, -6f));
             detailsText.enableAutoSizing = true;
-            detailsText.fontSizeMin = 16f;
-            detailsText.fontSizeMax = 22f;
+            detailsText.fontSizeMin = 21f;
+            detailsText.fontSizeMax = 29f;
         }
 
         private void BuildItemGrid(RectTransform panel)
         {
             RectTransform scrollRoot = CreateRect(panel, "Item_Scroll_Area");
-            Stretch(scrollRoot, new Vector2(0.13f, 0.10f), new Vector2(0.87f, 0.55f), Vector2.zero, Vector2.zero);
+            Stretch(scrollRoot, new Vector2(0.06f, 0.08f), new Vector2(0.94f, 0.62f), Vector2.zero, Vector2.zero);
 
             RectTransform viewport = CreateRect(scrollRoot, "Viewport");
             Stretch(viewport, Vector2.zero, Vector2.one, new Vector2(8f, 8f), new Vector2(-8f, -8f));
             Image viewportImage = viewport.gameObject.AddComponent<Image>();
-            viewportImage.color = new Color(1f, 1f, 1f, 0.01f);
+            viewportImage.color = new Color32(7, 22, 47, 255);
             viewportImage.raycastTarget = true;
             viewport.gameObject.AddComponent<RectMask2D>();
 
@@ -502,7 +507,7 @@ namespace GalaxyStrike.UI.Home
 
             GridLayoutGroup grid = content.gameObject.AddComponent<GridLayoutGroup>();
             grid.padding = new RectOffset(8, 8, 12, 12);
-            grid.cellSize = new Vector2(160f, 176f);
+            grid.cellSize = new Vector2(212f, 221f);
             grid.spacing = new Vector2(12f, 12f);
             grid.startCorner = GridLayoutGroup.Corner.UpperLeft;
             grid.startAxis = GridLayoutGroup.Axis.Horizontal;
@@ -523,7 +528,7 @@ namespace GalaxyStrike.UI.Home
         private void BuildEmptyState(RectTransform panel)
         {
             emptyState = CreateRect(panel, "Empty_State");
-            Stretch(emptyState, new Vector2(0.15f, 0.28f), new Vector2(0.85f, 0.55f), Vector2.zero, Vector2.zero);
+            Stretch(emptyState, new Vector2(0.15f, 0.18f), new Vector2(0.85f, 0.59f), Vector2.zero, Vector2.zero);
 
             Image badge = AddImage(emptyState, "Empty_Icon_Badge", itemSlotSprite != null ? Color.white : new Color(0.02f, 0.12f, 0.29f, 0.98f));
             if (itemSlotSprite != null)
@@ -602,7 +607,11 @@ namespace GalaxyStrike.UI.Home
                 return;
 
             for (int i = content.childCount - 1; i >= 0; i--)
-                Destroy(content.GetChild(i).gameObject);
+            {
+                GameObject oldCard = content.GetChild(i).gameObject;
+                oldCard.SetActive(false);
+                Destroy(oldCard);
+            }
 
             List<InventoryEntry> entries = GetInventoryEntries();
 
@@ -757,9 +766,6 @@ namespace GalaxyStrike.UI.Home
         private void CreateItemCard(InventoryEntry entry)
         {
             Button card = AddButton(content, "Item_" + entry.title.Replace(' ', '_'), itemSlotSprite != null ? Color.white : CardColor);
-            RectTransform cardRect = card.GetComponent<RectTransform>();
-            cardRect.sizeDelta = new Vector2(160f, 176f);
-
             Image cardImage = card.GetComponent<Image>();
             if (itemSlotSprite != null)
             {
@@ -777,19 +783,21 @@ namespace GalaxyStrike.UI.Home
             icon.sprite = GetIconSprite(entry.iconIndex);
             icon.preserveAspect = true;
             icon.raycastTarget = false;
-            Stretch(icon.rectTransform, new Vector2(0.08f, 0.36f), new Vector2(0.92f, 0.95f), Vector2.zero, Vector2.zero);
+            Stretch(icon.rectTransform, new Vector2(0.10f, 0.45f), new Vector2(0.90f, 0.89f), Vector2.zero, Vector2.zero);
 
-            TextMeshProUGUI name = AddText(card.transform, "Name", entry.title, 21f, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
-            Stretch(name.rectTransform, new Vector2(0.03f, 0.18f), new Vector2(0.97f, 0.34f), Vector2.zero, Vector2.zero);
+            TextMeshProUGUI name = AddText(card.transform, "Name", entry.title, 25f, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
+            Stretch(name.rectTransform, new Vector2(0.10f, 0.23f), new Vector2(0.90f, 0.46f), Vector2.zero, Vector2.zero);
             name.enableAutoSizing = true;
-            name.fontSizeMin = 15f;
-            name.fontSizeMax = 21f;
+            name.fontSizeMin = 16f;
+            name.fontSizeMax = 25f;
+            name.textWrappingMode = TextWrappingModes.Normal;
+            name.overflowMode = TextOverflowModes.Ellipsis;
 
-            TextMeshProUGUI count = AddText(card.transform, "Count", entry.quantity, 20f, FontStyles.Bold, TextAlignmentOptions.Right, new Color(0.92f, 0.97f, 1f, 1f));
-            Stretch(count.rectTransform, new Vector2(0.06f, 0.025f), new Vector2(0.94f, 0.16f), Vector2.zero, Vector2.zero);
+            TextMeshProUGUI count = AddText(card.transform, "Count", entry.quantity, 24f, FontStyles.Bold, TextAlignmentOptions.Center, new Color32(177, 220, 249, 255));
+            Stretch(count.rectTransform, new Vector2(0.10f, 0.10f), new Vector2(0.90f, 0.23f), Vector2.zero, Vector2.zero);
             count.enableAutoSizing = true;
-            count.fontSizeMin = 14f;
-            count.fontSizeMax = 20f;
+            count.fontSizeMin = 18f;
+            count.fontSizeMax = 24f;
 
             InventoryEntry selectedEntry = entry;
             card.onClick.AddListener(() => ShowItemDetails(selectedEntry, cardImage));
@@ -817,9 +825,9 @@ namespace GalaxyStrike.UI.Home
             if (save == null)
                 return;
 
-            SetSummaryValue("COINS", "COINS " + save.Coins.ToString("N0"));
-            SetSummaryValue("GEMS", "GEMS " + save.Gems.ToString("N0"));
-            SetSummaryValue("ENERGY", "ENERGY " + save.Energy + "/" + save.MaxEnergy);
+            SetSummaryValue("COINS", save.Coins.ToString("N0"));
+            SetSummaryValue("GEMS", save.Gems.ToString("N0"));
+            SetSummaryValue("ENERGY", save.Energy + "/" + save.MaxEnergy);
         }
 
         private void SetSummaryValue(string token, string value)
@@ -827,7 +835,10 @@ namespace GalaxyStrike.UI.Home
             Transform summary = overlay.Find("Backpack_Panel/Currency_Summary/Currency_" + token + "/Value");
             TextMeshProUGUI text = summary != null ? summary.GetComponent<TextMeshProUGUI>() : null;
             if (text != null)
-                text.text = value;
+            {
+                text.textWrappingMode = TextWrappingModes.NoWrap;
+                text.text = token + "\n" + value;
+            }
         }
 
         private Sprite GetIconSprite(int index)
@@ -887,7 +898,7 @@ namespace GalaxyStrike.UI.Home
             text.color = color;
             text.raycastTarget = false;
             text.enableWordWrapping = true;
-            text.overflowMode = TextOverflowModes.Ellipsis;
+            text.overflowMode = TextOverflowModes.Truncate;
             if (TMP_Settings.defaultFontAsset != null)
                 text.font = TMP_Settings.defaultFontAsset;
             return text;

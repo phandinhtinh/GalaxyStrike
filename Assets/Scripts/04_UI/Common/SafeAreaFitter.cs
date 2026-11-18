@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Screen = UnityEngine.Device.Screen;
 
 namespace GalaxyStrike.UI
 {

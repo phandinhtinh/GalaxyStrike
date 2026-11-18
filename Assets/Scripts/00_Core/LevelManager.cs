@@ -10,22 +10,30 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     private static LevelManager _instance;
+
+    /// <summary>Xoá tham chiếu tĩnh khi vào Play Mode (tránh giữ object của phiên trước).</summary>
+    public static void ResetStaticInstance()
+    {
+        _instance = null;
+    }
+
     /// <summary>
-    /// Singleton "lazy": nếu Scene chưa có LevelManager thì tự tạo object mới,
-    /// nên bất kỳ script nào cũng dùng được LevelManager.Instance mà không cần lo thứ tự.
+    /// Singleton "lazy": ưu tiên object có sẵn trong Scene; chỉ tạo mới khi Scene
+    /// chưa có LevelManager. Nhờ vậy object lazy không "thắng" object được author
+    /// sẵn với currentLevel/maxLevels đúng.
     /// </summary>
     public static LevelManager Instance
     {
         get
         {
+            if (_instance != null)
+                return _instance;
+
+            _instance = FindObjectOfType<LevelManager>();
             if (_instance == null)
             {
-                _instance = FindObjectOfType<LevelManager>();
-                if (_instance == null)
-                {
-                    GameObject obj = new GameObject("LevelManager");
-                    _instance = obj.AddComponent<LevelManager>();
-                }
+                GameObject obj = new GameObject("LevelManager");
+                _instance = obj.AddComponent<LevelManager>();
             }
             return _instance;
         }
@@ -87,18 +95,12 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private bool useSavedProgress = true;
     [SerializeField] private int maxLevels = 50;
 
-    [Header("Enemy Prefabs (Tự động tải từ Resources nếu để trống)")]
-    [SerializeField] private GameObject scoutPrefab;
-    [SerializeField] private GameObject fighterPrefab;
-    [SerializeField] private GameObject strikerPrefab;
-    [SerializeField] private GameObject gunshipPrefab;
-    [SerializeField] private GameObject cruiserPrefab;
-    [SerializeField] private GameObject destroyerPrefab;
-    [SerializeField] private GameObject elitePrefab;
-    [SerializeField] private GameObject miniBossPrefab;
-    [SerializeField] private GameObject bossPrefab;
+    // Prefab quái KHÔNG còn SerializeField: nguồn sự thật duy nhất là
+    // EnemyFactory.Registry (nạp từ Resources/Prefabs theo EnemyKind).
 
     private const string LEVEL_SAVE_KEY = "GalaxyStrike_CurrentLevel";
+
+    public static int SavedLevel => PlayerPrefs.GetInt(LEVEL_SAVE_KEY, 1);
 
     /// <summary>
     /// Chế độ chơi được chọn ở HomeScene ("Campaign" hoặc "Challenge").
@@ -109,7 +111,7 @@ public class LevelManager : MonoBehaviour
 
     /// <summary>
     /// Khởi tạo LevelManager: đảm bảo Singleton, gỡ khỏi parent và giữ qua các Scene,
-    /// tải prefab quái từ Resources, rồi nạp màn hiện tại từ PlayerPrefs (nếu bật).
+    /// nạp registry quái từ Resources, rồi nạp màn hiện tại từ PlayerPrefs (nếu bật).
     /// </summary>
     private void Awake()
     {
@@ -128,11 +130,11 @@ public class LevelManager : MonoBehaviour
             return;
         }
 
-        LoadPrefabsIfNull();
+        EnsureEnemyRegistry();
 
         if (useSavedProgress)
         {
-            currentLevel = PlayerPrefs.GetInt(LEVEL_SAVE_KEY, 1);
+            currentLevel = SavedLevel;
         }
         currentLevel = Mathf.Clamp(currentLevel, 1, maxLevels);
     }
@@ -173,20 +175,19 @@ public class LevelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Nếu prefab quái chưa được gán trong Inspector thì tự nạp từ Resources/Prefabs,
-    /// giúp Scene cấu hình tối thiểu vẫn chạy được.
+    /// Đảm bảo registry của <see cref="EnemyFactory"/> đã nạp prefab từ Resources/Prefabs.
+    /// Trước đây LevelManager tự giữ 9 field prefab; nay mọi chủng quái đều là
+    /// <see cref="EnemyKind"/> và được tra cứu qua Factory.
     /// </summary>
-    private void LoadPrefabsIfNull()
+    private static void EnsureEnemyRegistry()
     {
-        if (scoutPrefab == null) scoutPrefab = Resources.Load<GameObject>("Prefabs/Enemy_Scout");
-        if (fighterPrefab == null) fighterPrefab = Resources.Load<GameObject>("Prefabs/Enemy_Fighter");
-        if (strikerPrefab == null) strikerPrefab = Resources.Load<GameObject>("Prefabs/Enemy_Striker");
-        if (gunshipPrefab == null) gunshipPrefab = Resources.Load<GameObject>("Prefabs/Enemy_Gunship");
-        if (cruiserPrefab == null) cruiserPrefab = Resources.Load<GameObject>("Prefabs/Enemy_Cruiser");
-        if (destroyerPrefab == null) destroyerPrefab = Resources.Load<GameObject>("Prefabs/Enemy_Destroyer");
-        if (elitePrefab == null) elitePrefab = Resources.Load<GameObject>("Prefabs/Enemy_Elite");
-        if (miniBossPrefab == null) miniBossPrefab = Resources.Load<GameObject>("Prefabs/Enemy_MiniBoss");
-        if (bossPrefab == null) bossPrefab = Resources.Load<GameObject>("Prefabs/Enemy_Boss");
+        EnemyFactory.EnsureRegistry();
+    }
+
+    /// <summary>Prefab của một chủng quái theo Factory (null nếu chưa có trong Resources).</summary>
+    private static GameObject GetEnemyPrefab(EnemyKind kind)
+    {
+        return EnemyFactory.Registry.Get(kind);
     }
 
     /// <summary>
@@ -202,7 +203,7 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public LevelData GenerateLevelData(int levelNum)
     {
-        LoadPrefabsIfNull();
+        EnsureEnemyRegistry();
         levelNum = Mathf.Clamp(levelNum, 1, maxLevels);
 
         LevelData data = new LevelData();
@@ -311,7 +312,7 @@ public class LevelManager : MonoBehaviour
                     case 2:
                         wave = MakeWave($"Wave {w} - Drop & Anchor", SpawnOrigin.TopCascade, FormationType.DropAnchor,
                             2, 0.45f, 0.95f, 0f, 1f,
-                            cruiserPrefab != null ? cruiserPrefab : GetEnemyByTier(zone, 3),
+                            GetEnemyPrefab(EnemyKind.Enemy_Cruiser),
                             EnemyFirePattern.RadialBloom, 0.9f, 26f);
                         break;
                     default:
@@ -370,7 +371,7 @@ public class LevelManager : MonoBehaviour
             1.0f,
             1.4f,
             0.8f,
-            planetBoss != null ? planetBoss : (bossPrefab != null ? bossPrefab : miniBossPrefab),
+            planetBoss != null ? planetBoss : (GetEnemyPrefab(EnemyKind.Enemy_Boss) ?? GetEnemyPrefab(EnemyKind.Enemy_MiniBoss)),
             EnemyFirePattern.RadialBloom,
             powerUpDropChance,
             0f));
@@ -382,7 +383,7 @@ public class LevelManager : MonoBehaviour
     /// <summary>
     /// Trả về prefab Boss "hành tinh" riêng của từng Zone (Enemy_Boss_Zone01..05).
     /// Ở màn cuối của Zone 5 dùng Boss cuối (Enemy_Boss_Final).
-    /// Không tìm thấy thì trả về bossPrefab mặc định.
+    /// Không tìm thấy thì trả về Boss mặc định qua Factory.
     /// </summary>
     private GameObject GetPlanetBossPrefab(int zone, int level)
     {
@@ -394,14 +395,17 @@ public class LevelManager : MonoBehaviour
             case 3: prefabName = "Enemy_Boss_Zone03"; break;
             case 4: prefabName = "Enemy_Boss_Zone04"; break;
             case 5: prefabName = "Enemy_Boss_Zone05"; break;
-            default: return bossPrefab;
+            default: return GetEnemyPrefab(EnemyKind.Enemy_Boss);
         }
 
         if (zone == 5 && level >= maxLevels)
             return Resources.Load<GameObject>("Prefabs/Enemy_Boss_Final");
 
+        // Boss theo Zone nằm ngoài enum EnemyKind (biến thể riêng của từng chiến khu),
+        // nên vẫn nạp trực tiếp từ Resources; lỗi chỉ là thiếu prefab chứ không ảnh hưởng Factory.
         return Resources.Load<GameObject>("Prefabs/" + prefabName);
     }
+
     /// <summary>
     /// Hàm tiện ích tạo một WaveConfig từ tham số truyền vào,
     /// giúp BuildWavesForLevel viết ngắn gọn và không lặp code khởi tạo.
@@ -449,19 +453,19 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private void ApplyArsenalVariety(List<EnemySpawner.WaveConfig> waves, int level, int zone)
     {
-        var candidates = new List<string>();
-        if (level >= 2) candidates.Add("Enemy_Swarmer");
-        if (level >= 4) candidates.Add("Enemy_Wasp");
-        if (zone >= 2) candidates.Add("Enemy_TwinCannon");
-        if (level >= 15) candidates.Add("Enemy_ShieldUnit");
-        if (zone >= 3) candidates.Add("Enemy_MissileShip");
+        var candidates = new List<EnemyKind>();
+        if (level >= 2) candidates.Add(EnemyKind.Enemy_Swarmer);
+        if (level >= 4) candidates.Add(EnemyKind.Enemy_Wasp);
+        if (zone >= 2) candidates.Add(EnemyKind.Enemy_TwinCannon);
+        if (level >= 15) candidates.Add(EnemyKind.Enemy_ShieldUnit);
+        if (zone >= 3) candidates.Add(EnemyKind.Enemy_MissileShip);
         for (int i = 0; i < waves.Count; i++)
         {
             var wave = waves[i];
             if (wave.formation == FormationType.Boss)
                 continue;
             if (candidates.Count == 0 || (i + level) % 3 != 0) continue;
-            var prefab = Resources.Load<GameObject>("Prefabs/" + candidates[(level + i / 3) % candidates.Count]);
+            var prefab = GetEnemyPrefab(candidates[(level + i / 3) % candidates.Count]);
             if (prefab != null) wave.enemyPrefab = prefab;
         }
     }
@@ -472,35 +476,44 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private GameObject GetEnemyByTier(int zone, int tier)
     {
+        EnemyKind kind;
         switch (zone)
         {
             case 1: // Earth Orbit
-                if (tier == 1) return scoutPrefab;
-                if (tier == 2) return fighterPrefab;
-                return strikerPrefab;
+                kind = tier == 1 ? EnemyKind.Enemy_Scout
+                     : tier == 2 ? EnemyKind.Enemy_Fighter
+                                 : EnemyKind.Enemy_Striker;
+                break;
 
             case 2: // Asteroid Belt
-                if (tier == 1) return fighterPrefab;
-                if (tier == 2) return strikerPrefab;
-                return gunshipPrefab;
+                kind = tier == 1 ? EnemyKind.Enemy_Fighter
+                     : tier == 2 ? EnemyKind.Enemy_Striker
+                                 : EnemyKind.Enemy_Gunship;
+                break;
 
             case 3: // Deep Space
-                if (tier == 1) return strikerPrefab;
-                if (tier == 2) return gunshipPrefab;
-                return cruiserPrefab;
+                kind = tier == 1 ? EnemyKind.Enemy_Striker
+                     : tier == 2 ? EnemyKind.Enemy_Gunship
+                                 : EnemyKind.Enemy_Cruiser;
+                break;
 
             case 4: // Alien Void
-                if (tier == 1) return gunshipPrefab;
-                if (tier == 2) return cruiserPrefab;
-                return destroyerPrefab;
+                kind = tier == 1 ? EnemyKind.Enemy_Gunship
+                     : tier == 2 ? EnemyKind.Enemy_Cruiser
+                                 : EnemyKind.Enemy_Destroyer;
+                break;
 
             case 5: // Mothership Core
             default:
-                if (tier == 1) return cruiserPrefab;
-                if (tier == 2) return destroyerPrefab;
-                return elitePrefab;
+                kind = tier == 1 ? EnemyKind.Enemy_Cruiser
+                     : tier == 2 ? EnemyKind.Enemy_Destroyer
+                                 : EnemyKind.Enemy_Elite;
+                break;
         }
+
+        return GetEnemyPrefab(kind);
     }
+
 
     /// <summary>Lên màn kế tiếp. Đã ở màn cuối thì giữ nguyên màn cuối.</summary>
     public void AdvanceToNextLevel()

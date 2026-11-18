@@ -10,6 +10,7 @@ public class GameOverPanelUI : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private Button replayButton;
     [SerializeField] private Button mainMenuButton;
+    [SerializeField] private RevivePanelUI reviveOffer;
 
     private void Awake()
     {
@@ -33,23 +34,38 @@ public class GameOverPanelUI : MonoBehaviour
         }
     }
 
+    public bool TryShowReviveOffer(int coinCost, float shieldSeconds)
+    {
+        if (reviveOffer == null)
+            return false;
+
+        gameObject.SetActive(true);
+        reviveOffer.ShowRevive(coinCost, shieldSeconds);
+        return true;
+    }
+
     /// <summary>
     /// Hiển thị bảng Game Over và dừng thời gian của game lại
     /// </summary>
     public void ShowGameOver()
     {
+        if (reviveOffer != null)
+            reviveOffer.gameObject.SetActive(false);
+
         gameObject.SetActive(true);
         Time.timeScale = 0f;
     }
 
     public void OnClickReplay()
     {
+        FinalizeReviveOffer();
         Time.timeScale = 1f;
         LoadingSceneController.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void OnClickMainMenu()
     {
+        FinalizeReviveOffer();
         Time.timeScale = 1f;
         
         if (GameManager.Instance != null)
@@ -60,5 +76,11 @@ public class GameOverPanelUI : MonoBehaviour
         {
             LoadingSceneController.LoadScene("HomeScene");
         }
+    }
+
+    private void FinalizeReviveOffer()
+    {
+        if (reviveOffer != null && reviveOffer.gameObject.activeSelf)
+            GameManager.Instance?.DeclineRevive();
     }
 }

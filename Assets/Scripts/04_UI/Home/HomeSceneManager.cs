@@ -14,6 +14,7 @@ namespace GalaxyStrike.UI.Home
     {
         [Header("--- Top Bar Display ---")]
         [SerializeField] private TextMeshProUGUI energyText;
+        [SerializeField] private TextMeshProUGUI energyRechargeText;
         [SerializeField] private TextMeshProUGUI coinText;
         [SerializeField] private TextMeshProUGUI gemText;
         [SerializeField] private TextMeshProUGUI levelText;
@@ -57,6 +58,9 @@ namespace GalaxyStrike.UI.Home
         [SerializeField] private Button challengeBtn;
         [SerializeField] private Button leftArrowBtn;
         [SerializeField] private Button rightArrowBtn;
+        [SerializeField] private Sprite lockedPlaySprite;
+        [SerializeField] private Sprite lockedCampaignSprite;
+        [SerializeField] private Sprite lockedChallengeSprite;
 
         [Header("--- Ship Selection & Lock System ---")]
         [SerializeField] private GameObject[] shipList; // Kéo Ship_1 -> Ship_8 vào đây
@@ -115,7 +119,6 @@ namespace GalaxyStrike.UI.Home
 
             RefreshTopBarUI();
             UpdateModeUI();
-            UpdateShipDisplay();
 
             // Mặc định hiển thị Home
             OnTabSelected("Home");
@@ -129,24 +132,27 @@ namespace GalaxyStrike.UI.Home
             SaveManager save = SaveManager.Instance;
             if (save == null) return;
 
-            if (energyText) energyText.text = FormatEnergyText(save);
+            if (energyText) energyText.text = $"{save.Energy}/{save.MaxEnergy}";
+            RefreshEnergyCountdown(save);
             if (coinText) coinText.text = save.Coins.ToString("N0");
             if (gemText) gemText.text = save.Gems.ToString("N0");
             if (levelText) levelText.text = $"Lv.{save.Data.accountLevel}";
             if (nameText) nameText.text = save.Data.playerName;
         }
 
-        /// <summary>"28/30" khi đã đầy, hoặc "28/30  02:14" (đếm ngược) khi còn hồi.</summary>
-        private static string FormatEnergyText(SaveManager save)
+        private void RefreshEnergyCountdown(SaveManager save)
         {
-            int energy = save.Energy;
-            int max = save.MaxEnergy;
+            if (energyRechargeText == null)
+                return;
 
-            if (energy >= max)
-                return $"{energy}/{max}";
+            if (save.Energy >= save.MaxEnergy)
+            {
+                energyRechargeText.text = string.Empty;
+                return;
+            }
 
             int seconds = save.SecondsUntilNextEnergy();
-            return $"{energy}/{max}  {seconds / 60:00}:{seconds % 60:00}";
+            energyRechargeText.text = $"{seconds / 60:00}:{seconds % 60:00}";
         }
 
         private float energyUiTimer;
@@ -154,7 +160,7 @@ namespace GalaxyStrike.UI.Home
         /// <summary>Cập nhật đồng hồ đếm ngược năng lượng mỗi giây, không cần chờ OnDataChanged.</summary>
         private void Update()
         {
-            if (energyText == null)
+            if (energyRechargeText == null)
                 return;
 
             SaveManager save = SaveManager.Instance;
@@ -166,7 +172,7 @@ namespace GalaxyStrike.UI.Home
                 return;
 
             energyUiTimer = 0f;
-            energyText.text = FormatEnergyText(save);
+            RefreshEnergyCountdown(save);
         }
 
         private void RegisterButtonEvents()
@@ -286,10 +292,24 @@ namespace GalaxyStrike.UI.Home
                 lockIcon.SetActive(!isUnlocked);
             }
 
-            // Cập nhật trạng thái tương tác của các nút PLAY
-            if (playBtn != null) playBtn.interactable = isUnlocked;
-            if (campaignBtn != null) campaignBtn.interactable = isUnlocked;
-            if (challengeBtn != null) challengeBtn.interactable = isUnlocked;
+            UpdateShipAction(playBtn, lockedPlaySprite, isUnlocked);
+            UpdateShipAction(campaignBtn, lockedCampaignSprite, isUnlocked);
+            UpdateShipAction(challengeBtn, lockedChallengeSprite, isUnlocked);
+        }
+
+        private static void UpdateShipAction(Button button, Sprite lockedSprite, bool isUnlocked)
+        {
+            if (!button)
+                return;
+
+            button.interactable = isUnlocked;
+            if (button.image)
+                button.image.overrideSprite = isUnlocked ? null : lockedSprite;
+        }
+
+        public void PlayCampaignFromMap()
+        {
+            StartGameWithMode(GameMode.Campaign);
         }
 
         private void StartGameWithMode(GameMode mode)
@@ -347,6 +367,7 @@ namespace GalaxyStrike.UI.Home
             {
                 case "Home":
                     if (centerPanel) centerPanel.SetActive(true);
+                    UpdateShipDisplay();
                     break;
                 case "Shop":
                     if (shopPanel) shopPanel.SetActive(true);
@@ -377,7 +398,7 @@ namespace GalaxyStrike.UI.Home
         {
             Button[] buttons = { shopNavBtn, upgradeNavBtn, homeNavBtn, mapNavBtn, leaderNavBtn };
             string[] tabNames = { "Shop", "Upgrade", "Home", "Map", "Leaderboard" };
-            Vector3[] startScales = new Vector3[buttons.Length];
+            Vector3[] startIconScales = new Vector3[buttons.Length];
             Color[] startBackgroundColors = new Color[buttons.Length];
             Color[] startLabelColors = new Color[buttons.Length];
             Color[] startIconColors = new Color[buttons.Length];
@@ -392,7 +413,6 @@ namespace GalaxyStrike.UI.Home
                     continue;
 
                 selectedStates[i] = tabNames[i] == selectedTab;
-                startScales[i] = button.transform.localScale;
 
                 Transform tabBackgroundTransform = button.transform.Find("Tab_Background");
                 Image background = tabBackgroundTransform != null ? tabBackgroundTransform.GetComponent<Image>() : null;
@@ -403,6 +423,7 @@ namespace GalaxyStrike.UI.Home
 
                 Transform iconTransform = button.transform.Find("Icon");
                 Image icon = iconTransform != null ? iconTransform.GetComponent<Image>() : null;
+                startIconScales[i] = icon != null ? icon.rectTransform.localScale : Vector3.one;
                 startIconColors[i] = icon != null ? icon.color : Color.white;
 
             }
@@ -420,10 +441,6 @@ namespace GalaxyStrike.UI.Home
                         continue;
 
                     bool selected = selectedStates[i];
-                    float targetScale = selected ? navSelectedScale : 1f;
-
-                    button.transform.localScale = Vector3.Lerp(startScales[i], Vector3.one * targetScale, t);
-
                     Transform tabBackgroundTransform = button.transform.Find("Tab_Background");
                     Image background = tabBackgroundTransform != null ? tabBackgroundTransform.GetComponent<Image>() : null;
                     if (background != null)
@@ -443,6 +460,8 @@ namespace GalaxyStrike.UI.Home
                     Image icon = iconTransform != null ? iconTransform.GetComponent<Image>() : null;
                     if (icon != null)
                     {
+                        float targetScale = selected ? navSelectedScale : 1f;
+                        icon.rectTransform.localScale = Vector3.Lerp(startIconScales[i], Vector3.one * targetScale, t);
                         Color targetColor = selected ? Color.white : new Color(0.82f, 0.90f, 1f, 0.88f);
                         icon.color = Color.Lerp(startIconColors[i], targetColor, t);
                     }
@@ -459,8 +478,6 @@ namespace GalaxyStrike.UI.Home
                     continue;
 
                 bool selected = selectedStates[i];
-                button.transform.localScale = Vector3.one * (selected ? navSelectedScale : 1f);
-
                 Transform tabBackgroundTransform = button.transform.Find("Tab_Background");
                 Image background = tabBackgroundTransform != null ? tabBackgroundTransform.GetComponent<Image>() : null;
                 if (background != null)
@@ -475,7 +492,10 @@ namespace GalaxyStrike.UI.Home
                 Transform iconTransform = button.transform.Find("Icon");
                 Image icon = iconTransform != null ? iconTransform.GetComponent<Image>() : null;
                 if (icon != null)
+                {
+                    icon.rectTransform.localScale = Vector3.one * (selected ? navSelectedScale : 1f);
                     icon.color = selected ? Color.white : new Color(0.82f, 0.90f, 1f, 0.88f);
+                }
             }
 
             navSelectionRoutine = null;

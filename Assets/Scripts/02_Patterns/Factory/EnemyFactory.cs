@@ -18,19 +18,22 @@ public static class EnemyFactory
 
     private static bool _registryInitialized;
 
-    /// <summary>Nạp registry từ Resources/Prefabs đúng 1 lần (hoặc ép nạp lại).</summary>
+    /// <summary>Nạp registry từ Resources/&lt;resourcesFolder&gt; đúng 1 lần (hoặc ép nạp lại).</summary>
     public static void EnsureRegistry(string resourcesFolder = "Prefabs")
     {
         if (_registryInitialized)
             return;
 
-        int loaded = Registry.LoadDefaultsFromResources();
+        int loaded = Registry.LoadDefaultsFromResources(resourcesFolder);
         _registryInitialized = true;
 
         if (loaded == 0)
+        {
             Debug.LogWarning($"[EnemyFactory] Không nạp được quái nào từ Resources/{resourcesFolder}. " +
                              "Kiểm tra prefab có trong Assets/Resources/Prefabs.");
+        }
     }
+
 
     /// <summary>
     /// Xóa toàn bộ registry và đặt lại cờ để lần gọi EnsureRegistry tiếp theo

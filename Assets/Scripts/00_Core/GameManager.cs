@@ -4,6 +4,7 @@ using GalaxyStrike.UI.Loading;
 using TMPro;
 using GalaxyStrike.Save;
 using GalaxyStrike.Leaderboard;
+using GalaxyStrike.Data;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,6 +30,27 @@ public class GameManager : MonoBehaviour
     public int currentStageHP = 16;
 
     private bool isLevelWon = false;
+    private bool isGameOver = false;
+
+    /// <summary>Trận đã kết thúc (thắng hoặc thua).</summary>
+    public bool IsRoundOver => isLevelWon || isGameOver;
+    public bool IsOverForBooster => IsRoundOver;
+
+    [Header("Revive")]
+    [Tooltip("Giá Coin lần hồi sinh đầu tiên trong màn")]
+    [SerializeField] private int reviveBaseCost = 900;
+    [Tooltip("Mỗi lần hồi sinh tiếp theo trong cùng màn cộng thêm chừng này")]
+    [SerializeField] private int reviveCostStep = 500;
+    [Tooltip("Số giây bất tử sau khi hồi sinh")]
+    [SerializeField] private float reviveShieldSeconds = 3f;
+
+    [Header("VFX (để trống thì dùng hiệu ứng sinh bằng code)")]
+    [Tooltip("Prefab vụ nổ khi quái/Boss chết")]
+    [SerializeField] private GameObject explosionPrefab;
+    [Tooltip("Prefab tia lửa khi đạn trúng quái / nhặt item")]
+    [SerializeField] private GameObject hitSparkPrefab;
+
+    private int reviveCount;
 
     /// <summary>
     /// Singleton của bộ điều khiển game trong GameScene.
@@ -52,6 +74,23 @@ public class GameManager : MonoBehaviour
         {
             gameObject.AddComponent<HUD_Panel>();
         }
+
+        EnsureGameplayFxSystems();
+    }
+
+    /// <summary>Cấu hình VFX và tự gắn rung camera nếu Scene chưa đặt sẵn.</summary>
+    private void EnsureGameplayFxSystems()
+    {
+        // Cho phép designer gán prefab VFX trong Inspector; để trống thì dùng hiệu ứng code.
+        VfxSpawner.Configure(explosionPrefab, hitSparkPrefab);
+
+        // CameraShake phải nằm trên camera để rung đúng.
+        if (FindObjectOfType<CameraShake>() == null)
+        {
+            Camera cam = Camera.main;
+            if (cam != null && cam.GetComponent<CameraShake>() == null)
+                cam.gameObject.AddComponent<CameraShake>();
+        }
     }
 
     /// <summary>
@@ -62,6 +101,8 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         isLevelWon = false;
+        isGameOver = false;
+        reviveCount = 0;
 
         // Điểm/vàng lấy từ SaveManager (nguồn dữ liệu duy nhất từ Giai đoạn 2).
         score = PlayerPrefs.GetInt("GalaxyStrike_Score", 0);
@@ -84,6 +125,7 @@ public class GameManager : MonoBehaviour
         totalEnemiesInLevel = Mathf.Max(1, totalEnemies);
         enemiesDefeated = 0;
         isLevelWon = false;
+        isGameOver = false;
 
         if (HUD_Panel.Instance != null)
         {
@@ -133,6 +175,16 @@ public class GameManager : MonoBehaviour
         // Ghi ngay vào save để tiền kiếm được không mất khi thoát giữa chừng.
         SaveManager.Instance.AddCoins(amount);
 
+        UpdateUI();
+    }
+
+    /// <summary>
+    /// Đồng bộ số Coin hiển thị theo số dư thật trong SaveManager.
+    /// Dùng sau khi Booster (hoặc chỗ khác) tự trừ tiền qua SaveManager.
+    /// </summary>
+    public void SyncCoinsFromSave()
+    {
+        coins = SaveManager.Instance.Coins;
         UpdateUI();
     }
 
@@ -300,11 +352,142 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Giá Coin của lần hồi sinh kế tiếp (lũy tiến theo số lần đã hồi trong màn).
+    /// </summary>
+    public int NextReviveCost => reviveBaseCost + reviveCostStep * reviveCount;
+
+    /// <summary>
+    /// Còn lượt hồi sinh miễn phí / không? Hiện cho phép tối đa 1 lần mỗi màn
+    /// (khớp thiết kế level: "Hồi sinh tại chỗ khi Game Over, tối đa 1 lần/màn").
+    /// </summary>
+    public bool CanRevive => reviveCount < 1 && !isLevelWon;
+
+    /// <summary>
+    /// Người chơi vừa cạn máu. Nếu còn lượt hồi sinh thì mời hồi sinh,
+    /// ngược lại chạy luồng Game Over như cũ.
+    /// </summary>
+    public void OnPlayerDefeated()
+    {
+        if (isLevelWon || isGameOver) return;
+
+        if (CanRevive && OpenReviveOffer())
+            return;
+
+        GameOver();
+    }
+
+    /// <summary>
+    /// Mở panel hồi sinh. Trả về false nếu không dựng được panel -> caller hiện Game Over.
+    /// </summary>
+    private bool OpenReviveOffer()
+    {
+        if (PanelManager.Instance != null && PanelManager.Instance.TryShowReviveOffer(NextReviveCost, reviveShieldSeconds))
+        {
+            Time.timeScale = 0f;
+            return true;
+        }
+
+        RevivePanelUI panel = RevivePanelUI.EnsureExists();
+        if (panel == null)
+            return false;
+
+        if (PanelManager.Instance != null)
+            PanelManager.Instance.HideHudForModal();
+
+        // Hiện panel TRƯỚC rồi mới dừng thời gian: nếu panel không hiển thị được
+        // thì tránh để game kẹt paused mà người chơi không bấm được gì.
+        panel.ShowRevive(NextReviveCost, reviveShieldSeconds);
+        Time.timeScale = 0f;
+        return true;
+    }
+
+    /// <summary>
+    /// Người chơi chọn hồi sinh bằng Coin. Trừ tiền nếu đủ, hồi đầy máu + bất tử tạm thời
+    /// rồi tiếp tục ván. Trả về true nếu hồi sinh thành công.
+    /// </summary>
+    public bool TryReviveWithCoins()
+    {
+        if (!CanRevive) return false;
+
+        // Chỉ hồi sinh khi tàu thực sự đang gục; tránh trừ tiền oan nếu gọi sai lúc.
+        PlayerController player = PlayerController.Instance;
+        if (player == null || !player.IsDowned)
+            return false;
+
+        int cost = NextReviveCost;
+        if (!SaveManager.Instance.TrySpendCurrency(CurrencyType.Gold, cost))
+            return false;
+
+        // HUD coin hiển thị tổng ví thật sau khi trừ.
+        SyncCoinsFromSave();
+
+        return ApplyRevive();
+    }
+
+    /// <summary>
+    /// Người chơi chọn hồi sinh bằng Rewarded Ad (miễn phí Coin).
+    ///
+    /// HIỆN CHƯA tích hợp SDK quảng cáo nên hàm TỪ CHỐI (trả false) để không biến
+    /// nút quảng cáo thành nút hồi sinh miễn phí vô hạn. Khi tích hợp AdMob/Unity Ads,
+    /// chỉ gọi <see cref="ApplyRevive"/> bên trong callback onUserEarnedReward.
+    /// </summary>
+    public bool TryReviveWithAd()
+    {
+        if (!CanRevive) return false;
+
+        // TODO(Ads): thay bằng AdsService.ShowRewarded(onReward: () => ApplyRevive()).
+        Debug.LogWarning("[Revive] Rewarded Ad chưa tích hợp — từ chối hồi sinh bằng quảng cáo.");
+        return false;
+    }
+
+    /// <summary>
+    /// Thực sự hồi sinh tàu và đóng panel, trả lại quyền điều khiển.
+    /// </summary>
+    private bool ApplyRevive()
+    {
+        PlayerController player = PlayerController.Instance;
+        if (player == null || !player.Revive(reviveShieldSeconds))
+            return false;
+
+        reviveCount++;
+
+        if (PanelManager.Instance != null)
+            PanelManager.Instance.ShowHUDOnly();
+
+        Time.timeScale = 1f;
+        return true;
+    }
+
+    /// <summary>
+    /// Người chơi chọn bỏ qua hồi sinh: đóng panel rồi đi thẳng tới Game Over.
+    /// Việc mở Game Over Panel do <see cref="GameOver"/> tự lo (tránh gọi 2 lần).
+    /// </summary>
+    public void DeclineRevive()
+    {
+        if (RevivePanelUI.Instance != null)
+            RevivePanelUI.Instance.gameObject.SetActive(false);
+
+        GameOver();
+    }
+
+    /// <summary>
     /// Xử lý khi người chơi thua: cộng XP theo số quái đã hạ, lưu điểm,
     /// gửi thành tích lên Leaderboard rồi mở màn hình Game Over.
+    /// Chỉ chạy đúng MỘT lần nhờ cờ <see cref="isGameOver"/>.
     /// </summary>
     public void GameOver()
     {
+        if (isLevelWon || isGameOver) return;
+        isGameOver = true;
+
+        if (PanelManager.Instance != null)
+            PanelManager.Instance.ShowGameOverPanel();
+
+        // Nếu đang chờ hồi sinh mà người chơi bỏ qua, tàu vẫn còn trong Scene
+        // nhưng đã ở trạng thái gục — dọn nó luôn cho nhất quán với luồng cũ.
+        if (PlayerController.Instance != null && PlayerController.Instance.IsDowned)
+            Destroy(PlayerController.Instance.gameObject);
+
         // Coin/XP kiếm được trong màn vẫn thuộc về người chơi.
         // AddCoins đã flush vào save ngay khi giết quái, nhưng XP chỉ cộng khi thắng màn,
         // nên ở đây cấp XP theo số quái đã hạ để không mất công sức.
@@ -317,12 +500,7 @@ public class GameManager : MonoBehaviour
         // Thua vẫn ghi thành tích: quái đã hạ + điểm cao (nếu phá kỷ lục).
         SaveManager.Instance.ReportScore(score);
         SaveManager.Instance.FlushProgress();
-        LeaderboardService.Instance.SubmitProgress();
-
-        if (PanelManager.Instance != null)
-        {
-            PanelManager.Instance.ShowGameOverPanel();
-        }
+        LeaderboardService.Instance?.SubmitProgress();
     }
 
     /// <summary>

@@ -66,13 +66,9 @@ public static class GalaxyStrikeBottomNavigationSetup
         barRect.sizeDelta = new Vector2(0f, 280f);
 
         Image barImage = barObject.GetComponent<Image>();
-        if (barImage == null)
-            barImage = barObject.AddComponent<Image>();
-        barImage.sprite = panelSprite;
-        barImage.type = Image.Type.Simple;
-        barImage.preserveAspect = false;
-        barImage.color = new Color(0.82f, 0.90f, 1f, 0.86f);
-        barImage.raycastTarget = false;
+        if (barImage != null)
+            barImage.raycastTarget = false;
+        ConfigureBackground(barRect, panelSprite);
 
         HorizontalLayoutGroup layout = barObject.GetComponent<HorizontalLayoutGroup>();
         if (layout != null)
@@ -95,6 +91,33 @@ public static class GalaxyStrikeBottomNavigationSetup
         Debug.Log("[GalaxyStrike] Bottom navigation built and saved in HomeScene.");
     }
 
+    private static void ConfigureBackground(RectTransform bar, Sprite sprite)
+    {
+        Transform background = bar.Find("Background_Bar");
+        if (background == null)
+        {
+            var go = new GameObject("Background_Bar", typeof(RectTransform), typeof(Image));
+            go.layer = bar.gameObject.layer;
+            background = go.transform;
+            background.SetParent(bar, false);
+        }
+
+        var rect = (RectTransform)background;
+        rect.anchorMin = Vector2.zero;
+        rect.anchorMax = new Vector2(1f, 0f);
+        rect.pivot = new Vector2(0.5f, 0f);
+        // The source sprite has a black strip along its bottom edge.
+        rect.anchoredPosition = new Vector2(0f, -18f);
+        rect.sizeDelta = new Vector2(100f, 310f);
+        rect.SetAsFirstSibling();
+
+        Image image = background.GetComponent<Image>();
+        image.sprite = sprite;
+        image.type = Image.Type.Simple;
+        image.preserveAspect = false;
+        image.color = Color.white;
+    }
+
     private static void ConfigureButton(Button button, Sprite iconSprite, string labelText, Sprite tabSprite, bool selected, int index)
     {
         RectTransform buttonRect = button.GetComponent<RectTransform>();
@@ -102,9 +125,9 @@ public static class GalaxyStrikeBottomNavigationSetup
         buttonRect.anchorMin = new Vector2(centerX, 0f);
         buttonRect.anchorMax = new Vector2(centerX, 0f);
         buttonRect.pivot = new Vector2(0.5f, 0f);
-        buttonRect.anchoredPosition = Vector2.zero;
+        buttonRect.anchoredPosition = new Vector2(0f, 25f);
         buttonRect.sizeDelta = new Vector2(216f, 280f);
-        buttonRect.localScale = Vector3.one * (selected ? 1.12f : 1f);
+        buttonRect.localScale = Vector3.one;
 
         LayoutElement layoutElement = button.GetComponent<LayoutElement>();
         if (layoutElement != null)
@@ -137,8 +160,8 @@ public static class GalaxyStrikeBottomNavigationSetup
         tabBackgroundRect.anchorMin = new Vector2(0.5f, 0f);
         tabBackgroundRect.anchorMax = new Vector2(0.5f, 0f);
         tabBackgroundRect.pivot = new Vector2(0.5f, 0f);
-        tabBackgroundRect.anchoredPosition = Vector2.zero;
-        tabBackgroundRect.sizeDelta = new Vector2(216f, 330f);
+        tabBackgroundRect.anchoredPosition = new Vector2(0f, -21f);
+        tabBackgroundRect.sizeDelta = new Vector2(216f, 301f);
 
         Image tabBackground = tabBackgroundTransform.GetComponent<Image>();
         tabBackground.sprite = tabSprite;
@@ -159,9 +182,10 @@ public static class GalaxyStrikeBottomNavigationSetup
         RectTransform iconRect = (RectTransform)iconTransform;
         iconRect.anchorMin = new Vector2(0.5f, 1f);
         iconRect.anchorMax = new Vector2(0.5f, 1f);
-        iconRect.pivot = new Vector2(0.5f, 1f);
-        iconRect.anchoredPosition = new Vector2(0f, -56f);
+        iconRect.pivot = new Vector2(0.5f, 0.5f);
         iconRect.sizeDelta = labelText == "SHOP" ? new Vector2(160f, 120f) : new Vector2(140f, 140f);
+        iconRect.anchoredPosition = new Vector2(0f, -56f - iconRect.sizeDelta.y * 0.5f);
+        iconRect.localScale = Vector3.one * (selected ? 1.12f : 1f);
 
         Image icon = iconTransform.GetComponent<Image>();
         icon.sprite = iconSprite;

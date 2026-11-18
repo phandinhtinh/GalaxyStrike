@@ -1,9 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI; 
 
-public class PanelManager : MonoBehaviour
+public sealed class PanelManager : SingletonBehaviour<PanelManager>
 {
-    public static PanelManager Instance { get; private set; }
+    /// <summary>
+    /// Panel là object của Scene hiện tại (hudPanel/settingsPanel/gameOverPanel/victoryPanel
+    /// đều nằm trong GameScene). KHÔNG giữ qua Scene, nếu không sau khi load lại Scene
+    /// các reference sẽ trở thành null và mọi panel ngừng hoạt động.
+    /// </summary>
+    protected override bool PersistAcrossScenes => false;
 
     [Header("UI Panels")]
     [SerializeField] private GameObject hudPanel;
@@ -14,20 +19,10 @@ public class PanelManager : MonoBehaviour
     /// <summary>
     /// Khởi tạo Singleton cho PanelManager và tắt raycastTarget của ảnh nền HUD
     /// để nền HUD không "nuốt" thao tác kéo/click của người chơi.
+    /// Việc giữ object qua Scene do <see cref="SingletonBehaviour{T}"/> lo.
     /// </summary>
-    private void Awake()
+    protected override void OnSingletonAwake()
     {
-        // Khởi tạo Singleton để các script khác có thể gọi PanelManager dễ dàng
-        if (Instance == null) 
-        {
-            Instance = this;
-        }
-        else 
-        {
-            Destroy(gameObject);
-            return;
-        }
-
         // Đảm bảo HUD_Panel không bao giờ chặn chuột/cảm ứng kéo tàu
         if (hudPanel != null)
         {
@@ -37,7 +32,7 @@ public class PanelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Khi Scene vừa vào: chỉ bật HUD, ẩn Settings/GameOver/Victory.
+    /// Khi Scene vừa vào: chỉ bật HUD, ẩn Settings/GameOver/Victory/Revive.
     /// </summary>
     private void Start()
     {
@@ -54,6 +49,9 @@ public class PanelManager : MonoBehaviour
         if (settingsPanel != null) settingsPanel.SetActive(false);
         if (gameOverPanel != null) gameOverPanel.SetActive(false);
         if (victoryPanel != null) victoryPanel.SetActive(false);
+
+        if (RevivePanelUI.Instance != null)
+            RevivePanelUI.Instance.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -79,9 +77,35 @@ public class PanelManager : MonoBehaviour
     /// </summary>
     public void ShowGameOverPanel()
     {
-        if (hudPanel != null) hudPanel.SetActive(false); // Ẩn HUD đi cho gọn
-        if (gameOverPanel != null) gameOverPanel.SetActive(true);
+        HideHudForModal();
+        if (settingsPanel != null) settingsPanel.SetActive(false);
+        if (RevivePanelUI.Instance != null) RevivePanelUI.Instance.gameObject.SetActive(false);
+        if (gameOverPanel != null)
+        {
+            if (gameOverPanel.TryGetComponent(out GameOverPanelUI gameOver))
+                gameOver.ShowGameOver();
+            else
+                gameOverPanel.SetActive(true);
+        }
         Time.timeScale = 0f; // Đóng băng game
+    }
+
+    public bool TryShowReviveOffer(int coinCost, float shieldSeconds)
+    {
+        if (gameOverPanel == null || !gameOverPanel.TryGetComponent(out GameOverPanelUI gameOver)
+            || !gameOver.TryShowReviveOffer(coinCost, shieldSeconds))
+            return false;
+
+        HideHudForModal();
+        return true;
+    }
+
+    /// <summary>
+    /// Ẩn HUD khi mở một panel modal (Revive) để tránh chồng lên nhau.
+    /// </summary>
+    public void HideHudForModal()
+    {
+        if (hudPanel != null) hudPanel.SetActive(false);
     }
 
     /// <summary>

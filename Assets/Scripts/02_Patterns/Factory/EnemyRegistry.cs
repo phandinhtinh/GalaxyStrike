@@ -61,10 +61,10 @@ public sealed class EnemyRegistry
     }
 
     /// <summary>
-    /// Nạp mặc định từ Resources/Prefabs — khớp với cách LevelManager đang load.
+    /// Nạp mặc định từ Resources/&lt;folder&gt; — mặc định "Prefabs" khớp với LevelManager.
     /// Gọi 1 lần khi khởi tạo game; trả về số loại nạp được.
     /// </summary>
-    public int LoadDefaultsFromResources()
+    public int LoadDefaultsFromResources(string resourcesFolder = "Prefabs")
     {
         int loaded = 0;
         foreach (EnemyKind kind in Enum.GetValues(typeof(EnemyKind)))
@@ -72,7 +72,7 @@ public sealed class EnemyRegistry
             if (kind == EnemyKind.None)
                 continue;
 
-            GameObject prefab = Resources.Load<GameObject>("Prefabs/" + kind);
+            GameObject prefab = Resources.Load<GameObject>(resourcesFolder + "/" + kind);
             if (prefab == null)
                 continue;
 

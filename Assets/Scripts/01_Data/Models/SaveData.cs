@@ -19,8 +19,10 @@ namespace GalaxyStrike.Save
 
         [Tooltip("Tổng XP đã tích luỹ (dùng để tính accountLevel)")]
         public int experience;
+        public int battlePassClaimedTiers;
 
         public int coins = 500;
+        public bool welcomeGiftClaimed;
         public int gems = 20;
         public int energy = 30;
         public int maxEnergy = 30;
