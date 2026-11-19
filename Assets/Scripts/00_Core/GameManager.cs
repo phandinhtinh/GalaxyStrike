@@ -518,7 +518,7 @@ public class GameManager : MonoBehaviour
 
         int levelNum = (LevelManager.Instance != null)
             ? LevelManager.Instance.CurrentLevel
-            : PlayerPrefs.GetInt("GalaxyStrike_CurrentLevel", 1);
+            : LevelManager.SavedLevel;
 
         if (VictoryPanelUI.Instance != null)
         {
@@ -547,26 +547,16 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("GalaxyStrike_Score", score);
         PlayerPrefs.DeleteKey("GalaxyStrike_BulletLevel");
 
-        if (LevelManager.Instance != null)
+        LevelManager levels = LevelManager.Instance;
+        if (levels.IsChallengeMode || levels.CurrentLevel >= levels.MaxLevels)
         {
-            LevelManager.Instance.AdvanceToNextLevel();
-        }
-        else
-        {
-            int current = PlayerPrefs.GetInt("GalaxyStrike_CurrentLevel", 1);
-            PlayerPrefs.SetInt("GalaxyStrike_CurrentLevel", current + 1);
-        }
-        PlayerPrefs.Save();
-
-        // Đã hoàn thành màn cuối của chiến dịch -> về Home, không chơi lại màn 50.
-        // Challenge: mỗi lượt là một màn khác -> quay về Home để chọn lượt mới.
-        if (LevelManager.Instance != null &&
-            (LevelManager.Instance.IsChallengeMode || LevelManager.Instance.IsCampaignComplete()))
-        {
+            PlayerPrefs.Save();
             LoadingSceneController.LoadScene("HomeScene");
             return;
         }
 
+        levels.AdvanceToNextLevel();
+        PlayerPrefs.Save();
         LoadingSceneController.LoadScene(SceneManager.GetActiveScene().name);
     }
 

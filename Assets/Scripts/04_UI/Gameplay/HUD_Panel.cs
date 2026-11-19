@@ -104,7 +104,7 @@ public class HUD_Panel : MonoBehaviour
 
         int level = LevelManager.Instance != null
             ? LevelManager.Instance.CurrentLevel
-            : PlayerPrefs.GetInt("GalaxyStrike_CurrentLevel", 1);
+            : LevelManager.SavedLevel;
         levelText.text = $"Lv. {level}";
     }
 

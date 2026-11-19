@@ -70,7 +70,7 @@ namespace GalaxyStrike.UI.Home
         private void OnEnable()
         {
             currentStage = Mathf.Clamp(LevelManager.SavedLevel, 1, nodes.Length);
-            lastCleared = SaveManager.Instance.HighestLevel >= nodes.Length ? nodes.Length : currentStage - 1;
+            lastCleared = Mathf.Clamp(SaveManager.Instance.HighestLevel, 0, nodes.Length);
             RefreshRoute();
             FocusStage(currentStage);
         }

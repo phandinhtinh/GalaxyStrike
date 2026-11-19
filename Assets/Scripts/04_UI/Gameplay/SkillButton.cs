@@ -10,6 +10,7 @@ public abstract class SkillButton : MonoBehaviour, ICanvasRaycastFilter
     [SerializeField] private Image skillIcon;
     [SerializeField] private Image chargeRing;
     [SerializeField] private TextMeshProUGUI cooldownText;
+    [SerializeField] private TMP_Text skillLabel;
     [SerializeField, Min(0.1f)] private float cooldown = 12f;
 
     protected Sprite RingSprite => chargeRing.sprite;
@@ -49,7 +50,8 @@ public abstract class SkillButton : MonoBehaviour, ICanvasRaycastFilter
             return;
 
         displayedSeconds = seconds;
-        skillIcon.enabled = seconds == 0;
+        if (skillLabel != null)
+            skillLabel.enabled = seconds == 0;
         cooldownText.enabled = seconds > 0;
         cooldownText.SetText("{0}", seconds);
     }

@@ -178,31 +178,31 @@ public static class GalaxyStrikeTaskPopupBuilder
         {
             new TaskPopupCategory { entries = CreateEntries(taskIcons, coin, gem, energy, crate,
                 new[] {
-                    Entry(taskIcons[0], "Play 3 battles", 1f / 3f, "1/3", coin, "x500", gem, "x5", "GO"),
-                    Entry(taskIcons[1], "Destroy 50 enemies", 12f / 50f, "12/50", coin, "x800", energy, "x10", "GO"),
-                    Entry(taskIcons[2], "Defeat 1 Boss", 0f, "0/1", gem, "x10", coin, "x1000", "GO"),
-                    Entry(taskIcons[3], "Use 3 Power-ups", 0f, "0/3", coin, "x600", energy, "x10", "GO"),
-                    Entry(taskIcons[4], "Watch 1 Ad", 0f, "0/1", gem, "x5", coin, "x100", "GO"),
+                    Entry(taskIcons[0], "Play 3 battles", 0f, string.Empty, coin, "x500", gem, "x5", "UNAVAILABLE"),
+                    Entry(taskIcons[1], "Destroy 50 enemies", 0f, string.Empty, coin, "x800", energy, "x10", "UNAVAILABLE"),
+                    Entry(taskIcons[2], "Defeat 1 Boss", 0f, string.Empty, gem, "x10", coin, "x1000", "UNAVAILABLE"),
+                    Entry(taskIcons[3], "Use 3 Power-ups", 0f, string.Empty, coin, "x600", energy, "x10", "UNAVAILABLE"),
+                    Entry(taskIcons[4], "Watch 1 Ad", 0f, string.Empty, gem, "x5", coin, "x100", "UNAVAILABLE"),
                     Entry(taskIcons[5], "Login today", 1f, "1/1", coin, "x300", gem, "x5", "CLAIM", true,
                         TaskPopupRewardType.Coins, TaskPopupRewardType.Gems)
                 }) },
             new TaskPopupCategory { entries = CreateEntries(taskIcons, coin, gem, energy, crate,
                 new[] {
-                    Entry(taskIcons[0], "Play 20 battles", 0.35f, "7/20", coin, "x2500", gem, "x20", "GO"),
-                    Entry(taskIcons[1], "Destroy 500 enemies", 0.22f, "110/500", coin, "x4000", energy, "x50", "GO"),
-                    Entry(taskIcons[2], "Defeat 5 Bosses", 0f, "0/5", gem, "x60", crate, "x2", "GO"),
-                    Entry(taskIcons[3], "Use 30 Power-ups", 0.3f, "9/30", coin, "x3000", energy, "x40", "GO"),
-                    Entry(taskIcons[0], "Clear 10 stages", 0.4f, "4/10", gem, "x30", coin, "x1800", "GO"),
-                    Entry(taskIcons[5], "Login 5 days", 0.4f, "2/5", coin, "x1500", gem, "x15", "GO")
+                    Entry(taskIcons[0], "Play 20 battles", 0f, string.Empty, coin, "x2500", gem, "x20", "UNAVAILABLE"),
+                    Entry(taskIcons[1], "Destroy 500 enemies", 0f, string.Empty, coin, "x4000", energy, "x50", "UNAVAILABLE"),
+                    Entry(taskIcons[2], "Defeat 5 Bosses", 0f, string.Empty, gem, "x60", crate, "x2", "UNAVAILABLE"),
+                    Entry(taskIcons[3], "Use 30 Power-ups", 0f, string.Empty, coin, "x3000", energy, "x40", "UNAVAILABLE"),
+                    Entry(taskIcons[0], "Clear 10 stages", 0f, string.Empty, gem, "x30", coin, "x1800", "UNAVAILABLE"),
+                    Entry(taskIcons[5], "Login 5 days", 0f, string.Empty, coin, "x1500", gem, "x15", "UNAVAILABLE")
                 }) },
             new TaskPopupCategory { entries = CreateEntries(taskIcons, coin, gem, energy, crate,
                 new[] {
-                    Entry(taskIcons[0], "Complete 10 battles", 0.7f, "7/10", gem, "x25", coin, "x1500", "GO"),
-                    Entry(taskIcons[1], "Destroy 1000 enemies", 0.12f, "120/1000", gem, "x40", energy, "x30", "GO"),
-                    Entry(taskIcons[2], "Defeat 10 Bosses", 0f, "0/10", crate, "x3", gem, "x50", "GO"),
-                    Entry(taskIcons[3], "Use 100 Power-ups", 0.09f, "9/100", coin, "x5000", energy, "x60", "GO"),
-                    Entry(taskIcons[5], "Login for 7 days", 0.28f, "2/7", gem, "x35", coin, "x2000", "GO"),
-                    Entry(taskIcons[0], "Earn 3 stars", 0.33f, "1/3", crate, "x1", gem, "x15", "GO")
+                    Entry(taskIcons[0], "Complete 10 battles", 0f, string.Empty, gem, "x25", coin, "x1500", "UNAVAILABLE"),
+                    Entry(taskIcons[1], "Destroy 1000 enemies", 0f, string.Empty, gem, "x40", energy, "x30", "UNAVAILABLE"),
+                    Entry(taskIcons[2], "Defeat 10 Bosses", 0f, string.Empty, crate, "x3", gem, "x50", "UNAVAILABLE"),
+                    Entry(taskIcons[3], "Use 100 Power-ups", 0f, string.Empty, coin, "x5000", energy, "x60", "UNAVAILABLE"),
+                    Entry(taskIcons[5], "Login for 7 days", 0f, string.Empty, gem, "x35", coin, "x2000", "UNAVAILABLE"),
+                    Entry(taskIcons[0], "Earn 3 stars", 0f, string.Empty, crate, "x1", gem, "x15", "UNAVAILABLE")
                 }) }
         };
 
@@ -226,7 +226,7 @@ public static class GalaxyStrikeTaskPopupBuilder
         EditorUtility.SetDirty(missionObject);
         EditorSceneManager.MarkSceneDirty(scene);
         Selection.activeGameObject = canvas.gameObject;
-        Debug.Log("[Task UI] Built the HomeScene popup with Daily, Weekly, and Achievements tabs. Task counters/rewards are sample UI data.");
+        Debug.Log("[Task UI] Built the HomeScene popup with Daily, Weekly, and Achievements tabs. Unimplemented missions are shown as unavailable.");
     }
 
     private static void PrepareSprites()

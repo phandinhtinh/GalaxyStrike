@@ -68,8 +68,9 @@ public class VictoryPanelUI : MonoBehaviour
         gameObject.SetActive(true);
         Time.timeScale = 0f; // Tạm dừng game để người chơi xem kết quả
 
-        bool isChallenge = LevelManager.Instance != null && LevelManager.Instance.IsChallengeMode;
-        bool campaignComplete = LevelManager.Instance != null && LevelManager.Instance.IsCampaignComplete();
+        LevelManager levels = LevelManager.Instance;
+        bool isChallenge = levels.IsChallengeMode;
+        bool campaignComplete = !isChallenge && levelNum >= levels.MaxLevels;
 
         if (titleText != null)
         {
@@ -158,10 +159,14 @@ private static void SetSummaryText(TextMeshProUGUI text, string value)
         }
 
         Time.timeScale = 1f;
-        if (LevelManager.Instance != null)
+        LevelManager levels = LevelManager.Instance;
+        if (levels.IsChallengeMode || levels.CurrentLevel >= levels.MaxLevels)
         {
-            LevelManager.Instance.AdvanceToNextLevel();
+            LoadingSceneController.LoadScene("HomeScene");
+            return;
         }
+
+        levels.AdvanceToNextLevel();
         LoadingSceneController.LoadScene(SceneManager.GetActiveScene().name);
     }
 

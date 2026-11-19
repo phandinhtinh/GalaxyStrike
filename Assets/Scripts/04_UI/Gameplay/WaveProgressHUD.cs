@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>Live wave milestones. END is reached only when the spawner clears the stage.</summary>
+/// <summary>Live wave milestones and a single status line for the stage.</summary>
 public class WaveProgressHUD : MonoBehaviour
 {
     [SerializeField] private Image progressFill;
@@ -32,7 +32,7 @@ public class WaveProgressHUD : MonoBehaviour
         RectTransform root = GetComponent<RectTransform>();
         root.anchorMin = root.anchorMax = new Vector2(0.5f, 1f);
         root.pivot = new Vector2(0.5f, 0.5f);
-        root.anchoredPosition = new Vector2(0f, -570f);
+        root.anchoredPosition = new Vector2(0f, -420f);
         root.sizeDelta = new Vector2(1560f, 230f);
 
         Image frame = MakeImage("GeneratedFrame", root, new Vector2(1560f, 130f), Vector2.zero, Color.white);
@@ -43,7 +43,7 @@ public class WaveProgressHUD : MonoBehaviour
         // The generated sprite's recessed center remains visible around the live fill.
         progressFill.rectTransform.pivot = new Vector2(0f, 0.5f);
         progressFill.rectTransform.anchoredPosition = new Vector2(-700f, 0f);
-        statusText = MakeText("WaveStatus", root, new Vector2(1400f, 65f), new Vector2(0f, 100f), 44f);
+        statusText = MakeText("WaveStatus", root, new Vector2(1400f, 92f), new Vector2(0f, 112f), 68f);
         milestoneRoot = MakeRect("WaveMilestones", root, new Vector2(1400f, 1f), Vector2.zero);
         BuildMilestones(Mathf.Max(1, previewWaveCount));
         ApplyProgress(1, 0f, false);
@@ -65,10 +65,6 @@ public class WaveProgressHUD : MonoBehaviour
                 milestoneRoot, new Vector2(24f, 24f), new Vector2(x, 0f), cyan);
             marker.rectTransform.localRotation = Quaternion.Euler(0f, 0f, 45f);
             milestones.Add(marker);
-            TextMeshProUGUI label = MakeText("Label_" + i, milestoneRoot,
-                new Vector2(130f, 60f), new Vector2(x, -87f), 42f);
-            label.text = i == count ? "END" : (i + 1).ToString();
-            label.color = i == count ? gold : Color.white;
         }
     }
 
@@ -115,7 +111,7 @@ public class WaveProgressHUD : MonoBehaviour
         text.fontSize = fontSize;
         text.fontStyle = FontStyles.Bold;
         text.alignment = TextAlignmentOptions.Center;
-        text.enableWordWrapping = false;
+        text.textWrappingMode = TextWrappingModes.NoWrap;
         text.raycastTarget = false;
         text.color = Color.white;
         return text;

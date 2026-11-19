@@ -31,7 +31,7 @@ namespace GalaxyStrike.UI.Tasks
         public Sprite rewardTwoIcon;
         public string rewardTwoAmount;
         public TaskPopupRewardType rewardTwoType;
-        public string actionLabel = "GO";
+        public string actionLabel = "CLAIM";
         public bool claimAvailable;
     }
 
@@ -60,6 +60,7 @@ namespace GalaxyStrike.UI.Tasks
 
         private const string ClaimPrefsPrefix = "GalaxyStrike.TaskPopup.Claimed.v1";
         private const string ClaimedLabel = "CLAIMED";
+        private const string UnavailableLabel = "UNAVAILABLE";
 
         [SerializeField] private Sprite goButtonSprite;
         [SerializeField] private Sprite claimButtonSprite;
@@ -211,24 +212,23 @@ namespace GalaxyStrike.UI.Tasks
                     if (entry == null)
                         continue;
 
-                    if (entry.claimAvailable && HasClaimed(index, i))
-                    {
-                        entry.claimAvailable = false;
-                        entry.actionLabel = ClaimedLabel;
-                    }
-
                     if (row.icon != null)
                         row.icon.sprite = entry.icon;
                     if (row.title != null)
                         row.title.text = entry.title;
                     if (row.progressFill != null)
-                        row.progressFill.fillAmount = Mathf.Clamp01(entry.progress);
+                    {
+                        row.progressFill.fillAmount = entry.claimAvailable ? Mathf.Clamp01(entry.progress) : 0f;
+                        Transform track = row.progressFill.transform.parent;
+                        if (track != null && track.name == "Progress_Track")
+                            track.gameObject.SetActive(entry.claimAvailable);
+                    }
                     if (row.progressLabel != null)
-                        row.progressLabel.text = entry.progressLabel;
+                        row.progressLabel.text = entry.claimAvailable ? entry.progressLabel : string.Empty;
                     SetReward(row.rewardOneIcon, row.rewardOneAmount, entry.rewardOneIcon, entry.rewardOneAmount);
                     SetReward(row.rewardTwoIcon, row.rewardTwoAmount, entry.rewardTwoIcon, entry.rewardTwoAmount);
 
-                    RenderActionButton(row, entry);
+                    RenderActionButton(row, entry, entry.claimAvailable && HasClaimed(index, i));
                 }
             }
 
@@ -270,9 +270,7 @@ namespace GalaxyStrike.UI.Tasks
 
             if (HasClaimed(selectedCategoryIndex, rowIndex))
             {
-                entry.claimAvailable = false;
-                entry.actionLabel = ClaimedLabel;
-                RenderActionButton(row, entry);
+                RenderActionButton(row, entry, true);
                 return;
             }
 
@@ -280,29 +278,27 @@ namespace GalaxyStrike.UI.Tasks
                 || !GrantReward(entry.rewardTwoType, entry.rewardTwoAmount))
                 return;
 
-            entry.claimAvailable = false;
-            entry.actionLabel = ClaimedLabel;
             PlayerPrefs.SetInt(GetClaimPrefsKey(selectedCategoryIndex, rowIndex), 1);
             PlayerPrefs.Save();
-            RenderActionButton(row, entry);
+            RenderActionButton(row, entry, true);
         }
 
-        private void RenderActionButton(TaskPopupRowView row, TaskPopupEntry entry)
+        private void RenderActionButton(TaskPopupRowView row, TaskPopupEntry entry, bool claimed)
         {
+            bool canClaim = entry.claimAvailable && !claimed;
             if (row.actionLabel != null)
-                row.actionLabel.text = entry.actionLabel;
+                row.actionLabel.text = claimed ? ClaimedLabel : canClaim ? entry.actionLabel : UnavailableLabel;
 
-            bool isClaim = entry.claimAvailable || string.Equals(entry.actionLabel, ClaimedLabel, StringComparison.Ordinal);
             if (row.actionButton != null)
             {
-                row.actionButton.interactable = !string.Equals(entry.actionLabel, ClaimedLabel, StringComparison.Ordinal);
+                row.actionButton.interactable = canClaim;
                 if (row.actionButton.image != null)
                 {
                     if (goButtonSprite != null)
-                        row.actionButton.image.sprite = isClaim && claimButtonSprite != null ? claimButtonSprite : goButtonSprite;
+                        row.actionButton.image.sprite = canClaim && claimButtonSprite != null ? claimButtonSprite : goButtonSprite;
                     row.actionButton.image.type = Image.Type.Simple;
                     row.actionButton.image.preserveAspect = false;
-                    row.actionButton.image.color = Color.white;
+                    row.actionButton.image.color = canClaim ? Color.white : new Color32(158, 185, 210, 255);
                 }
             }
 

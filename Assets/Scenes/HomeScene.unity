@@ -38358,7 +38358,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &888184898
 RectTransform:
   m_ObjectHideFlags: 0
@@ -64027,8 +64027,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e944dff81234d5489aec162a13a48fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   popupRoot: {fileID: 1100556798}
   openButton: {fileID: 89149664}
   closeButton: {fileID: 933210006}
@@ -64056,63 +64056,63 @@ MonoBehaviour:
   - entries:
     - icon: {fileID: 4154075382020245118, guid: d3a260b20a0be1f41b2eb94fc89e9372, type: 3}
       title: Play 3 battles
-      progress: 0.33333334
-      progressLabel: 1/3
+      progress: 0
+      progressLabel:
       rewardOneIcon: {fileID: -1079134412, guid: ac3abd7a989172b438e624f355fd7c29, type: 3}
       rewardOneAmount: x500
       rewardOneType: 0
       rewardTwoIcon: {fileID: -427199135, guid: 0262976f8c0d4b349b3e96d1dd6a89ef, type: 3}
       rewardTwoAmount: x5
       rewardTwoType: 0
-      actionLabel: GO
+      actionLabel: UNAVAILABLE
       claimAvailable: 0
     - icon: {fileID: -2068952570215638476, guid: d3a260b20a0be1f41b2eb94fc89e9372, type: 3}
       title: Destroy 50 enemies
-      progress: 0.24
-      progressLabel: 12/50
+      progress: 0
+      progressLabel:
       rewardOneIcon: {fileID: -1079134412, guid: ac3abd7a989172b438e624f355fd7c29, type: 3}
       rewardOneAmount: x800
       rewardOneType: 0
       rewardTwoIcon: {fileID: 1703385626, guid: 2ec24783db52b2648aa227af74a0d233, type: 3}
       rewardTwoAmount: x10
       rewardTwoType: 0
-      actionLabel: GO
+      actionLabel: UNAVAILABLE
       claimAvailable: 0
     - icon: {fileID: 7725020156808081307, guid: d3a260b20a0be1f41b2eb94fc89e9372, type: 3}
       title: Defeat 1 Boss
       progress: 0
-      progressLabel: 0/1
+      progressLabel:
       rewardOneIcon: {fileID: -427199135, guid: 0262976f8c0d4b349b3e96d1dd6a89ef, type: 3}
       rewardOneAmount: x10
       rewardOneType: 0
       rewardTwoIcon: {fileID: 925263383, guid: 0262976f8c0d4b349b3e96d1dd6a89ef, type: 3}
       rewardTwoAmount: x1
       rewardTwoType: 0
-      actionLabel: GO
+      actionLabel: UNAVAILABLE
       claimAvailable: 0
     - icon: {fileID: -7374080201887889530, guid: d3a260b20a0be1f41b2eb94fc89e9372, type: 3}
       title: Use 3 Power-ups
       progress: 0
-      progressLabel: 0/3
+      progressLabel:
       rewardOneIcon: {fileID: -1079134412, guid: ac3abd7a989172b438e624f355fd7c29, type: 3}
       rewardOneAmount: x600
       rewardOneType: 0
       rewardTwoIcon: {fileID: 1703385626, guid: 2ec24783db52b2648aa227af74a0d233, type: 3}
       rewardTwoAmount: x10
       rewardTwoType: 0
-      actionLabel: GO
+      actionLabel: UNAVAILABLE
       claimAvailable: 0
     - icon: {fileID: -7893607000177315186, guid: d3a260b20a0be1f41b2eb94fc89e9372, type: 3}
       title: Watch 1 Ad
       progress: 0
-      progressLabel: 0/1
+      progressLabel:
       rewardOneIcon: {fileID: -427199135, guid: 0262976f8c0d4b349b3e96d1dd6a89ef, type: 3}
       rewardOneAmount: x5
       rewardOneType: 0
       rewardTwoIcon: {fileID: -1079134412, guid: ac3abd7a989172b438e624f355fd7c29, type: 3}
       rewardTwoAmount: x1
       rewardTwoType: 0
-      actionLabel: GO
+      actionLabel: UNAVAILABLE
       claimAvailable: 0
     - icon: {fileID: -7711898060197581523, guid: d3a260b20a0be1f41b2eb94fc89e9372, type: 3}
       title: Login today
@@ -64129,148 +64129,148 @@ MonoBehaviour:
   - entries:
     - icon: {fileID: 4154075382020245118, guid: d3a260b20a0be1f41b2eb94fc89e9372, type: 3}
       title: Play 20 battles
-      progress: 0.35
-      progressLabel: 7/20
+      progress: 0
+      progressLabel:
       rewardOneIcon: {fileID: -1079134412, guid: ac3abd7a989172b438e624f355fd7c29, type: 3}
       rewardOneAmount: x2500
       rewardOneType: 0
       rewardTwoIcon: {fileID: -427199135, guid: 0262976f8c0d4b349b3e96d1dd6a89ef, type: 3}
       rewardTwoAmount: x20
       rewardTwoType: 0
-      actionLabel: GO
+      actionLabel: UNAVAILABLE
       claimAvailable: 0
     - icon: {fileID: -2068952570215638476, guid: d3a260b20a0be1f41b2eb94fc89e9372, type: 3}
       title: Destroy 500 enemies
-      progress: 0.22
-      progressLabel: 110/500
+      progress: 0
+      progressLabel:
       rewardOneIcon: {fileID: -1079134412, guid: ac3abd7a989172b438e624f355fd7c29, type: 3}
       rewardOneAmount: x4000
       rewardOneType: 0
       rewardTwoIcon: {fileID: 1703385626, guid: 2ec24783db52b2648aa227af74a0d233, type: 3}
       rewardTwoAmount: x50
       rewardTwoType: 0
-      actionLabel: GO
+      actionLabel: UNAVAILABLE
       claimAvailable: 0
     - icon: {fileID: 7725020156808081307, guid: d3a260b20a0be1f41b2eb94fc89e9372, type: 3}
       title: Defeat 5 Bosses
       progress: 0
-      progressLabel: 0/5
+      progressLabel:
       rewardOneIcon: {fileID: -427199135, guid: 0262976f8c0d4b349b3e96d1dd6a89ef, type: 3}
       rewardOneAmount: x60
       rewardOneType: 0
       rewardTwoIcon: {fileID: -1079134412, guid: ac3abd7a989172b438e624f355fd7c29, type: 3}
       rewardTwoAmount: x2
       rewardTwoType: 0
-      actionLabel: GO
+      actionLabel: UNAVAILABLE
       claimAvailable: 0
     - icon: {fileID: -7374080201887889530, guid: d3a260b20a0be1f41b2eb94fc89e9372, type: 3}
       title: Use 30 Power-ups
-      progress: 0.3
-      progressLabel: 9/30
+      progress: 0
+      progressLabel:
       rewardOneIcon: {fileID: -1079134412, guid: ac3abd7a989172b438e624f355fd7c29, type: 3}
       rewardOneAmount: x3000
       rewardOneType: 0
       rewardTwoIcon: {fileID: 1703385626, guid: 2ec24783db52b2648aa227af74a0d233, type: 3}
       rewardTwoAmount: x40
       rewardTwoType: 0
-      actionLabel: GO
+      actionLabel: UNAVAILABLE
       claimAvailable: 0
     - icon: {fileID: 4154075382020245118, guid: d3a260b20a0be1f41b2eb94fc89e9372, type: 3}
       title: Clear 10 stages
-      progress: 0.4
-      progressLabel: 4/10
+      progress: 0
+      progressLabel:
       rewardOneIcon: {fileID: -427199135, guid: 0262976f8c0d4b349b3e96d1dd6a89ef, type: 3}
       rewardOneAmount: x30
       rewardOneType: 0
       rewardTwoIcon: {fileID: -1079134412, guid: ac3abd7a989172b438e624f355fd7c29, type: 3}
       rewardTwoAmount: x1800
       rewardTwoType: 0
-      actionLabel: GO
+      actionLabel: UNAVAILABLE
       claimAvailable: 0
     - icon: {fileID: -7711898060197581523, guid: d3a260b20a0be1f41b2eb94fc89e9372, type: 3}
       title: Login 5 days
-      progress: 0.4
-      progressLabel: 2/5
+      progress: 0
+      progressLabel:
       rewardOneIcon: {fileID: -1079134412, guid: ac3abd7a989172b438e624f355fd7c29, type: 3}
       rewardOneAmount: x1500
       rewardOneType: 0
       rewardTwoIcon: {fileID: -427199135, guid: 0262976f8c0d4b349b3e96d1dd6a89ef, type: 3}
       rewardTwoAmount: x15
       rewardTwoType: 0
-      actionLabel: GO
+      actionLabel: UNAVAILABLE
       claimAvailable: 0
   - entries:
     - icon: {fileID: 4154075382020245118, guid: d3a260b20a0be1f41b2eb94fc89e9372, type: 3}
       title: Complete 10 battles
-      progress: 0.7
-      progressLabel: 7/10
+      progress: 0
+      progressLabel:
       rewardOneIcon: {fileID: -427199135, guid: 0262976f8c0d4b349b3e96d1dd6a89ef, type: 3}
       rewardOneAmount: x25
       rewardOneType: 0
       rewardTwoIcon: {fileID: -1079134412, guid: ac3abd7a989172b438e624f355fd7c29, type: 3}
       rewardTwoAmount: x1500
       rewardTwoType: 0
-      actionLabel: GO
+      actionLabel: UNAVAILABLE
       claimAvailable: 0
     - icon: {fileID: -2068952570215638476, guid: d3a260b20a0be1f41b2eb94fc89e9372, type: 3}
       title: Destroy 1000 enemies
-      progress: 0.12
-      progressLabel: 120/1000
+      progress: 0
+      progressLabel:
       rewardOneIcon: {fileID: -427199135, guid: 0262976f8c0d4b349b3e96d1dd6a89ef, type: 3}
       rewardOneAmount: x40
       rewardOneType: 0
       rewardTwoIcon: {fileID: 1703385626, guid: 2ec24783db52b2648aa227af74a0d233, type: 3}
       rewardTwoAmount: x30
       rewardTwoType: 0
-      actionLabel: GO
+      actionLabel: UNAVAILABLE
       claimAvailable: 0
     - icon: {fileID: 7725020156808081307, guid: d3a260b20a0be1f41b2eb94fc89e9372, type: 3}
       title: Defeat 10 Bosses
       progress: 0
-      progressLabel: 0/10
+      progressLabel:
       rewardOneIcon: {fileID: -1079134412, guid: ac3abd7a989172b438e624f355fd7c29, type: 3}
       rewardOneAmount: x3
       rewardOneType: 0
       rewardTwoIcon: {fileID: -427199135, guid: 0262976f8c0d4b349b3e96d1dd6a89ef, type: 3}
       rewardTwoAmount: x50
       rewardTwoType: 0
-      actionLabel: GO
+      actionLabel: UNAVAILABLE
       claimAvailable: 0
     - icon: {fileID: -7374080201887889530, guid: d3a260b20a0be1f41b2eb94fc89e9372, type: 3}
       title: Use 100 Power-ups
-      progress: 0.09
-      progressLabel: 9/100
+      progress: 0
+      progressLabel:
       rewardOneIcon: {fileID: -1079134412, guid: ac3abd7a989172b438e624f355fd7c29, type: 3}
       rewardOneAmount: x5000
       rewardOneType: 0
       rewardTwoIcon: {fileID: 1703385626, guid: 2ec24783db52b2648aa227af74a0d233, type: 3}
       rewardTwoAmount: x60
       rewardTwoType: 0
-      actionLabel: GO
+      actionLabel: UNAVAILABLE
       claimAvailable: 0
     - icon: {fileID: -7711898060197581523, guid: d3a260b20a0be1f41b2eb94fc89e9372, type: 3}
       title: Login for 7 days
-      progress: 0.28
-      progressLabel: 2/7
+      progress: 0
+      progressLabel:
       rewardOneIcon: {fileID: -427199135, guid: 0262976f8c0d4b349b3e96d1dd6a89ef, type: 3}
       rewardOneAmount: x35
       rewardOneType: 0
       rewardTwoIcon: {fileID: -1079134412, guid: ac3abd7a989172b438e624f355fd7c29, type: 3}
       rewardTwoAmount: x2000
       rewardTwoType: 0
-      actionLabel: GO
+      actionLabel: UNAVAILABLE
       claimAvailable: 0
     - icon: {fileID: 4154075382020245118, guid: d3a260b20a0be1f41b2eb94fc89e9372, type: 3}
       title: Earn 3 stars
-      progress: 0.33
-      progressLabel: 1/3
+      progress: 0
+      progressLabel:
       rewardOneIcon: {fileID: -1079134412, guid: ac3abd7a989172b438e624f355fd7c29, type: 3}
       rewardOneAmount: x1
       rewardOneType: 0
       rewardTwoIcon: {fileID: -427199135, guid: 0262976f8c0d4b349b3e96d1dd6a89ef, type: 3}
       rewardTwoAmount: x15
       rewardTwoType: 0
-      actionLabel: GO
+      actionLabel: UNAVAILABLE
       claimAvailable: 0
   goButtonSprite: {fileID: 21300000, guid: ba5e01e24359af949b495cb4198debb3, type: 3}
   claimButtonSprite: {fileID: 21300000, guid: 995862245cf3a7a4394c27b01a1c1a4f, type: 3}

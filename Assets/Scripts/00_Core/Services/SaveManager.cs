@@ -136,16 +136,20 @@ namespace GalaxyStrike.Save
             if (data != null)
                 return;
 
-            data = LoadFromDisk() ?? CreateNewSave();
+            SaveData loaded = LoadFromDisk();
+            data = loaded ?? CreateNewSave();
 
             // Normalize cả save mới để chặn giá trị cấu hình bất thường trong Inspector.
             Normalize(data);
 
-            // Ghi save mới ngay (lần đầu chơi) để lần sau không phải migrate lại.
-            if (!PlayerPrefs.HasKey(SaveKey))
+            bool legacyMigrated = MigrateLegacyPlayerPrefs();
+            bool campaignMigrated = data.campaignStage <= 0;
+            if (campaignMigrated)
+                MigrateCampaignProgress(loaded != null);
+
+            if (loaded == null || legacyMigrated || campaignMigrated)
                 Flush();
 
-            MigrateLegacyPlayerPrefs();
             ApplyEnergyRefill();
         }
 
@@ -210,7 +214,8 @@ namespace GalaxyStrike.Save
             save.maxEnergy = Mathf.Max(1, maxEnergy);
             save.energy = Mathf.Clamp(save.energy, 0, save.maxEnergy);
             save.accountLevel = Mathf.Max(1, save.accountLevel);
-            save.highestLevel = Mathf.Max(1, save.highestLevel);
+            save.highestLevel = Mathf.Clamp(save.highestLevel, 0, LevelManager.CampaignLength);
+            save.campaignStage = Mathf.Clamp(save.campaignStage, 0, LevelManager.CampaignLength);
             save.totalKills = Mathf.Max(0, save.totalKills);
             save.bestScore = Mathf.Max(0, save.bestScore);
             save.selectedShipIndex = Mathf.Max(0, save.selectedShipIndex);
@@ -248,10 +253,10 @@ namespace GalaxyStrike.Save
         }
 
         /// <summary>Chuyển dữ liệu PlayerPrefs của bản cũ sang save mới, đúng 1 lần.</summary>
-        private void MigrateLegacyPlayerPrefs()
+        private bool MigrateLegacyPlayerPrefs()
         {
             if (PlayerPrefs.GetInt(LegacyMigrationKey, 0) == 1)
-                return;
+                return false;
 
             if (PlayerPrefs.HasKey("GalaxyStrike_Coins"))
                 data.coins = Mathf.Max(data.coins, PlayerPrefs.GetInt("GalaxyStrike_Coins", 0));
@@ -266,11 +271,28 @@ namespace GalaxyStrike.Save
             if (!data.HasShip(data.selectedShipIndex))
                 data.selectedShipIndex = 0;
 
-            if (PlayerPrefs.HasKey("GalaxyStrike_CurrentLevel"))
-                data.highestLevel = Mathf.Max(1, PlayerPrefs.GetInt("GalaxyStrike_CurrentLevel", 1));
-
             PlayerPrefs.SetInt(LegacyMigrationKey, 1);
             Debug.Log("[SaveManager] Đã chuyển dữ liệu PlayerPrefs cũ sang SaveV2.");
+            return true;
+        }
+
+        private void MigrateCampaignProgress(bool hasSignedSave)
+        {
+            int legacyStage = PlayerPrefs.GetInt(LevelManager.LegacyStageKey, 0);
+            int cleared = data.highestLevel;
+            bool legacyCampaign = !LevelManager.ChallengeSelected &&
+                legacyStage >= 1 && legacyStage <= LevelManager.CampaignLength;
+            bool matchesClearedStage = legacyStage >= cleared && legacyStage <= cleared + 1;
+
+            // The old signed save used 1 both as the default and as a clear of stage 1.
+            int nextVerifiedStage = cleared > 1 ? cleared + 1 : 1;
+            data.campaignStage = legacyCampaign && (!hasSignedSave || matchesClearedStage)
+                ? legacyStage
+                : Mathf.Min(nextVerifiedStage, LevelManager.CampaignLength);
+
+            if (cleared == 1 && data.campaignStage == 1)
+                cleared = 0;
+            data.highestLevel = Mathf.Max(cleared, data.campaignStage - 1);
         }
 
         /// <summary>Ghi xuống máy ngay lập tức (mã hóa + chữ ký).</summary>
@@ -619,6 +641,19 @@ namespace GalaxyStrike.Save
         // TIẾN TRÌNH LEVEL
         // =====================================================================
         public int HighestLevel => Data.highestLevel;
+
+        public int CampaignStage => Data.campaignStage;
+
+        public void SaveCampaignStage(int stage)
+        {
+            EnsureLoaded();
+            stage = Mathf.Clamp(stage, 1, LevelManager.CampaignLength);
+            if (data.campaignStage == stage)
+                return;
+
+            data.campaignStage = stage;
+            Flush();
+        }
 
         // =====================================================================
         // THÀNH TÍCH CHO BẢNG XẾP HẠNG

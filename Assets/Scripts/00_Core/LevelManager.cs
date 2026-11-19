@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using GalaxyStrike.Save;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -91,27 +92,30 @@ public class LevelManager : MonoBehaviour
     [Header("Level Progress & Save")]
     [Tooltip("Màn chơi hiện tại (1 đến 50)")]
     [SerializeField] private int currentLevel = 1;
-    [Tooltip("Tự động tải màn chơi đã lưu trong PlayerPrefs")]
+    [Tooltip("Tự động tải màn chiến dịch đã lưu")]
     [SerializeField] private bool useSavedProgress = true;
-    [SerializeField] private int maxLevels = 50;
+    [SerializeField] private int maxLevels = CampaignLength;
 
     // Prefab quái KHÔNG còn SerializeField: nguồn sự thật duy nhất là
     // EnemyFactory.Registry (nạp từ Resources/Prefabs theo EnemyKind).
 
-    private const string LEVEL_SAVE_KEY = "GalaxyStrike_CurrentLevel";
+    public const int CampaignLength = 50;
+    internal const string LegacyStageKey = "GalaxyStrike_CurrentLevel";
 
-    public static int SavedLevel => PlayerPrefs.GetInt(LEVEL_SAVE_KEY, 1);
+    public static int SavedLevel => SaveManager.Instance.CampaignStage;
 
     /// <summary>
     /// Chế độ chơi được chọn ở HomeScene ("Campaign" hoặc "Challenge").
     /// Challenge dùng chung công thức sinh màn nhưng KHÔNG ghi vào tiến trình chiến dịch.
     /// </summary>
-    public bool IsChallengeMode =>
+    internal static bool ChallengeSelected =>
         PlayerPrefs.GetString("SelectedGameMode", "Campaign") == "Challenge";
+
+    public bool IsChallengeMode => ChallengeSelected;
 
     /// <summary>
     /// Khởi tạo LevelManager: đảm bảo Singleton, gỡ khỏi parent và giữ qua các Scene,
-    /// nạp registry quái từ Resources, rồi nạp màn hiện tại từ PlayerPrefs (nếu bật).
+    /// nạp registry quái từ Resources, rồi nạp màn chiến dịch từ save (nếu bật).
     /// </summary>
     private void Awake()
     {
@@ -162,16 +166,13 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (!IsChallengeMode)
-            return;
-
-        // Bỏ qua LoadingScene: chỉ roll khi thực sự vào trận.
         if (scene.name != "GameScene")
             return;
 
-        currentLevel = RollChallengeLevel();
-        PlayerPrefs.SetInt(LEVEL_SAVE_KEY, currentLevel);
-        PlayerPrefs.Save();
+        if (IsChallengeMode)
+            currentLevel = RollChallengeLevel();
+        else if (useSavedProgress)
+            currentLevel = Mathf.Clamp(SavedLevel, 1, maxLevels);
     }
 
     /// <summary>
@@ -518,20 +519,10 @@ public class LevelManager : MonoBehaviour
     /// <summary>Lên màn kế tiếp. Đã ở màn cuối thì giữ nguyên màn cuối.</summary>
     public void AdvanceToNextLevel()
     {
-        // Challenge: mỗi lượt là một màn ngẫu nhiên, không đụng tiến trình chiến dịch.
-        if (IsChallengeMode)
-        {
-            currentLevel = RollChallengeLevel();
-            PlayerPrefs.SetInt(LEVEL_SAVE_KEY, currentLevel);
-            PlayerPrefs.Save();
-            return;
-        }
-
-        if (IsCampaignComplete())
+        if (IsChallengeMode || currentLevel >= maxLevels)
             return;
 
-        currentLevel = Mathf.Min(currentLevel + 1, maxLevels);
-        SaveCurrentLevel();
+        SetLevel(currentLevel + 1);
     }
 
     /// <summary>Màn ngẫu nhiên 1..50 cho một lượt Challenge.</summary>
@@ -547,7 +538,7 @@ public class LevelManager : MonoBehaviour
     /// <summary>Đã chinh phục màn cuối của chiến dịch (50) hay chưa.</summary>
     public bool IsCampaignComplete()
     {
-        return currentLevel >= maxLevels;
+        return !IsChallengeMode && SaveManager.Instance.HighestLevel >= maxLevels;
     }
 
     /// <summary>
@@ -556,16 +547,9 @@ public class LevelManager : MonoBehaviour
     public void SetLevel(int level)
     {
         currentLevel = Mathf.Clamp(level, 1, maxLevels);
-        SaveCurrentLevel();
-    }
+        if (!IsChallengeMode)
+            SaveManager.Instance.SaveCampaignStage(currentLevel);
 
-    /// <summary>
-    /// Ghi currentLevel xuống PlayerPrefs, flush, và báo HUD cập nhật số màn đang chơi.
-    /// </summary>
-    private void SaveCurrentLevel()
-    {
-        PlayerPrefs.SetInt(LEVEL_SAVE_KEY, currentLevel);
-        PlayerPrefs.Save();
         if (HUD_Panel.Instance != null)
         {
             HUD_Panel.Instance.UpdateLevelDisplay();

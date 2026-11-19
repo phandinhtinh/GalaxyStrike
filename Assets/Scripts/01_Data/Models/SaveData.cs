@@ -27,7 +27,9 @@ namespace GalaxyStrike.Save
         public int energy = 30;
         public int maxEnergy = 30;
 
-        public int highestLevel = 1;
+        public int highestLevel;
+        // Zero identifies a save created before Campaign and Challenge used separate progress.
+        public int campaignStage;
 
         [Tooltip("Tổng số quái đã hạ (dùng cho bảng xếp hạng)")]
         public int totalKills;
