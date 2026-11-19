@@ -33,6 +33,7 @@ namespace GalaxyStrike.UI.Tasks
         public TaskPopupRewardType rewardTwoType;
         public string actionLabel = "CLAIM";
         public bool claimAvailable;
+        public bool isDailyLoginReward;
     }
 
     [Serializable]
@@ -225,10 +226,12 @@ namespace GalaxyStrike.UI.Tasks
                     }
                     if (row.progressLabel != null)
                         row.progressLabel.text = entry.claimAvailable ? entry.progressLabel : string.Empty;
-                    SetReward(row.rewardOneIcon, row.rewardOneAmount, entry.rewardOneIcon, entry.rewardOneAmount);
-                    SetReward(row.rewardTwoIcon, row.rewardTwoAmount, entry.rewardTwoIcon, entry.rewardTwoAmount);
+                    SetReward(row.rewardOneIcon, row.rewardOneAmount, entry.rewardOneIcon,
+                        entry.isDailyLoginReward ? $"x{SaveManager.DailyLoginCoins}" : entry.rewardOneAmount);
+                    SetReward(row.rewardTwoIcon, row.rewardTwoAmount, entry.rewardTwoIcon,
+                        entry.isDailyLoginReward ? $"x{SaveManager.DailyLoginGems}" : entry.rewardTwoAmount);
 
-                    RenderActionButton(row, entry, entry.claimAvailable && HasClaimed(index, i));
+                    RenderActionButton(row, entry, entry.claimAvailable && HasClaimed(entry, index, i));
                 }
             }
 
@@ -268,7 +271,15 @@ namespace GalaxyStrike.UI.Tasks
             if (entry == null || !entry.claimAvailable)
                 return;
 
-            if (HasClaimed(selectedCategoryIndex, rowIndex))
+            if (entry.isDailyLoginReward)
+            {
+                SaveManager save = SaveManager.Instance;
+                save.TryClaimDailyLoginReward();
+                RenderActionButton(row, entry, save.IsDailyLoginRewardClaimed);
+                return;
+            }
+
+            if (HasClaimed(entry, selectedCategoryIndex, rowIndex))
             {
                 RenderActionButton(row, entry, true);
                 return;
@@ -349,9 +360,11 @@ namespace GalaxyStrike.UI.Tasks
                 : 0;
         }
 
-        private static bool HasClaimed(int categoryIndex, int rowIndex)
+        private static bool HasClaimed(TaskPopupEntry entry, int categoryIndex, int rowIndex)
         {
-            return PlayerPrefs.GetInt(GetClaimPrefsKey(categoryIndex, rowIndex), 0) == 1;
+            return entry.isDailyLoginReward
+                ? SaveManager.Instance.IsDailyLoginRewardClaimed
+                : PlayerPrefs.GetInt(GetClaimPrefsKey(categoryIndex, rowIndex), 0) == 1;
         }
 
         private static string GetClaimPrefsKey(int categoryIndex, int rowIndex)

@@ -184,7 +184,7 @@ public static class GalaxyStrikeTaskPopupBuilder
                     Entry(taskIcons[3], "Use 3 Power-ups", 0f, string.Empty, coin, "x600", energy, "x10", "UNAVAILABLE"),
                     Entry(taskIcons[4], "Watch 1 Ad", 0f, string.Empty, gem, "x5", coin, "x100", "UNAVAILABLE"),
                     Entry(taskIcons[5], "Login today", 1f, "1/1", coin, "x300", gem, "x5", "CLAIM", true,
-                        TaskPopupRewardType.Coins, TaskPopupRewardType.Gems)
+                        TaskPopupRewardType.Coins, TaskPopupRewardType.Gems, isDailyLoginReward: true)
                 }) },
             new TaskPopupCategory { entries = CreateEntries(taskIcons, coin, gem, energy, crate,
                 new[] {
@@ -449,7 +449,7 @@ public static class GalaxyStrikeTaskPopupBuilder
     private static TaskPopupEntry Entry(Sprite icon, string title, float progress, string progressLabel,
         Sprite rewardOne, string amountOne, Sprite rewardTwo, string amountTwo, string action, bool claim = false,
         TaskPopupRewardType rewardOneType = TaskPopupRewardType.None,
-        TaskPopupRewardType rewardTwoType = TaskPopupRewardType.None)
+        TaskPopupRewardType rewardTwoType = TaskPopupRewardType.None, bool isDailyLoginReward = false)
     {
         return new TaskPopupEntry
         {
@@ -464,7 +464,8 @@ public static class GalaxyStrikeTaskPopupBuilder
             rewardTwoAmount = amountTwo,
             rewardTwoType = rewardTwoType,
             actionLabel = action,
-            claimAvailable = claim
+            claimAvailable = claim,
+            isDailyLoginReward = isDailyLoginReward
         };
     }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using UnityEngine;
 using GalaxyStrike.Data;
 
@@ -435,6 +436,46 @@ namespace GalaxyStrike.Save
         public int Gems => Data.gems;
 
         public const int WelcomeGiftCoins = 100;
+        public const int DailyLoginCoins = 300;
+        public const int DailyLoginGems = 5;
+
+        public bool IsDailyLoginRewardClaimed => HasDailyLoginClaim(Data, DateTime.UtcNow);
+
+        public bool TryClaimDailyLoginReward()
+        {
+            SaveData save = Data;
+            DateTime now = DateTime.UtcNow;
+            if (HasDailyLoginClaim(save, now) || save.coins > int.MaxValue - DailyLoginCoins ||
+                save.gems > int.MaxValue - DailyLoginGems)
+                return false;
+
+            int previousDay = save.dailyLoginClaimDay;
+            save.dailyLoginClaimDay = GetDailyLoginDay(now);
+            save.coins += DailyLoginCoins;
+            save.gems += DailyLoginGems;
+            if (!TryFlush())
+            {
+                save.dailyLoginClaimDay = previousDay;
+                save.coins -= DailyLoginCoins;
+                save.gems -= DailyLoginGems;
+                return false;
+            }
+
+            NotifyChanged();
+            return true;
+        }
+
+        private static bool HasDailyLoginClaim(SaveData save, DateTime utc)
+        {
+            if (save.dailyLoginClaimDay == GetDailyLoginDay(utc))
+                return true;
+
+            // The previous HomeScene stored Login today as the first tab's sixth row.
+            string date = utc.ToString("yyyyMMdd", CultureInfo.InvariantCulture);
+            return PlayerPrefs.GetInt("GalaxyStrike.TaskPopup.Claimed.v1." + date + ".0.5", 0) == 1;
+        }
+
+        private static int GetDailyLoginDay(DateTime utc) => utc.Year * 10000 + utc.Month * 100 + utc.Day;
 
         public bool IsBattlePassTierClaimed(int index)
         {

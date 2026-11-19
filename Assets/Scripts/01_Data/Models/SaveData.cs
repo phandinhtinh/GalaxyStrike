@@ -23,6 +23,7 @@ namespace GalaxyStrike.Save
 
         public int coins = 500;
         public bool welcomeGiftClaimed;
+        public int dailyLoginClaimDay;
         public int gems = 20;
         public int energy = 30;
         public int maxEnergy = 30;
