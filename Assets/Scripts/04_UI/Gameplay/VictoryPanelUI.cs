@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement; 
 using GalaxyStrike.UI.Loading;
 using TMPro;
@@ -24,6 +25,8 @@ public class VictoryPanelUI : MonoBehaviour
     [SerializeField] private Button replayButton;
     [SerializeField] private Button mainMenuButton;
 
+    private bool transitionStarted;
+
     private void Awake()
     {
         if (Instance == null)
@@ -41,23 +44,34 @@ public class VictoryPanelUI : MonoBehaviour
 
     private void SetupButtons()
     {
-        if (nextLevelButton != null)
-        {
-            nextLevelButton.onClick.RemoveAllListeners();
-            nextLevelButton.onClick.AddListener(OnClickNextLevel);
-        }
+        BindButton(nextLevelButton, OnClickNextLevel);
+        BindButton(replayButton, OnClickReplay);
+        BindButton(mainMenuButton, OnClickMainMenu);
+    }
 
-        if (replayButton != null)
+    private static void BindButton(Button button, UnityAction action)
+    {
+        if (button == null) return;
+        button.onClick.RemoveAllListeners();
+        // Inspector callbacks survive RemoveAllListeners. Reuse an existing active binding.
+        for (int i = 0; i < button.onClick.GetPersistentEventCount(); i++)
         {
-            replayButton.onClick.RemoveAllListeners();
-            replayButton.onClick.AddListener(OnClickReplay);
+            if (button.onClick.GetPersistentTarget(i) == (action.Target as Object) &&
+                button.onClick.GetPersistentMethodName(i) == action.Method.Name &&
+                button.onClick.GetPersistentListenerState(i) != UnityEventCallState.Off)
+                return;
         }
+        button.onClick.AddListener(action);
+    }
 
-        if (mainMenuButton != null)
-        {
-            mainMenuButton.onClick.RemoveAllListeners();
-            mainMenuButton.onClick.AddListener(OnClickMainMenu);
-        }
+    private bool TryBeginTransition()
+    {
+        if (transitionStarted) return false;
+        transitionStarted = true;
+        if (nextLevelButton != null) nextLevelButton.interactable = false;
+        if (replayButton != null) replayButton.interactable = false;
+        if (mainMenuButton != null) mainMenuButton.interactable = false;
+        return true;
     }
 
     /// <summary>
@@ -152,6 +166,8 @@ private static void SetSummaryText(TextMeshProUGUI text, string value)
 
     public void OnClickNextLevel()
     {
+        if (!TryBeginTransition()) return;
+
         if (GameManager.Instance != null)
         {
             GameManager.Instance.NextLevel();
@@ -172,6 +188,8 @@ private static void SetSummaryText(TextMeshProUGUI text, string value)
 
     public void OnClickReplay()
     {
+        if (!TryBeginTransition()) return;
+
         Time.timeScale = 1f;
 
         LoadingSceneController.LoadScene(SceneManager.GetActiveScene().name);
@@ -179,6 +197,8 @@ private static void SetSummaryText(TextMeshProUGUI text, string value)
 
     public void OnClickMainMenu()
     {
+        if (!TryBeginTransition()) return;
+
         Time.timeScale = 1f;
         
         if (GameManager.Instance != null)

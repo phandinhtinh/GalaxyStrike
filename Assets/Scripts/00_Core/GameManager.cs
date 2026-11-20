@@ -190,12 +190,12 @@ public class GameManager : MonoBehaviour
 
     /// <summary>
     /// Gọi mỗi khi hạ được 1 quái: tăng bộ đếm màn, cộng 1 vào tổng kills tích luỹ,
-    /// cập nhật HUD và kích hoạt thắng màn nếu đã hạ đủ số quái.
+    /// và cập nhật HUD.
     /// Tham số <paramref name="enemy"/> giữ lại để tương thích với chỗ gọi cũ.
     /// </summary>
     public void AddEnemyDefeated(Enemy enemy = null)
     {
-        if (isLevelWon) return;
+        if (IsRoundOver) return;
 
         enemiesDefeated++;
 
@@ -203,11 +203,6 @@ public class GameManager : MonoBehaviour
         SaveManager.Instance.AddTotalKills(1);
 
         UpdateUI();
-
-        if (enemiesDefeated >= totalEnemiesInLevel)
-        {
-            OnLevelCleared();
-        }
     }
 
     /// <summary>
@@ -221,11 +216,11 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Kiểm tra màn đã hoàn thành chưa: đã thắng hoặc đã hạ đủ số quái yêu cầu.
+    /// Trả về trạng thái thắng do EnemySpawner xác nhận sau wave cuối.
     /// </summary>
     public bool IsLevelCompleted()
     {
-        return isLevelWon || enemiesDefeated >= totalEnemiesInLevel;
+        return isLevelWon;
     }
 
     // --- KẾT THÚC LEVEL VÀ HIỂN THỊ VICTORY PANEL ---
@@ -237,7 +232,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void OnLevelCleared()
     {
-        if (isLevelWon) return;
+        if (IsRoundOver) return;
         isLevelWon = true;
 
         currentStageHP = 0;
@@ -311,7 +306,7 @@ public class GameManager : MonoBehaviour
     {
         if (scoreText != null) scoreText.text = "SCORE: " + score;
         if (coinText != null) coinText.text = "COINS: " + coins;
-        if (levelProgressText != null) levelProgressText.text = $"ENEMIES: {enemiesDefeated}/{totalEnemiesInLevel}";
+        if (levelProgressText != null) levelProgressText.text = $"KILLS: {enemiesDefeated}";
     }
 
     // --- TRẠNG THÁI GAME & CHUYỂN GIAO DIỆN QUA PANELMANAGER ---

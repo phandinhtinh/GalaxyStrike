@@ -90,9 +90,9 @@ public class LevelManager : MonoBehaviour
     }
 
     [Header("Level Progress & Save")]
-    [Tooltip("Màn chơi hiện tại (1 đến 50)")]
-    [SerializeField] private int currentLevel = 1;
-    [Tooltip("Tự động tải màn chiến dịch đã lưu")]
+    [Tooltip("Màn muốn chơi (1–50). Tắt Use Saved Progress rồi chọn màn trước khi nhấn Play để demo.")]
+    [Range(1, CampaignLength)] public int currentLevel = 1;
+    [Tooltip("Bật để tải tiến trình đã lưu. Tắt để chơi Current Level được chọn trong Inspector, kể cả khi đang chọn Challenge.")]
     [SerializeField] private bool useSavedProgress = true;
     [SerializeField] private int maxLevels = CampaignLength;
 
@@ -169,9 +169,15 @@ public class LevelManager : MonoBehaviour
         if (scene.name != "GameScene")
             return;
 
+        if (!useSavedProgress)
+        {
+            currentLevel = Mathf.Clamp(currentLevel, 1, maxLevels);
+            return;
+        }
+
         if (IsChallengeMode)
             currentLevel = RollChallengeLevel();
-        else if (useSavedProgress)
+        else
             currentLevel = Mathf.Clamp(SavedLevel, 1, maxLevels);
     }
 
@@ -251,9 +257,29 @@ public class LevelManager : MonoBehaviour
         }
 
         // Tạo danh sách các Wave dựa theo tiến độ của Level
-        data.waves = BuildWavesForLevel(levelNum, zoneIndex);
+        data.waves = levelNum == 1 && !IsChallengeMode
+            ? BuildTutorialWaves()
+            : BuildWavesForLevel(levelNum, zoneIndex);
 
         return data;
+    }
+
+    private static List<EnemySpawner.WaveConfig> BuildTutorialWaves()
+    {
+        GameObject scout = GetEnemyPrefab(EnemyKind.Enemy_Scout);
+        return new List<EnemySpawner.WaveConfig>
+        {
+            new EnemySpawner.WaveConfig { waveName = "Movement", enemyPrefab = scout, count = 3,
+                moveSpeed = 1.2f, spawnDelay = 0.15f, dropChance = 0f,
+                tutorialStep = EnemySpawner.TutorialStep.Move },
+            new EnemySpawner.WaveConfig { waveName = "Dodge", enemyPrefab = scout, count = 3,
+                formation = FormationType.DropAnchor, moveSpeed = 1.4f, dropChance = 0f,
+                tutorialStep = EnemySpawner.TutorialStep.Dodge },
+            new EnemySpawner.WaveConfig { waveName = "Upgrade", enemyPrefab = scout, count = 3,
+                moveSpeed = 1.3f, dropChance = 0f, tutorialStep = EnemySpawner.TutorialStep.Upgrade },
+            new EnemySpawner.WaveConfig { waveName = "MiniBoss", enemyPrefab = GetEnemyPrefab(EnemyKind.Enemy_MiniBoss),
+                formation = FormationType.Boss, count = 1, moveSpeed = 1f }
+        };
     }
 
     /// <summary>

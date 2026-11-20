@@ -170,6 +170,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: Enemy_Swarmer
+  hitColor: {r: 0.501961, g: 1.000000, b: 0.760784, a: 1}
+  hitSparkCount: 7
+  hitScale: 0.95
+  hitSpread: 150
+  hitPulse: 0
   health: 2
   scoreValue: 150
   coinValue: 1

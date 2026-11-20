@@ -12,6 +12,11 @@ public class WaveProgressHUD : MonoBehaviour
     [SerializeField] private List<Image> milestones = new List<Image>();
     [SerializeField] private int displayedWaveCount;
     private EnemySpawner spawner;
+    private int lastWave = -1;
+    private bool lastComplete;
+    private float lastProgress = -1f;
+    private TextMeshProUGUI hint;
+
     private readonly Color cyan = new Color(0.05f, 0.9f, 1f);
     private readonly Color gold = new Color(1f, 0.8f, 0.2f);
 
@@ -24,6 +29,14 @@ public class WaveProgressHUD : MonoBehaviour
     {
         if (spawner == null || spawner.WaveCount == 0) return;
         if (displayedWaveCount != spawner.WaveCount) BuildMilestones(spawner.WaveCount);
+        bool showHint = !spawner.IsStageComplete && Time.time < spawner.HintVisibleUntil;
+        if (showHint && hint == null)
+            hint = MakeText("TutorialHint", (RectTransform)transform, new Vector2(1450f, 100f), new Vector2(0f, -120f), 54f);
+        if (hint != null)
+        {
+            if (showHint && hint.text != spawner.TutorialHint) hint.text = spawner.TutorialHint;
+            if (hint.enabled != showHint) hint.enabled = showHint;
+        }
         ApplyProgress(spawner.CurrentWaveNumber, spawner.StageWaveProgress, spawner.IsStageComplete);
     }
 
@@ -57,6 +70,7 @@ public class WaveProgressHUD : MonoBehaviour
             if (Application.isPlaying) Destroy(child); else DestroyImmediate(child);
         }
         milestones.Clear();
+        lastWave = -1;
         displayedWaveCount = count;
         for (int i = 0; i <= count; i++)
         {
@@ -70,8 +84,14 @@ public class WaveProgressHUD : MonoBehaviour
 
     private void ApplyProgress(int wave, float progress, bool complete)
     {
-        if (progressFill != null)
+        if (progressFill != null && lastProgress != progress)
+        {
             progressFill.rectTransform.sizeDelta = new Vector2(1400f * Mathf.Clamp01(progress), 38f);
+            lastProgress = progress;
+        }
+        if (lastWave == wave && lastComplete == complete) return;
+        lastWave = wave;
+        lastComplete = complete;
         if (statusText != null) statusText.text = complete ? "STAGE CLEAR" : "WAVE " + wave + " / " + displayedWaveCount;
         for (int i = 0; i < milestones.Count; i++)
         {

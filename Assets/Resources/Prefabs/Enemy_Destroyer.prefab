@@ -170,6 +170,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: Enemy_Destroyer
+  hitColor: {r: 1.000000, g: 0.396078, b: 0.250980, a: 1}
+  hitSparkCount: 11
+  hitScale: 1.2
+  hitSpread: 130
+  hitPulse: 0
   health: 8
   scoreValue: 800
   coinValue: 5

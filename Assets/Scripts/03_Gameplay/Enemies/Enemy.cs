@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -13,11 +14,26 @@ public class Enemy : MonoBehaviour
 {
     public static event System.Action<Enemy> OnEnemyDied;
 
+    public static event System.Action<Enemy, Enemy> SplitChildSpawned;
+    private static readonly List<Enemy> activeEnemies = new List<Enemy>();
+    public static IReadOnlyList<Enemy> ActiveEnemies => activeEnemies;
+
+    private void OnEnable() => activeEnemies.Add(this);
+    private void OnDisable() => activeEnemies.Remove(this);
+
     [Header("Enemy Identity & Stats")]
     [SerializeField] private string enemyName = "Enemy";
     [SerializeField] private int health = 1;
     [SerializeField] private int scoreValue = 100;
     [SerializeField] private int coinValue = 1;
+
+    [Header("Damage Impact VFX")]
+    [SerializeField] private Color hitColor = new Color(1f, 0.7f, 0.25f);
+    [SerializeField, Range(3, 18)] private int hitSparkCount = 6;
+    [SerializeField, Range(0.4f, 2f)] private float hitScale = 0.8f;
+    [SerializeField, Range(20f, 180f)] private float hitSpread = 100f;
+    [SerializeField] private bool hitPulse;
+    private float nextHitEffectTime;
 
     [Header("Hostile Shooting")]
     [SerializeField] private bool canShoot = false;
@@ -986,7 +1002,7 @@ public class Enemy : MonoBehaviour
 
     /// <summary>
     /// Xử lý khi quái rời màn (không bị giết): tắt collider, bắn event OnEnemyDied
-    /// và báo GameManager đã "xử lý" xong con này (để tiến độ màn vẫn tăng).
+    /// để spawner tiếp tục wave.
     /// </summary>
     private void NotifyEscaped()
     {
@@ -998,9 +1014,6 @@ public class Enemy : MonoBehaviour
             cachedCollider.enabled = false;
 
         OnEnemyDied?.Invoke(this);
-
-        if (GameManager.Instance != null)
-            GameManager.Instance.AddEnemyDefeated(this);
     }
 
     // =====================================================================
@@ -1203,15 +1216,27 @@ public class Enemy : MonoBehaviour
 
     /// <summary>
     /// Bị đạn của player bắn trúng: trừ HP, trừ HP tổng của màn (GameManager),
-    /// rồi chết nếu HP ≤ 0, ngược lại nháy đỏ để báo trúng đạn.
+    /// rồi chết nếu HP ≤ 0, ngược lại chớp màu theo hiệu ứng riêng để báo trúng đạn.
     /// Bỏ qua khi đã chết, damage ≤ 0 hoặc đang phasing (warp-in chưa có hitbox).
     /// </summary>
     public void TakeDamage(int damage)
+    {
+        TakeDamage(damage, transform.position);
+    }
+
+    public void TakeDamage(int damage, Vector3 impactPosition)
     {
         if (isDead || damage <= 0 || isPhasing)
             return;
 
         health -= damage;
+
+        if (Time.time >= nextHitEffectTime)
+        {
+            nextHitEffectTime = Time.time + 0.045f;
+            Vector2 outward = impactPosition - transform.position;
+            EnemyHitVfx.Emit(impactPosition, outward, hitColor, hitSparkCount, hitScale, hitSpread, hitPulse);
+        }
 
         if (GameManager.Instance != null)
             GameManager.Instance.OnEnemyDamaged(damage);
@@ -1229,14 +1254,14 @@ public class Enemy : MonoBehaviour
     }
 
     /// <summary>
-    /// Hiệu ứng nháy đỏ khi trúng đạn: đổi màu sprite sang đỏ 0.08 giây rồi trả lại
+    /// Hiệu ứng trúng đạn: chớp màu riêng của Enemy trong 0.08 giây rồi trả lại
     /// màu gốc (nếu quái chưa chết).
     /// </summary>
     private IEnumerator DamageFlashRoutine()
     {
         if (spriteRenderer != null)
         {
-            spriteRenderer.color = Color.red;
+            spriteRenderer.color = Color.Lerp(originalColor, hitColor, 0.65f);
             yield return new WaitForSeconds(0.08f);
             if (!isDead && spriteRenderer != null)
                 spriteRenderer.color = originalColor;
@@ -1272,7 +1297,8 @@ public class Enemy : MonoBehaviour
                 Vector3 offset = new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0f) * 0.4f;
 
                 // PATTERN: Factory — quái con tách ra cũng tạo qua EnemyFactory.
-                EnemyFactory.Create(minionPrefab, transform.position + offset);
+                Enemy child = EnemyFactory.Create(minionPrefab, transform.position + offset);
+                if (child != null) SplitChildSpawned?.Invoke(this, child);
             }
         }
 

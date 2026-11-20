@@ -170,6 +170,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: Enemy_Boss_Zone04
+  hitColor: {r: 0.396078, g: 1.000000, b: 0.647059, a: 1}
+  hitSparkCount: 13
+  hitScale: 1.35
+  hitSpread: 170
+  hitPulse: 1
   health: 120
   scoreValue: 6000
   coinValue: 50

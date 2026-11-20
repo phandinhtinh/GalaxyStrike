@@ -170,6 +170,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: Enemy_Striker
+  hitColor: {r: 1.000000, g: 0.392157, b: 0.321569, a: 1}
+  hitSparkCount: 10
+  hitScale: 1.08
+  hitSpread: 45
+  hitPulse: 0
   health: 2
   scoreValue: 200
   coinValue: 2

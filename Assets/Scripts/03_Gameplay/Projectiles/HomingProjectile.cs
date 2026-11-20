@@ -2,7 +2,7 @@
 
 /// <summary>
 /// Tên lửa tự tìm mục tiêu (Homing Missile).
-/// Tìm Enemy gần nhất mỗi khung hình và bẻ lái về phía đó.
+/// Tìm Enemy gần nhất khi phóng hoặc mất mục tiêu và bẻ lái mỗi khung hình.
 /// Chỉ dùng khi người chơi đã mua "HOMING ROCKET" trong Shop.
 /// </summary>
 public class HomingProjectile : MonoBehaviour
@@ -15,7 +15,7 @@ public class HomingProjectile : MonoBehaviour
 
     private int damage = 1;
     private float age;
-    private Transform currentTarget;
+    private Enemy currentTarget;
     private float retargetCooldown;
 
     /// <summary>Gán sát thương từ trang bị của người chơi.</summary>
@@ -40,8 +40,9 @@ public class HomingProjectile : MonoBehaviour
             return;
         }
 
-        if (currentTarget == null)
+        if (currentTarget == null || currentTarget.IsDead || !currentTarget.isActiveAndEnabled)
         {
+            currentTarget = null;
             // Không tìm lại mỗi frame khi màn hình trống (tiết kiệm CPU trên mobile).
             retargetCooldown -= dt;
             if (retargetCooldown <= 0f)
@@ -53,7 +54,7 @@ public class HomingProjectile : MonoBehaviour
 
         if (currentTarget != null)
         {
-            Vector3 toTarget = currentTarget.position - transform.position;
+            Vector3 toTarget = currentTarget.transform.position - transform.position;
             float targetAngle = Mathf.Atan2(toTarget.y, toTarget.x) * Mathf.Rad2Deg - 90f;
             float angle = Mathf.MoveTowardsAngle(transform.eulerAngles.z, targetAngle, turnRate * dt);
             transform.rotation = Quaternion.Euler(0f, 0f, angle);
@@ -69,20 +70,21 @@ public class HomingProjectile : MonoBehaviour
     private void AcquireTarget()
     {
         // Chỉ gọi khi mất mục tiêu (target chết hoặc chưa có), không chạy mỗi frame.
-        Enemy[] enemies = FindObjectsOfType<Enemy>();
-        float bestDistance = targetSearchRadius;
-        Transform best = null;
+        var enemies = Enemy.ActiveEnemies;
+        Vector2 origin = transform.position;
+        float bestDistance = targetSearchRadius * targetSearchRadius;
+        Enemy best = null;
 
-        for (int i = 0; i < enemies.Length; i++)
+        for (int i = 0; i < enemies.Count; i++)
         {
             if (enemies[i] == null || enemies[i].IsDead)
                 continue;
 
-            float distance = Vector2.Distance(transform.position, enemies[i].transform.position);
+            float distance = ((Vector2)enemies[i].transform.position - origin).sqrMagnitude;
             if (distance < bestDistance)
             {
                 bestDistance = distance;
-                best = enemies[i].transform;
+                best = enemies[i];
             }
         }
 
@@ -102,7 +104,7 @@ public class HomingProjectile : MonoBehaviour
             enemy = collision.GetComponentInParent<Enemy>();
 
         if (enemy != null)
-            enemy.TakeDamage(damage);
+            enemy.TakeDamage(damage, collision.ClosestPoint(transform.position));
 
         Destroy(gameObject);
     }

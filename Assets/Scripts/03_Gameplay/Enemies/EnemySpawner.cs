@@ -17,9 +17,12 @@ public class EnemySpawner : MonoBehaviour
     /// số lượng, tốc độ/nhịp thả, prefab quái, kiểu bắn, giới hạn thời gian và tỉ lệ rơi item.
     /// Ngoài ra còn các tooltip chi tiết cho từng field bên dưới.
     /// </summary>
+    public enum TutorialStep { None, Move, Dodge, Upgrade }
+
     [System.Serializable]
     public class WaveConfig
     {
+        public TutorialStep tutorialStep;
         public string waveName = "Wave 1";
 
         [Header("Nhóm I — Xuất hiện")]
@@ -112,20 +115,22 @@ public class EnemySpawner : MonoBehaviour
     private readonly List<Enemy> aliveEnemies = new List<Enemy>(32);
     private bool isSpawningWave;
     private int totalEnemiesToKill;
-    private int currentEnemiesKilled;
+    public string TutorialHint { get; private set; }
+    public float HintVisibleUntil { get; private set; }
     private bool isVictoryTriggered;
 
     private Enemy vLeader;
     private bool vLeaderBroken;
 
     /// <summary>
-    /// Đăng ký lắng nghe 2 sự kiện tĩnh của Enemy:
+    /// Đăng ký các sự kiện vòng đời của Enemy:
     /// - OnEnemyDied: biết quái đã bị hạ (để trừ bộ đếm và xử lý chữ V).
-    /// - HiveSpawned: tàu mẹ phóng tàu con (Carrier/Hive).
+    /// - HiveSpawned và SplitChildSpawned: theo dõi các quái con.
     /// </summary>
     private void OnEnable()
     {
         Enemy.OnEnemyDied += HandleEnemyDied;
+        Enemy.SplitChildSpawned += TrackSplitChild;
         Enemy.HiveSpawned += HandleHiveSpawn;
     }
 
@@ -135,6 +140,7 @@ public class EnemySpawner : MonoBehaviour
     private void OnDisable()
     {
         Enemy.OnEnemyDied -= HandleEnemyDied;
+        Enemy.SplitChildSpawned -= TrackSplitChild;
         Enemy.HiveSpawned -= HandleHiveSpawn;
     }
 
@@ -145,7 +151,6 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         isVictoryTriggered = false;
-        currentEnemiesKilled = 0;
         aliveEnemies.Clear();
 
         if (LevelManager.Instance != null)
@@ -223,6 +228,12 @@ public class EnemySpawner : MonoBehaviour
                 yield break;
 
             ClearRemainingEnemies();
+            if (currentWaveIndex == waves.Count - 1)
+            {
+                isVictoryTriggered = true;
+                if (GameManager.Instance != null) GameManager.Instance.OnLevelCleared();
+                yield break;
+            }
             currentWaveIndex++;
             spawnedEnemiesInWave = 0;
             yield return new WaitForSeconds(delayBetweenWaves);
@@ -253,6 +264,20 @@ public class EnemySpawner : MonoBehaviour
 
         GameObject prefab = wave.enemyPrefab != null ? wave.enemyPrefab : enemyPrefab;
         int count = Mathf.Max(1, wave.count);
+
+        if (wave.tutorialStep == TutorialStep.Move)
+            ShowTutorialHint("Kéo để di chuyển");
+        else if (wave.tutorialStep == TutorialStep.Upgrade)
+        {
+            Camera camera = Camera.main;
+            GameObject pickup = Resources.Load<GameObject>("Prefabs/PowerUp_Bullet");
+            if (camera != null && pickup != null)
+            {
+                Vector3 position = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.65f, Mathf.Abs(camera.transform.position.z)));
+                Instantiate(pickup, position, Quaternion.identity);
+                ShowTutorialHint("Nhặt vật phẩm để nâng cấp đạn");
+            }
+        }
 
         // Cảnh báo trước cho đòn phục kích từ đáy.
         bool isHighThreat = IsHighThreatPrefab(prefab, wave.formation == FormationType.Boss);
@@ -364,7 +389,10 @@ public class EnemySpawner : MonoBehaviour
         }
 
         enemy.SetStaysInUpperLane(isHighThreat);
-        enemy.ConfigureFormationShooting(isHighThreat, regularEnemyFireChance);
+        float fireChance = regularEnemyFireChance;
+        if (wave.tutorialStep == TutorialStep.Move) fireChance = 0f;
+        if (wave.tutorialStep == TutorialStep.Dodge) fireChance = 1f;
+        enemy.ConfigureFormationShooting(isHighThreat, fireChance);
         enemy.SetFirePattern(wave.firePattern);
         enemy.SetDropChance(wave.dropChance);
 
@@ -542,7 +570,7 @@ public class EnemySpawner : MonoBehaviour
     /// <summary>
     /// Xử lý khi một con quái bị hạ (rời màn hoặc chết): giảm bộ đếm quái trong wave,
     /// tách biệt quái con (không tính vào tiến trình màn), cho chữ V vỡ nếu leader chết,
-    /// và kích hoạt thắng màn khi đã hạ đủ tổng quái.
+    /// để vòng lặp wave quyết định lúc chuyển đợt hoặc thắng màn.
     /// </summary>
     private void HandleEnemyDied(Enemy enemy)
     {
@@ -561,7 +589,6 @@ public class EnemySpawner : MonoBehaviour
         }
 
         activeEnemiesInWave = Mathf.Max(0, activeEnemiesInWave - 1);
-        currentEnemiesKilled++;
 
         // V-Formation: leader chết -> hai cánh tỏa ra mép màn hình.
         if (enemy.IsVLeader && !vLeaderBroken)
@@ -573,12 +600,25 @@ public class EnemySpawner : MonoBehaviour
                     aliveEnemies[i].BreakVFormation();
             }
         }
+    }
 
-        if (!isVictoryTriggered && currentEnemiesKilled >= totalEnemiesToKill)
-        {
-            isVictoryTriggered = true;
-            StartCoroutine(TriggerVictoryRoutine());
-        }
+    private void ShowTutorialHint(string message)
+    {
+        TutorialHint = message;
+        HintVisibleUntil = Time.time + 3f;
+    }
+
+    private void TrackSplitChild(Enemy parent, Enemy child)
+    {
+        if (aliveEnemies.Contains(parent)) TrackMinion(child);
+    }
+
+    private void TrackMinion(Enemy child)
+    {
+        hiveMinionsAlive++;
+        hiveMinions.Add(child);
+        activeEnemiesInWave++;
+        aliveEnemies.Add(child);
     }
 
     /// <summary>Carrier/Hive phóng tàu con: tạo ngay tại vị trí tàu mẹ (không tính vào Wave).</summary>
@@ -611,10 +651,7 @@ public class EnemySpawner : MonoBehaviour
 
             // Quái con KHÔNG tính vào tiến trình màn (đã có tàu mẹ trong tổng số).
             // Chỉ đếm riêng để Wave biết còn quái trên màn khi kết thúc.
-            hiveMinionsAlive++;
-            hiveMinions.Add(e);
-            activeEnemiesInWave++;
-            aliveEnemies.Add(e);
+            TrackMinion(e);
         }
     }
 
@@ -624,17 +661,11 @@ public class EnemySpawner : MonoBehaviour
     private readonly List<Enemy> hiveMinions = new List<Enemy>(16);
 
     /// <summary>
-    /// Kết thúc một wave khi hết thời gian/chờ dọn sạch: cộng số quái chính còn sống
-    /// vào bộ đếm đã hạ (vì chúng bị huỷ để sang wave mới), huỷ mọi quái còn trên màn
-    /// và reset các bộ đếm của wave. Quái con không được cộng.
+    /// Dọn các quái còn sống khi hết thời gian wave và reset bộ đếm.
+    /// Việc dọn wave không cấp kill hoặc XP.
     /// </summary>
     private void ClearRemainingEnemies()
     {
-        // Chỉ quái CHÍNH còn sống mới tính vào tiến trình màn.
-        // Quái con (Hive) không nằm trong tổng số nên phải trừ ra.
-        int mainEnemiesRemaining = Mathf.Max(0, activeEnemiesInWave - hiveMinionsAlive);
-        currentEnemiesKilled += mainEnemiesRemaining;
-
         for (int i = 0; i < aliveEnemies.Count; i++)
         {
             if (aliveEnemies[i] != null)
@@ -645,22 +676,5 @@ public class EnemySpawner : MonoBehaviour
         hiveMinions.Clear();
         hiveMinionsAlive = 0;
         activeEnemiesInWave = 0;
-
-        if (!isVictoryTriggered && currentEnemiesKilled >= totalEnemiesToKill)
-        {
-            isVictoryTriggered = true;
-            StartCoroutine(TriggerVictoryRoutine());
-        }
-    }
-
-    /// <summary>
-    /// Chờ 1.5 giây (để hiệu ứng cuối chạy xong) rồi báo GameManager màn đã thắng
-    /// để mở Victory Panel.
-    /// </summary>
-    private IEnumerator TriggerVictoryRoutine()
-    {
-        yield return new WaitForSeconds(1.5f);
-        if (GameManager.Instance != null)
-            GameManager.Instance.OnLevelCleared();
     }
 }

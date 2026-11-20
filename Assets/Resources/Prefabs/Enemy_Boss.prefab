@@ -170,6 +170,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: Enemy_Boss
+  hitColor: {r: 1.000000, g: 0.462745, b: 0.313725, a: 1}
+  hitSparkCount: 12
+  hitScale: 1.25
+  hitSpread: 160
+  hitPulse: 1
   health: 75
   scoreValue: 6000
   coinValue: 50

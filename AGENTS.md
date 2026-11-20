@@ -1,6 +1,6 @@
 <!-- UNITY CODE ASSIST INSTRUCTIONS START -->
 - Project name: GalaxyStrike
-- Unity version: Unity 2022.3.62f2
+- Unity version: Unity 6000.3.27f1
 - Active scene:
   - Name: GameScene
   - Tags:

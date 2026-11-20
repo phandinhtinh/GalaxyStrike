@@ -170,6 +170,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: Enemy_Scout
+  hitColor: {r: 1.000000, g: 0.819608, b: 0.541176, a: 1}
+  hitSparkCount: 8
+  hitScale: 1.0
+  hitSpread: 65
+  hitPulse: 0
   health: 1
   scoreValue: 100
   coinValue: 1

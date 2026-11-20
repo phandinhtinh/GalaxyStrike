@@ -322,6 +322,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: Enemy_Gunship
+  hitColor: {r: 1.000000, g: 0.713725, b: 0.423529, a: 1}
+  hitSparkCount: 11
+  hitScale: 1.15
+  hitSpread: 85
+  hitPulse: 0
   health: 3
   scoreValue: 300
   coinValue: 2

@@ -102,6 +102,7 @@ public class PlayerController : MonoBehaviour
     {
         // 1. Đọc và nạp dữ liệu Máy bay đã chọn từ HomeScene
         LoadSelectedShipData();
+        GetComponentInChildren<EngineTrail>(true)?.AlignToShip(spriteRenderer);
 
         // Mỗi màn bắt đầu lại với 1 tia đạn; PowerUp nhặt trong màn sẽ nâng tạm thời.
         bulletLevel = 1;
@@ -609,6 +610,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         isDowned = true;
+        GetComponentInChildren<EngineTrail>(true)?.SetThrust(false);
 
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = false;
@@ -631,6 +633,7 @@ public class PlayerController : MonoBehaviour
             return false;
 
         isDowned = false;
+        GetComponentInChildren<EngineTrail>(true)?.SetThrust(true);
         currentHealth = maxHealth;
 
         Collider2D col = GetComponent<Collider2D>();

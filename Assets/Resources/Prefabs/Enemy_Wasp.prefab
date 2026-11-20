@@ -170,6 +170,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: Enemy_Wasp
+  hitColor: {r: 0.894118, g: 1.000000, b: 0.396078, a: 1}
+  hitSparkCount: 8
+  hitScale: 1.0
+  hitSpread: 55
+  hitPulse: 0
   health: 2
   scoreValue: 150
   coinValue: 1

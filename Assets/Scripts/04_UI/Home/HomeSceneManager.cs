@@ -15,6 +15,7 @@ namespace GalaxyStrike.UI.Home
         [Header("--- Top Bar Display ---")]
         [SerializeField] private TextMeshProUGUI energyText;
         [SerializeField] private TextMeshProUGUI energyRechargeText;
+        [SerializeField] private GameObject energyRechargePanel;
         [SerializeField] private TextMeshProUGUI coinText;
         [SerializeField] private TextMeshProUGUI gemText;
         [SerializeField] private TextMeshProUGUI levelText;
@@ -145,14 +146,15 @@ namespace GalaxyStrike.UI.Home
             if (energyRechargeText == null)
                 return;
 
-            if (save.Energy >= save.MaxEnergy)
-            {
-                energyRechargeText.text = string.Empty;
+            bool showCountdown = save.Energy < save.MaxEnergy;
+            GameObject countdown = energyRechargePanel != null ? energyRechargePanel : energyRechargeText.gameObject;
+            if (countdown.activeSelf != showCountdown)
+                countdown.SetActive(showCountdown);
+            if (!showCountdown)
                 return;
-            }
 
             int seconds = save.SecondsUntilNextEnergy();
-            energyRechargeText.text = $"{seconds / 60:00}:{seconds % 60:00}";
+            energyRechargeText.text = $"+1 sau {seconds / 60:00}:{seconds % 60:00}";
         }
 
         private float energyUiTimer;

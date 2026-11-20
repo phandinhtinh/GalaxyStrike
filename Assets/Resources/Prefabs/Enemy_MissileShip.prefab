@@ -170,6 +170,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: Enemy_MissileShip
+  hitColor: {r: 1.000000, g: 0.462745, b: 0.321569, a: 1}
+  hitSparkCount: 10
+  hitScale: 1.12
+  hitSpread: 110
+  hitPulse: 0
   health: 4
   scoreValue: 150
   coinValue: 5

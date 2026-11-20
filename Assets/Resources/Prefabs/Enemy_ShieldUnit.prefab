@@ -170,6 +170,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: Enemy_ShieldUnit
+  hitColor: {r: 0.392157, g: 0.894118, b: 1.000000, a: 1}
+  hitSparkCount: 6
+  hitScale: 1.05
+  hitSpread: 160
+  hitPulse: 1
   health: 5
   scoreValue: 150
   coinValue: 5

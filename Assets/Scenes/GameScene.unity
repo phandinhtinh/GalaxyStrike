@@ -7961,7 +7961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentLevel: 1
-  useSavedProgress: 1
+  useSavedProgress: 0
   maxLevels: 50
 --- !u!1 &2068255639
 GameObject:

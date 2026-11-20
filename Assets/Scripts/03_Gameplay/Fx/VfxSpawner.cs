@@ -45,7 +45,23 @@ public static class VfxSpawner
             startColor = tint ?? new Color(1f, 0.65f, 0.2f, 1f)
         };
 
-        ps.Emit(emit, Mathf.RoundToInt(28 * Mathf.Max(0.5f, scale)));
+        float burstScale = Mathf.Max(0.5f, scale);
+        int count = Mathf.RoundToInt(22 * burstScale);
+        for (int i = 0; i < count; i++)
+        {
+            float angle = Random.Range(0f, Mathf.PI * 2f);
+            emit.velocity = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0f)
+                * Random.Range(1.2f, 3.5f) * burstScale;
+            emit.startSize = Random.Range(0.12f, 0.28f) * burstScale;
+            emit.startLifetime = Random.Range(0.22f, 0.45f);
+            ps.Emit(emit, 1);
+        }
+
+        emit.velocity = Vector3.zero;
+        emit.startSize = 0.9f * burstScale;
+        emit.startLifetime = 0.16f;
+        emit.startColor = Color.Lerp(emit.startColor, Color.white, 0.5f);
+        ps.Emit(emit, 1);
     }
 
     /// <summary>Tia lửa nhỏ khi đạn trúng quái (rất rẻ, nhiều lần/phút).</summary>
@@ -98,6 +114,17 @@ public static class VfxSpawner
         main.simulationSpace = ParticleSystemSimulationSpace.World;
         main.maxParticles = 600;
 
+        var fade = ps.colorOverLifetime;
+        fade.enabled = true;
+        var gradient = new Gradient();
+        gradient.SetKeys(
+            new[] { new GradientColorKey(Color.white, 0f), new GradientColorKey(Color.white, 1f) },
+            new[] { new GradientAlphaKey(1f, 0f), new GradientAlphaKey(0f, 1f) });
+        fade.color = gradient;
+        var size = ps.sizeOverLifetime;
+        size.enabled = true;
+        size.size = new ParticleSystem.MinMaxCurve(1f, AnimationCurve.Linear(0f, 1f, 1f, 0f));
+
         var emission = ps.emission;
         emission.enabled = false; // chỉ Emit() thủ công
 
@@ -114,7 +141,7 @@ public static class VfxSpawner
 
     /// <summary>
     /// Material particle "mềm" dựng từ shader mặc định của Unity (không cần asset).
-    /// Dùng sprite-default particle để có texture tròn mờ dựng sẵn.
+    /// Gán texture tròn mờ để hạt không hiển thị thành ô vuông.
     /// </summary>
     private static Material GetSoftParticleMaterial()
     {
@@ -125,7 +152,11 @@ public static class VfxSpawner
         if (shader == null)
             return null;
 
-        return new Material(shader) { name = "VFX_SoftAdditive" };
+        return new Material(shader)
+        {
+            name = "VFX_SoftAdditive",
+            mainTexture = EnemyHitVfx.CreateTexture(false)
+        };
     }
 
     private static void DestroyAfter(GameObject go, float seconds)

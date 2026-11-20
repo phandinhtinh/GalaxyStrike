@@ -123,10 +123,7 @@ public class Bullet : MonoBehaviour, IPoolable
 
         if (enemy != null)
         {
-            enemy.TakeDamage(Damage);
-
-            // Tia lửa nhỏ tại điểm chạm đạn-quái (thuần thị giác, rất rẻ).
-            VfxSpawner.SpawnHitSpark(transform.position);
+            enemy.TakeDamage(Damage, collision.ClosestPoint(transform.position));
         }
 
         onHitEnemy?.Invoke();
