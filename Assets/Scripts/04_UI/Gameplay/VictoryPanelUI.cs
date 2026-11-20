@@ -25,6 +25,9 @@ public class VictoryPanelUI : MonoBehaviour
     [SerializeField] private Button replayButton;
     [SerializeField] private Button mainMenuButton;
 
+    [Header("Celebration")]
+    [SerializeField] private VictoryCelebration celebration;
+    private Coroutine popInRoutine;
     private bool transitionStarted;
 
     private void Awake()
@@ -88,17 +91,17 @@ public class VictoryPanelUI : MonoBehaviour
 
         if (titleText != null)
         {
-            titleText.text = campaignComplete && !isChallenge ? "★ GALAXY LIBERATED! ★" : "★ VICTORY! ★";
+            titleText.text = campaignComplete ? "GALAXY LIBERATED" : "VICTORY";
         }
 
         if (subtitleText != null)
         {
             if (isChallenge)
-                subtitleText.text = $"CHALLENGE CLEARED · LV {levelNum}!";
+                subtitleText.text = $"CHALLENGE · LEVEL {levelNum:00} CLEARED";
             else if (campaignComplete)
                 subtitleText.text = "ALL 50 LEVELS CLEARED!";
             else
-                subtitleText.text = $"LEVEL {levelNum} CLEARED!";
+                subtitleText.text = $"LEVEL {levelNum:00} CLEARED";
         }
 
         // Màn cuối: không còn màn kế tiếp -> ẩn nút Next Level.
@@ -110,44 +113,36 @@ public class VictoryPanelUI : MonoBehaviour
 
         if (scoreText != null)
         {
-            SetSummaryText(scoreText, $"SCORE\n<color=#00E5FF>+{score:N0}</color>");
+            scoreText.text = $"<size=24>SCORE</size>\n<color=#A9EDFF>{score:N0}</color>";
         }
 
         if (coinText != null)
         {
-            SetSummaryText(coinText, $"COINS\n<color=#FFD700>+{coins:N0}</color>");
+            coinText.text = $"<size=24>COINS</size>\n<color=#FFD77A>+{coins:N0}</color>";
         }
 
         if (enemiesText != null)
         {
-            SetSummaryText(enemiesText, $"ENEMIES\n<color=#38BDF8>{enemiesDefeated:N0}</color>");
+            enemiesText.text = $"<size=24>KILLS</size>\n<color=#A9EDFF>{enemiesDefeated:N0}</color>";
         }
 
-        // Hiệu ứng Pop-in nảy nhẹ khi xuất hiện
+        if (celebration != null) celebration.Play();
         if (dialogCard != null)
         {
-            StartCoroutine(PopInAnimationRoutine());
+            if (popInRoutine != null) StopCoroutine(popInRoutine);
+            popInRoutine = StartCoroutine(PopInAnimationRoutine());
         }
     }
 
-private static void SetSummaryText(TextMeshProUGUI text, string value)
+    private void OnDisable()
     {
-        text.text = value;
-        text.fontSize = 52f;
-        text.fontSizeMin = 38f;
-        text.fontSizeMax = 52f;
-        text.enableAutoSizing = true;
-        text.enableWordWrapping = false;
-        text.alignment = TextAlignmentOptions.Center;
-        text.fontStyle = FontStyles.Bold;
-
-        RectTransform rectTransform = text.rectTransform;
-        rectTransform.sizeDelta = new Vector2(260f, 150f);
+        if (popInRoutine != null) StopCoroutine(popInRoutine);
+        popInRoutine = null;
     }
 
     private IEnumerator PopInAnimationRoutine()
     {
-        dialogCard.localScale = Vector3.one * 0.75f;
+        dialogCard.localScale = Vector3.one * 0.94f;
         float elapsed = 0f;
         float duration = 0.25f;
 
@@ -156,12 +151,13 @@ private static void SetSummaryText(TextMeshProUGUI text, string value)
         {
             elapsed += Time.unscaledDeltaTime;
             float t = Mathf.Clamp01(elapsed / duration);
-            float scale = Mathf.Lerp(0.75f, 1f, t) + Mathf.Sin(t * Mathf.PI) * 0.08f;
+            float scale = Mathf.Lerp(0.94f, 1f, t) + Mathf.Sin(t * Mathf.PI) * 0.025f;
             dialogCard.localScale = Vector3.one * scale;
             yield return null;
         }
 
         dialogCard.localScale = Vector3.one;
+        popInRoutine = null;
     }
 
     public void OnClickNextLevel()

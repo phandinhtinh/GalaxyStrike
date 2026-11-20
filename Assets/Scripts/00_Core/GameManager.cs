@@ -305,8 +305,8 @@ public class GameManager : MonoBehaviour
     private void UpdateUI()
     {
         if (scoreText != null) scoreText.text = "SCORE: " + score;
-        if (coinText != null) coinText.text = "COINS: " + coins;
-        if (levelProgressText != null) levelProgressText.text = $"KILLS: {enemiesDefeated}";
+        if (coinText != null) coinText.text = coins.ToString("N0", System.Globalization.CultureInfo.InvariantCulture);
+        if (levelProgressText != null) levelProgressText.text = enemiesDefeated.ToString("N0", System.Globalization.CultureInfo.InvariantCulture);
     }
 
     // --- TRẠNG THÁI GAME & CHUYỂN GIAO DIỆN QUA PANELMANAGER ---

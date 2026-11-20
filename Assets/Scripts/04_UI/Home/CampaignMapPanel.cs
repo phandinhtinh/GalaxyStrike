@@ -63,14 +63,14 @@ namespace GalaxyStrike.UI.Home
             for (int i = 0; i < nodes.Length; i++)
             {
                 int stage = i + 1;
-                nodes[i].button.onClick.AddListener(() => SelectStage(stage));
+                nodes[i].button.onClick.AddListener(() => PlayStage(stage));
             }
         }
 
         private void OnEnable()
         {
-            currentStage = Mathf.Clamp(LevelManager.SavedLevel, 1, nodes.Length);
             lastCleared = Mathf.Clamp(SaveManager.Instance.HighestLevel, 0, nodes.Length);
+            currentStage = Mathf.Clamp(Mathf.Max(LevelManager.SavedLevel, lastCleared + 1), 1, nodes.Length);
             RefreshRoute();
             FocusStage(currentStage);
         }
@@ -119,8 +119,8 @@ namespace GalaxyStrike.UI.Home
 
         private void UseMissionAction()
         {
-            if (selectedStage == currentStage)
-                home.PlayCampaignFromMap();
+            if (CanPlayStage(selectedStage))
+                home.PlayCampaignStageFromMap(selectedStage);
             else
                 FocusStage(currentStage);
         }
@@ -142,6 +142,15 @@ namespace GalaxyStrike.UI.Home
             nextZone.interactable = zone < ZoneCount - 1;
         }
 
+        private bool CanPlayStage(int stage) => stage >= 1 && stage <= currentStage;
+
+        private void PlayStage(int stage)
+        {
+            SelectStage(stage);
+            if (CanPlayStage(stage))
+                home.PlayCampaignStageFromMap(stage);
+        }
+
         private void SelectStage(int stage)
         {
             int previous = selectedStage;
@@ -155,8 +164,8 @@ namespace GalaxyStrike.UI.Home
             missionTitle.text = stage % StagesPerZone == 0 ? $"BOSS STAGE {stage:00}" : $"STAGE {stage:00}";
             missionStatus.text = cleared ? "STAGE CLEARED" : ready ? "READY TO LAUNCH" : "LOCKED";
             missionStatus.color = cleared ? ClearedColor : ready ? ActiveColor : LockedColor;
-            missionButton.image.sprite = ready ? mainActionSprite : secondaryActionSprite;
-            missionAction.text = ready ? "PLAY STAGE" : "GO TO ACTIVE STAGE";
+            missionButton.image.sprite = CanPlayStage(stage) ? mainActionSprite : secondaryActionSprite;
+            missionAction.text = cleared ? "REPLAY STAGE" : ready ? "PLAY STAGE" : "GO TO ACTIVE STAGE";
         }
 
         private void UpdateNode(StageNode node, int stage)

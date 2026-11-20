@@ -21,3 +21,17 @@ MonoBehaviour:
   moveSpeed: 9.2
   fireRate: 0.46
   bulletPrefab: {fileID: 4403078060870034160, guid: c97b7aa95f35b3b4c83e360dedca54ca, type: 3}
+  exhaustColor: {r: 0.572549, g: 0.952941, b: 1.000000, a: 1}
+  exhaustTailColor: {r: 0.219608, g: 0.545098, b: 1.000000, a: 1}
+  exhaustWidth: 0.095
+  exhaustLifetime: 0.27
+  exhaustSpeed: 4.2
+  exhaustSpread: 1
+  exhaustWakeRate: 10
+  exhaustNozzles:
+  - position: {x: 0.34, y: 0.08}
+    strength: 0.7
+  - position: {x: 0.5, y: 0.18}
+    strength: 1
+  - position: {x: 0.66, y: 0.08}
+    strength: 0.7

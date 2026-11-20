@@ -139,6 +139,8 @@ public class PlayerController : MonoBehaviour
                 spriteRenderer.sprite = data.shipSprite;
             }
 
+            GetComponentInChildren<EngineTrail>(true)?.ConfigureForShip(data, spriteRenderer);
+
             baseMaxHealth = data.maxHealth;
             baseFireRate = data.fireRate;
             baseMoveSpeed = data.moveSpeed;

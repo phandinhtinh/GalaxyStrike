@@ -67,6 +67,7 @@ namespace GalaxyStrike.UI.Home
         [SerializeField] private GameObject[] shipList; // Kéo Ship_1 -> Ship_8 vào đây
         [SerializeField] private GameObject lockIcon;   // Biểu tượng ổ khóa (tùy chọn)
         private int currentShipIndex = 0;
+        private bool gameStarting;
         private Coroutine navSelectionRoutine;
 
         public enum GameMode { Campaign, Challenge }
@@ -314,8 +315,18 @@ namespace GalaxyStrike.UI.Home
             StartGameWithMode(GameMode.Campaign);
         }
 
-        private void StartGameWithMode(GameMode mode)
+        public void PlayCampaignStageFromMap(int stage)
         {
+            if (stage < 1 || stage > LevelManager.CampaignLength)
+                return;
+            StartGameWithMode(GameMode.Campaign, stage);
+        }
+
+        private void StartGameWithMode(GameMode mode, int? stage = null)
+        {
+            if (gameStarting)
+                return;
+
             // Chặn vào trận nếu tàu chưa mở khóa
             if (!IsShipUnlocked(currentShipIndex))
             {
@@ -329,6 +340,7 @@ namespace GalaxyStrike.UI.Home
 
             SaveManager save = SaveManager.Instance;
 
+            gameStarting = true;
             // Challenge: không tiêu năng lượng (không ảnh hưởng tiến trình chiến dịch).
             if (currentMode == GameMode.Challenge || save.TryConsumeEnergy())
             {
@@ -337,12 +349,15 @@ namespace GalaxyStrike.UI.Home
                 save.SelectShip(currentShipIndex);
 
                 PlayerPrefs.SetString("SelectedGameMode", currentMode.ToString());
+                if (stage.HasValue)
+                    LevelManager.Instance.SetLevel(stage.Value);
                 PlayerPrefs.Save();
 
                 LoadingSceneController.LoadScene("GameScene");
             }
             else
             {
+                gameStarting = false;
                 Debug.LogWarning("[HomeSceneManager] Không đủ năng lượng để vào trận!");
                 OnTabSelected("Shop");
             }
