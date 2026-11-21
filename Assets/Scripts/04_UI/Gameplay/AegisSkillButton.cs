@@ -12,5 +12,6 @@ public sealed class AegisSkillButton : SkillButton
             player.GrantInvulnerability(duration);
 
         PlayerSkillVfx.PlayAegis(player, duration);
+        BattleFeedbackHUD.Instance?.ShowNotice("AEGIS ACTIVE", "TEMPORARY SHIELD ONLINE", new Color(1f, 0.8f, 0.26f), 1.4f);
     }
 }

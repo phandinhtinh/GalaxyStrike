@@ -82,7 +82,12 @@ public class BulletUpgradeItem : MonoBehaviour
             PlayerController player = collision.GetComponent<PlayerController>();
             if (player != null)
             {
+                int previousLevel = player.CurrentBulletLevel;
                 player.UpgradeBulletCount(1);
+                bool upgraded = player.CurrentBulletLevel > previousLevel;
+                BattleFeedbackHUD.Instance?.ShowNotice(upgraded ? "FIREPOWER UP" : "FIREPOWER MAX",
+                    "WEAPON LEVEL " + player.CurrentBulletLevel + " / " + player.MaxBulletLevel,
+                    new Color(0.2f, 1f, 0.8f));
             }
 
             // Phát âm thanh nhặt vật phẩm
@@ -99,7 +104,7 @@ public class BulletUpgradeItem : MonoBehaviour
 
             // "Juice": flash nhẹ camera + tia lửa xanh tại chỗ nhặt.
             CameraShake.Play(0.08f);
-            VfxSpawner.SpawnHitSpark(transform.position, new Color(0.5f, 1f, 0.6f, 1f));
+            VfxSpawner.SpawnPickup(transform.position, true);
 
             Destroy(gameObject);
         }

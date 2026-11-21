@@ -10,6 +10,7 @@ public sealed class PulseSkillButton : SkillButton
         Vector2 center = player.transform.position;
         float radiusSquared = radius * radius;
         PlayerSkillVfx.PlayPulse(player, radius);
+        BattleFeedbackHUD.Instance?.ShowNotice("PULSE DISCHARGED", "NEARBY THREATS SUPPRESSED", new Color(0.18f, 0.88f, 1f), 1.4f);
         CameraShake.Play(0.28f);
 
         foreach (EnemyBullet bullet in FindObjectsByType<EnemyBullet>(FindObjectsSortMode.None))

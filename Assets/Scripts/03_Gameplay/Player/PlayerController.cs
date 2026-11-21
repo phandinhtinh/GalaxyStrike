@@ -647,6 +647,9 @@ public class PlayerController : MonoBehaviour
             HUD_Panel.Instance.UpdatePlayerHPBar(currentHealth, maxHealth);
 
         GrantInvulnerability(Mathf.Max(0.1f, shieldSeconds));
+        PlayerSkillVfx.PlayAegis(this, Mathf.Max(0.1f, shieldSeconds));
+        VfxSpawner.SpawnPickup(transform.position, true);
+        BattleFeedbackHUD.Instance?.ShowNotice("HULL RESTORED", "REVIVE SHIELD ACTIVE", new Color(0.2f, 1f, 0.8f), 2f, 3);
         return true;
     }
 

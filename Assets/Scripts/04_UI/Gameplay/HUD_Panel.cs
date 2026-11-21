@@ -47,6 +47,21 @@ public class HUD_Panel : MonoBehaviour
     private void Start()
     {
         UpdateLevelDisplay();
+        Transform nameTransform = GameObject.Find("HUD_Panel")?.transform.Find("PlayerProfile_Block/PlayerName");
+        if (nameTransform != null && GalaxyStrike.Save.SaveManager.Instance != null)
+        {
+            var nameLabel = nameTransform.GetComponent<TextMeshProUGUI>();
+            if (nameLabel != null)
+            {
+                string pilotName = GalaxyStrike.Save.SaveManager.Instance.Data.playerName;
+                nameLabel.text = string.IsNullOrWhiteSpace(pilotName) ? "ACE PILOT" : pilotName;
+                nameLabel.enableAutoSizing = true;
+                nameLabel.fontSizeMin = 24f;
+                nameLabel.fontSizeMax = 43f;
+                nameLabel.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 60f);
+                nameLabel.overflowMode = TextOverflowModes.Ellipsis;
+            }
+        }
     }
 
     private void Update()

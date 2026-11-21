@@ -102,7 +102,8 @@ public sealed class CoinDrop : MonoBehaviour
             AudioManager.Instance.PlaySFX(AudioManager.Instance.coinCollectSFX);
 
         CameraShake.Play(0.05f);
-        VfxSpawner.SpawnHitSpark(transform.position, new Color(1f, 0.9f, 0.35f, 1f));
+        VfxSpawner.SpawnPickup(transform.position);
+        BattleFeedbackHUD.Instance?.ShowCoinPickup(transform.position, coinValue);
 
         Destroy(gameObject);
     }
