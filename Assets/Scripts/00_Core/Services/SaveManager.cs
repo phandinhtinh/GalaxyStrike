@@ -235,6 +235,9 @@ namespace GalaxyStrike.Save
 
             save.ownedItemIds.RemoveAll(string.IsNullOrEmpty);
 
+            if (save.processedIapTransactions == null)
+                save.processedIapTransactions = new System.Collections.Generic.List<string>();
+
             // XP không được âm; level phải khớp với tổng XP (chống sửa tay).
             // Giới hạn XP tối đa để vòng lặp bên dưới luôn kết thúc (chống file save bị chỉnh).
             save.experience = Mathf.Clamp(save.experience, 0, MaxExperience);
@@ -553,6 +556,48 @@ namespace GalaxyStrike.Save
             data.gems = Mathf.Max(0, data.gems + amount);
             Flush();
             NotifyChanged();
+        }
+
+        /// <summary>Số transaction IAP tối đa được nhớ (đủ phủ các đơn Store có thể gửi lại).</summary>
+        private const int MaxRememberedIapTransactions = 200;
+
+        /// <summary>Giao dịch IAP này đã được cộng thưởng chưa.</summary>
+        public bool IsIapTransactionProcessed(string transactionId)
+        {
+            return !string.IsNullOrEmpty(transactionId) &&
+                   Data.processedIapTransactions.Contains(transactionId);
+        }
+
+        /// <summary>
+        /// Cộng thưởng của một giao dịch IAP và ghi nhận transaction trong CÙNG một lần lưu.
+        /// Store có thể gửi lại cùng một đơn (app tắt trước khi xác nhận) -> lần sau trả false,
+        /// không cộng thêm. Trả true khi vừa cộng thưởng.
+        /// </summary>
+        public bool TryApplyIapPurchase(string transactionId, int coins, int gems, int energy)
+        {
+            EnsureLoaded();
+            if (string.IsNullOrEmpty(transactionId) || data.processedIapTransactions.Contains(transactionId))
+                return false;
+
+            data.processedIapTransactions.Add(transactionId);
+            int overflow = data.processedIapTransactions.Count - MaxRememberedIapTransactions;
+            if (overflow > 0)
+                data.processedIapTransactions.RemoveRange(0, overflow);
+
+            if (coins > 0)
+                data.coins += coins;
+            if (gems > 0)
+                data.gems += gems;
+            if (energy > 0)
+            {
+                if (data.energy >= data.maxEnergy)
+                    data.lastEnergyRefillUnixTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                data.energy = Mathf.Min(data.maxEnergy, data.energy + energy);
+            }
+
+            Flush();
+            NotifyChanged();
+            return true;
         }
 
         /// <summary>Trừ tiền nếu đủ. Trả false khi không đủ số dư (không trừ gì).</summary>

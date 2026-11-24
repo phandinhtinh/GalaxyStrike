@@ -15,7 +15,7 @@ public static class GalaxyStrikeIapCatalogBuilder
     public static void CreateCatalogAsset()
     {
         // Bundle ID hiá»‡n táº¡i váº«n lÃ  DefaultCompany -> dÃ¹ng prefix táº¡m, sáº½ Ä‘á»•i á»Ÿ Giai Ä‘oáº¡n 5.
-        const string prefix = "com.defaultcompany.galaxystrike";
+        const string prefix = "com.solostudio.galaxystrike";
 
         var asset = ScriptableObject.CreateInstance<GalaxyStrike.IAP.IapCatalogAsset>();
         GalaxyStrike.IAP.IapCatalog catalog = asset.catalog;

@@ -44,6 +44,9 @@ namespace GalaxyStrike.Save
         [Tooltip("ID các vật phẩm (ItemDataSO.itemID) đã sở hữu")]
         public List<string> ownedItemIds = new List<string>();
 
+        [Tooltip("Transaction ID các giao dịch IAP đã cộng thưởng (chống cộng 2 lần khi Store gửi lại đơn)")]
+        public List<string> processedIapTransactions = new List<string>();
+
         public bool HasItem(string itemId)
         {
             return !string.IsNullOrEmpty(itemId) &&

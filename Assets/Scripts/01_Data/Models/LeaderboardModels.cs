@@ -53,7 +53,7 @@ namespace GalaxyStrike.Leaderboard
     public sealed class PlayGamesConfig
     {
         [Header("--- OAuth (Play Console) ---")]
-        [Tooltip("Web Client ID từ Google Cloud Console, dạng 123456789-abc.apps.googleusercontent.com")]
+        [Tooltip("(Tuỳ chọn) Web Client ID - chỉ cần khi có server xác thực người chơi. Leaderboard KHÔNG cần.")]
         public string webClientId = "";
 
         [Header("--- Leaderboard IDs (Play Console) ---")]
@@ -73,10 +73,14 @@ namespace GalaxyStrike.Leaderboard
         [Tooltip("Số dòng hiển thị trên bảng xếp hạng")]
         [Range(5, 50)] public int maxEntries = 20;
 
-        /// <summary>Cấu hình đã đủ để gọi Play Games thật hay chưa.</summary>
+        /// <summary>
+        /// Đã điền ít nhất một Leaderboard ID hay chưa. (App ID của Play Games được
+        /// kiểm tra riêng trong LeaderboardService qua PlayGamesSettings.)
+        /// </summary>
         public bool IsConfigured =>
-            !string.IsNullOrEmpty(webClientId) &&
-            !string.IsNullOrEmpty(highScoreLeaderboardId);
+            !string.IsNullOrEmpty(highScoreLeaderboardId) ||
+            !string.IsNullOrEmpty(highestLevelLeaderboardId) ||
+            !string.IsNullOrEmpty(totalKillsLeaderboardId);
 
         /// <summary>Lấy ID theo loại bảng.</summary>
         public string GetLeaderboardId(LeaderboardType type)
