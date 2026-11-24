@@ -188,6 +188,13 @@ public class VictoryPanelUI : MonoBehaviour
 
         Time.timeScale = 1f;
 
+        // Đi qua GameManager để trừ năng lượng và reset điểm như mọi lượt chơi mới.
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.Replay();
+            return;
+        }
+
         LoadingSceneController.LoadScene(SceneManager.GetActiveScene().name);
     }
 

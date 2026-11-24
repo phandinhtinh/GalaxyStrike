@@ -60,7 +60,12 @@ public class GameOverPanelUI : MonoBehaviour
     {
         FinalizeReviveOffer();
         Time.timeScale = 1f;
-        LoadingSceneController.LoadScene(SceneManager.GetActiveScene().name);
+
+        // Đi qua GameManager để trừ năng lượng và reset điểm như mọi lượt chơi mới.
+        if (GameManager.Instance != null)
+            GameManager.Instance.Replay();
+        else
+            LoadingSceneController.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void OnClickMainMenu()

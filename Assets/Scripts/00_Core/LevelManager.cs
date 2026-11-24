@@ -105,6 +105,13 @@ public class LevelManager : MonoBehaviour
     public static int SavedLevel => SaveManager.Instance.CampaignStage;
 
     /// <summary>
+    /// Màn xa nhất người chơi đã mở trong chiến dịch (màn kế sau màn cao nhất đã qua).
+    /// Đây là giới hạn trên của màn được phép chơi; chọn lại màn cũ không làm giảm nó.
+    /// </summary>
+    public static int FrontierLevel =>
+        Mathf.Clamp(Mathf.Max(SavedLevel, SaveManager.Instance.HighestLevel + 1), 1, CampaignLength);
+
+    /// <summary>
     /// Chế độ chơi được chọn ở HomeScene ("Campaign" hoặc "Challenge").
     /// Challenge dùng chung công thức sinh màn nhưng KHÔNG ghi vào tiến trình chiến dịch.
     /// </summary>
@@ -138,7 +145,7 @@ public class LevelManager : MonoBehaviour
 
         if (useSavedProgress)
         {
-            currentLevel = SavedLevel;
+            currentLevel = FrontierLevel;
         }
         currentLevel = Mathf.Clamp(currentLevel, 1, maxLevels);
     }
@@ -162,6 +169,8 @@ public class LevelManager : MonoBehaviour
 
     /// <summary>
     /// Challenge: mỗi lượt vào GameScene là một màn ngẫu nhiên.
+    /// Chiến dịch: giữ màn đã chọn (bản đồ / Replay / Next Level), chỉ kẹp không vượt
+    /// màn xa nhất đã mở. Trước đây luôn ép về màn đã lưu nên chọn màn cũ phải ghi đè save.
     /// Phải làm ở đây (không phải Awake) vì LevelManager sống qua các Scene.
     /// </summary>
     private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -178,7 +187,7 @@ public class LevelManager : MonoBehaviour
         if (IsChallengeMode)
             currentLevel = RollChallengeLevel();
         else
-            currentLevel = Mathf.Clamp(SavedLevel, 1, maxLevels);
+            currentLevel = Mathf.Clamp(currentLevel, 1, Mathf.Min(FrontierLevel, maxLevels));
     }
 
     /// <summary>
@@ -568,7 +577,8 @@ public class LevelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Gán màn chơi trực tiếp (ví dụ chọn màn từ bản đồ) rồi lưu lại tiến trình.
+    /// Gán màn chơi trực tiếp (ví dụ chọn màn từ bản đồ). Chiến dịch chỉ ghi save khi
+    /// màn mới xa hơn mốc đã lưu: chơi lại màn cũ không kéo lùi tiến trình.
     /// </summary>
     public void SetLevel(int level)
     {

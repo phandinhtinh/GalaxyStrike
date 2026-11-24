@@ -685,11 +685,15 @@ namespace GalaxyStrike.Save
 
         public int CampaignStage => Data.campaignStage;
 
+        /// <summary>
+        /// Ghi mốc màn chiến dịch đã mở. Chỉ tăng, không bao giờ giảm: chọn chơi lại
+        /// màn cũ trên bản đồ không được làm mất tiến trình.
+        /// </summary>
         public void SaveCampaignStage(int stage)
         {
             EnsureLoaded();
             stage = Mathf.Clamp(stage, 1, LevelManager.CampaignLength);
-            if (data.campaignStage == stage)
+            if (stage <= data.campaignStage)
                 return;
 
             data.campaignStage = stage;

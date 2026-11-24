@@ -54,6 +54,12 @@ public sealed class PanelManager : SingletonBehaviour<PanelManager>
             RevivePanelUI.Instance.gameObject.SetActive(false);
     }
 
+    /// <summary>Bảng Settings (tạm dừng) đang mở hay không.</summary>
+    public bool IsSettingsOpen => settingsPanel != null && settingsPanel.activeSelf;
+
+    /// <summary>Scene có gán bảng Settings không (thiếu thì không được tự pause, kẻo kẹt game).</summary>
+    public bool HasSettingsPanel => settingsPanel != null;
+
     /// <summary>
     /// Mở bảng Settings và tạm dừng game.
     /// </summary>

@@ -68,6 +68,23 @@ namespace GalaxyStrike.UI.Home
         [SerializeField] private GameObject lockIcon;   // Biểu tượng ổ khóa (tùy chọn)
         private int currentShipIndex = 0;
         private bool gameStarting;
+
+        /// <summary>Tab cần mở ngay khi HomeScene vào (ví dụ "Shop" khi hết năng lượng trong trận).</summary>
+        private static string pendingTabOnLoad;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics()
+        {
+            pendingTabOnLoad = null;
+        }
+
+        /// <summary>
+        /// Yêu cầu HomeScene mở sẵn một tab ở lần load kế tiếp (dùng một lần rồi xoá).
+        /// </summary>
+        public static void RequestTabOnLoad(string tabName)
+        {
+            pendingTabOnLoad = tabName;
+        }
         private Coroutine navSelectionRoutine;
 
         public enum GameMode { Campaign, Challenge }
@@ -122,8 +139,10 @@ namespace GalaxyStrike.UI.Home
             RefreshTopBarUI();
             UpdateModeUI();
 
-            // Mặc định hiển thị Home
-            OnTabSelected("Home");
+            // Mặc định hiển thị Home, trừ khi GameScene yêu cầu mở tab khác (vd: hết năng lượng -> Shop).
+            string startTab = string.IsNullOrEmpty(pendingTabOnLoad) ? "Home" : pendingTabOnLoad;
+            pendingTabOnLoad = null;
+            OnTabSelected(startTab);
 
             if (settingsPanel != null) settingsPanel.SetActive(false);
             if (collectionBoard != null) collectionBoard.SetActive(false);
@@ -349,8 +368,9 @@ namespace GalaxyStrike.UI.Home
                 save.SelectShip(currentShipIndex);
 
                 PlayerPrefs.SetString("SelectedGameMode", currentMode.ToString());
-                if (stage.HasValue)
-                    LevelManager.Instance.SetLevel(stage.Value);
+                // Chiến dịch: màn chọn từ bản đồ, hoặc màn xa nhất đã mở khi bấm Play.
+                if (currentMode == GameMode.Campaign)
+                    LevelManager.Instance.SetLevel(stage ?? LevelManager.FrontierLevel);
                 PlayerPrefs.Save();
 
                 LoadingSceneController.LoadScene("GameScene");

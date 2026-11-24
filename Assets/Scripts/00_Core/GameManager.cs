@@ -94,7 +94,26 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Chạy đầu mỗi màn: bỏ dừng thời gian, nạp lại điểm từ PlayerPrefs,
+    /// Key PlayerPrefs cũ từng giữ điểm qua mọi lượt chơi (làm điểm cộng dồn vô hạn).
+    /// Giờ chỉ còn dùng để xoá dữ liệu cũ.
+    /// </summary>
+    private const string LegacyScoreKey = "GalaxyStrike_Score";
+
+    /// <summary>
+    /// Điểm mang sang màn kế tiếp. Chỉ được gán khi người chơi bấm Next Level sau khi thắng
+    /// (một "chuỗi" liên tiếp). Replay, thua, về Home hay vào trận mới đều bắt đầu từ 0.
+    /// </summary>
+    private static int carriedScore;
+
+    /// <summary>Xoá điểm mang sang khi vào Play Mode (Domain Reload có thể bị tắt).</summary>
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStatics()
+    {
+        carriedScore = 0;
+    }
+
+    /// <summary>
+    /// Chạy đầu mỗi màn: bỏ dừng thời gian, lấy điểm mang sang (nếu vừa bấm Next Level),
     /// lấy số Coin thật từ SaveManager rồi cập nhật HUD.
     /// </summary>
     private void Start()
@@ -104,11 +123,62 @@ public class GameManager : MonoBehaviour
         isGameOver = false;
         reviveCount = 0;
 
-        // Điểm/vàng lấy từ SaveManager (nguồn dữ liệu duy nhất từ Giai đoạn 2).
-        score = PlayerPrefs.GetInt("GalaxyStrike_Score", 0);
+        score = carriedScore;
+        carriedScore = 0;
+        if (PlayerPrefs.HasKey(LegacyScoreKey))
+        {
+            PlayerPrefs.DeleteKey(LegacyScoreKey);
+            PlayerPrefs.Save();
+        }
+
         coins = SaveManager.Instance.Coins;
 
         UpdateUI();
+    }
+
+    private void Update()
+    {
+        // Nút Back của Android (Escape trên PC): mở/đóng bảng tạm dừng.
+        if (!Input.GetKeyDown(KeyCode.Escape))
+            return;
+
+        if (PanelManager.Instance != null && PanelManager.Instance.IsSettingsOpen)
+            ResumeGame();
+        else
+            TryAutoPause();
+    }
+
+    /// <summary>App bị đưa xuống nền (nghe điện thoại, về màn hình chính...) -> tự tạm dừng.</summary>
+    private void OnApplicationPause(bool paused)
+    {
+        if (paused)
+            TryAutoPause();
+    }
+
+    /// <summary>
+    /// Mất focus trên thiết bị (kéo thanh thông báo, hộp thoại hệ thống) -> tự tạm dừng.
+    /// Bỏ qua trong Editor để click sang cửa sổ khác khi test không làm game dừng.
+    /// </summary>
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus && !Application.isEditor)
+            TryAutoPause();
+    }
+
+    /// <summary>
+    /// Mở bảng tạm dừng nếu đang chơi bình thường. Không làm gì khi trận đã kết thúc
+    /// hoặc game đã dừng sẵn (Settings / Revive / Victory đang mở).
+    /// </summary>
+    private void TryAutoPause()
+    {
+        if (IsRoundOver || Time.timeScale <= 0f)
+            return;
+
+        // Không có bảng Settings thì đừng dừng game: người chơi sẽ không có nút để chạy lại.
+        if (PanelManager.Instance == null || !PanelManager.Instance.HasSettingsPanel)
+            return;
+
+        OpenSettings();
     }
 
     // --- KHỞI TẠO MÀN CHƠI & THANH HP TỔNG ---
@@ -240,10 +310,6 @@ public class GameManager : MonoBehaviour
         {
             HUD_Panel.Instance.SetStageHP(0, totalStageHP);
         }
-
-        // Lưu điểm số và tiền tích lũy
-        PlayerPrefs.SetInt("GalaxyStrike_Score", score);
-        PlayerPrefs.Save();
 
         // Ghi nhận mốc level đã chinh phục (SaveManager).
         // Challenge không tính vào tiến trình chiến dịch.
@@ -489,9 +555,6 @@ public class GameManager : MonoBehaviour
         if (enemiesDefeated > 0)
             SaveManager.Instance.AddExperience(enemiesDefeated * 2);
 
-        PlayerPrefs.SetInt("GalaxyStrike_Score", score);
-        PlayerPrefs.Save();
-
         // Thua vẫn ghi thành tích: quái đã hạ + điểm cao (nếu phá kỷ lục).
         SaveManager.Instance.ReportScore(score);
         SaveManager.Instance.FlushProgress();
@@ -530,50 +593,78 @@ public class GameManager : MonoBehaviour
     // --- CHUYỂN SCENE & TIẾN TRÌNH LEVEL ---
 
     /// <summary>
-    /// Sang màn kế tiếp: lưu điểm, xóa cấp đạn (mỗi màn bắt đầu lại từ 1 tia),
-    /// tăng CurrentLevel rồi load lại GameScene. Nếu đã hết chiến dịch hoặc đang
-    /// ở chế độ Challenge thì quay về HomeScene thay vì chơi lại.
+    /// Sang màn kế tiếp: trừ năng lượng, mang điểm sang màn sau, xóa cấp đạn
+    /// (mỗi màn bắt đầu lại từ 1 tia), tăng CurrentLevel rồi load lại GameScene.
+    /// Nếu đã hết chiến dịch hoặc đang ở chế độ Challenge thì quay về HomeScene.
+    /// Không đủ năng lượng thì về Home và mở Shop (giống luồng vào trận ở Home).
     /// </summary>
     public void NextLevel()
     {
         Time.timeScale = 1f;
 
-        // Lưu điểm số. Cấp đạn KHÔNG lưu sang màn mới: mỗi màn luôn bắt đầu với 1 tia.
-        PlayerPrefs.SetInt("GalaxyStrike_Score", score);
+        // Cấp đạn KHÔNG lưu sang màn mới: mỗi màn luôn bắt đầu với 1 tia.
         PlayerPrefs.DeleteKey("GalaxyStrike_BulletLevel");
+        PlayerPrefs.Save();
 
         LevelManager levels = LevelManager.Instance;
         if (levels.IsChallengeMode || levels.CurrentLevel >= levels.MaxLevels)
         {
-            PlayerPrefs.Save();
             LoadingSceneController.LoadScene("HomeScene");
             return;
         }
 
+        if (!TryPayForNextRun())
+        {
+            ReturnHomeForEnergy();
+            return;
+        }
+
+        // Thắng rồi đi tiếp -> giữ chuỗi điểm.
+        carriedScore = score;
         levels.AdvanceToNextLevel();
-        PlayerPrefs.Save();
         LoadingSceneController.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     /// <summary>
-    /// Chơi lại đúng màn hiện tại: lưu điểm rồi load lại Scene đang hoạt động.
+    /// Chơi lại đúng màn hiện tại với điểm bắt đầu từ 0. Chiến dịch tốn năng lượng
+    /// như khi vào trận từ Home; không đủ năng lượng thì về Home và mở Shop.
     /// </summary>
     public void Replay()
     {
         Time.timeScale = 1f;
-        PlayerPrefs.SetInt("GalaxyStrike_Score", score);
-        PlayerPrefs.Save();
+
+        if (!TryPayForNextRun())
+        {
+            ReturnHomeForEnergy();
+            return;
+        }
+
         LoadingSceneController.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    /// <summary>
-    /// Thoát về màn hình chính (HomeScene) sau khi đã lưu điểm.
-    /// </summary>
+    /// <summary>Thoát về màn hình chính (HomeScene). Điểm của lượt này không mang theo.</summary>
     public void LoadMainMenu()
     {
         Time.timeScale = 1f;
-        PlayerPrefs.SetInt("GalaxyStrike_Score", score);
-        PlayerPrefs.Save();
+        LoadingSceneController.LoadScene("HomeScene");
+    }
+
+    /// <summary>
+    /// Trừ năng lượng cho lượt chơi tiếp theo. Challenge miễn phí (khớp luồng ở HomeScene).
+    /// </summary>
+    private static bool TryPayForNextRun()
+    {
+        LevelManager levels = LevelManager.Instance;
+        if (levels != null && levels.IsChallengeMode)
+            return true;
+
+        return SaveManager.Instance.TryConsumeEnergy();
+    }
+
+    private static void ReturnHomeForEnergy()
+    {
+        Debug.LogWarning("[GameManager] Không đủ năng lượng để chơi tiếp -> về Home, mở Shop.");
+        GalaxyStrike.UI.Home.HomeSceneManager.RequestTabOnLoad("Shop");
         LoadingSceneController.LoadScene("HomeScene");
     }
 }
