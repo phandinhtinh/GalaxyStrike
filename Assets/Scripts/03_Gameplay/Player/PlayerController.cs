@@ -575,7 +575,8 @@ public class PlayerController : MonoBehaviour
 
         currentHealth -= damage;
 
-        // "Juice": rung camera nhẹ + haptic + tia lửa tại vị trí tàu.
+        // "Juice": rung camera nhẹ + haptic + tia lửa tại vị trí tàu + tiếng trúng đạn.
+        AudioManager.Play(SfxCue.PlayerHurt);
         CameraShake.Play(0.32f);
         Haptics.Light();
         VfxSpawner.SpawnHitSpark(transform.position, new Color(1f, 0.45f, 0.35f, 1f));
@@ -650,6 +651,7 @@ public class PlayerController : MonoBehaviour
         PlayerSkillVfx.PlayAegis(this, Mathf.Max(0.1f, shieldSeconds));
         VfxSpawner.SpawnPickup(transform.position, true);
         BattleFeedbackHUD.Instance?.ShowNotice("HULL RESTORED", "REVIVE SHIELD ACTIVE", new Color(0.2f, 1f, 0.8f), 2f, 3);
+        AudioManager.Play(SfxCue.Revive);
         return true;
     }
 

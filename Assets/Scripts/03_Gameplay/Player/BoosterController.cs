@@ -168,6 +168,9 @@ public sealed class BoosterController : MonoBehaviour
             case BoosterType.HyperMagnet: ApplyHyperMagnet(cfg); break;
         }
 
+        GalaxyStrike.Save.SaveManager.Instance?.RecordTaskMetric(GalaxyStrike.Data.TaskMetric.PowerUpsUsed);
+        AudioManager.Play(SfxCue.Skill);
+
         return true;
     }
 

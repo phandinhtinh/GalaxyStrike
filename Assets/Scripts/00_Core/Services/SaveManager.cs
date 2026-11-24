@@ -64,6 +64,7 @@ namespace GalaxyStrike.Save
         protected override void OnSingletonAwake()
         {
             EnsureLoaded();
+            RecordLoginIfNewDay();
         }
 
         /// <summary>
@@ -81,6 +82,8 @@ namespace GalaxyStrike.Save
             {
                 // Quay lại từ nền: đồng hồ thực đã trôi, hồi năng lượng ngay.
                 ApplyEnergyRefill();
+                // Có thể đã sang ngày mới khi app nằm nền -> tính thêm một ngày đăng nhập.
+                RecordLoginIfNewDay();
                 NotifyChanged();
             }
         }
@@ -237,6 +240,25 @@ namespace GalaxyStrike.Save
 
             if (save.processedIapTransactions == null)
                 save.processedIapTransactions = new System.Collections.Generic.List<string>();
+
+            // Nhiệm vụ: save cũ chưa có các field này.
+            bool hadLifetimeStats = save.lifetimeTaskStats != null && save.lifetimeTaskStats.Length > 0;
+            save.dailyTaskStats = ResizeStats(save.dailyTaskStats);
+            save.weeklyTaskStats = ResizeStats(save.weeklyTaskStats);
+            save.lifetimeTaskStats = ResizeStats(save.lifetimeTaskStats);
+            if (!hadLifetimeStats)
+            {
+                // Thành tựu tính cả công sức trước khi có hệ thống nhiệm vụ.
+                save.lifetimeTaskStats[(int)TaskMetric.EnemiesDestroyed] = save.totalKills;
+                save.lifetimeTaskStats[(int)TaskMetric.StagesCleared] = save.highestLevel;
+            }
+
+            if (save.claimedDailyTasks == null)
+                save.claimedDailyTasks = new System.Collections.Generic.List<string>();
+            if (save.claimedWeeklyTasks == null)
+                save.claimedWeeklyTasks = new System.Collections.Generic.List<string>();
+            if (save.claimedAchievements == null)
+                save.claimedAchievements = new System.Collections.Generic.List<string>();
 
             // XP không được âm; level phải khớp với tổng XP (chống sửa tay).
             // Giới hạn XP tối đa để vòng lặp bên dưới luôn kết thúc (chống file save bị chỉnh).
@@ -721,6 +743,192 @@ namespace GalaxyStrike.Save
             Flush();
             NotifyChanged();
             return true;
+        }
+
+        // =====================================================================
+        // NHIỆM VỤ (Daily / Weekly / Achievements)
+        // =====================================================================
+
+        private static int[] ResizeStats(int[] stats)
+        {
+            if (stats != null && stats.Length == TaskCatalog.MetricCount)
+                return stats;
+
+            var resized = new int[TaskCatalog.MetricCount];
+            if (stats != null)
+                Array.Copy(stats, resized, Mathf.Min(stats.Length, resized.Length));
+            return resized;
+        }
+
+        /// <summary>Ngày thứ Hai (UTC, yyyyMMdd) mở đầu tuần chứa <paramref name="utc"/>.</summary>
+        private static int GetTaskWeek(DateTime utc)
+        {
+            int daysSinceMonday = ((int)utc.DayOfWeek + 6) % 7;
+            return GetDailyLoginDay(utc.Date.AddDays(-daysSinceMonday));
+        }
+
+        /// <summary>Sang ngày/tuần mới thì xoá bộ đếm và trạng thái đã nhận của chu kỳ cũ.</summary>
+        private void RollTaskPeriods()
+        {
+            DateTime now = DateTime.UtcNow;
+
+            int day = GetDailyLoginDay(now);
+            if (data.taskDay != day)
+            {
+                data.taskDay = day;
+                Array.Clear(data.dailyTaskStats, 0, data.dailyTaskStats.Length);
+                data.claimedDailyTasks.Clear();
+            }
+
+            int week = GetTaskWeek(now);
+            if (data.taskWeek != week)
+            {
+                data.taskWeek = week;
+                Array.Clear(data.weeklyTaskStats, 0, data.weeklyTaskStats.Length);
+                data.claimedWeeklyTasks.Clear();
+            }
+        }
+
+        private static void AddStat(int[] stats, TaskMetric metric, int amount)
+        {
+            int index = (int)metric;
+            if (index >= 0 && index < stats.Length)
+                stats[index] = (int)Math.Min(int.MaxValue, (long)stats[index] + amount);
+        }
+
+        /// <summary>
+        /// Cộng tiến độ nhiệm vụ cho ngày, tuần và thành tựu. KHÔNG ghi đĩa ngay
+        /// (gọi rất nhiều lần trong trận); GameManager gọi <see cref="FlushProgress"/> cuối trận.
+        /// </summary>
+        public void RecordTaskMetric(TaskMetric metric, int amount = 1)
+        {
+            if (amount <= 0 || metric == TaskMetric.HighestStage)
+                return;
+
+            EnsureLoaded();
+            RollTaskPeriods();
+            AddStat(data.dailyTaskStats, metric, amount);
+            AddStat(data.weeklyTaskStats, metric, amount);
+            AddStat(data.lifetimeTaskStats, metric, amount);
+        }
+
+        /// <summary>Tính một ngày đăng nhập nếu hôm nay (UTC) chưa được tính.</summary>
+        public void RecordLoginIfNewDay()
+        {
+            EnsureLoaded();
+            int today = GetDailyLoginDay(DateTime.UtcNow);
+            if (data.lastLoginDay == today)
+                return;
+
+            data.lastLoginDay = today;
+            RecordTaskMetric(TaskMetric.LoginDays);
+            Flush();
+        }
+
+        /// <summary>Tiến độ hiện tại của nhiệm vụ trong chu kỳ của nó.</summary>
+        public int GetTaskProgress(TaskDefinition task)
+        {
+            if (task == null)
+                return 0;
+
+            EnsureLoaded();
+            RollTaskPeriods();
+
+            if (task.metric == TaskMetric.HighestStage)
+                return data.highestLevel;
+
+            int index = (int)task.metric;
+            switch (task.period)
+            {
+                case TaskPeriod.Daily:
+                    return data.dailyTaskStats[index];
+                case TaskPeriod.Weekly:
+                    return data.weeklyTaskStats[index];
+                default:
+                    // Tổng quái hạ đã được đếm riêng từ trước khi có nhiệm vụ.
+                    return task.metric == TaskMetric.EnemiesDestroyed
+                        ? Mathf.Max(data.totalKills, data.lifetimeTaskStats[index])
+                        : data.lifetimeTaskStats[index];
+            }
+        }
+
+        public bool IsTaskComplete(TaskDefinition task) => task != null && GetTaskProgress(task) >= task.target;
+
+        public bool IsTaskClaimed(TaskDefinition task)
+        {
+            if (task == null)
+                return false;
+            if (task.isDailyLoginReward)
+                return IsDailyLoginRewardClaimed;
+
+            EnsureLoaded();
+            RollTaskPeriods();
+            return ClaimedListFor(task.period).Contains(task.id);
+        }
+
+        /// <summary>Nhận thưởng nhiệm vụ đã hoàn thành. Trả false nếu chưa xong hoặc đã nhận.</summary>
+        public bool TryClaimTask(TaskDefinition task)
+        {
+            if (task == null)
+                return false;
+            if (task.isDailyLoginReward)
+                return TryClaimDailyLoginReward();
+
+            if (IsTaskClaimed(task) || !IsTaskComplete(task))
+                return false;
+
+            ClaimedListFor(task.period).Add(task.id);
+            ApplyTaskReward(task.rewardOne);
+            ApplyTaskReward(task.rewardTwo);
+            Flush();
+            NotifyChanged();
+            return true;
+        }
+
+        /// <summary>Số nhiệm vụ đã xong nhưng chưa nhận (để hiện chấm đỏ trên nút TASK nếu cần).</summary>
+        public int CountClaimableTasks()
+        {
+            int count = 0;
+            for (int tab = 0; tab < 3; tab++)
+            {
+                foreach (TaskDefinition task in TaskCatalog.ForTab(tab))
+                {
+                    if (IsTaskComplete(task) && !IsTaskClaimed(task))
+                        count++;
+                }
+            }
+            return count;
+        }
+
+        private System.Collections.Generic.List<string> ClaimedListFor(TaskPeriod period)
+        {
+            switch (period)
+            {
+                case TaskPeriod.Daily: return data.claimedDailyTasks;
+                case TaskPeriod.Weekly: return data.claimedWeeklyTasks;
+                default: return data.claimedAchievements;
+            }
+        }
+
+        private void ApplyTaskReward(TaskReward reward)
+        {
+            if (reward.amount <= 0)
+                return;
+
+            switch (reward.type)
+            {
+                case TaskRewardType.Coins:
+                    data.coins = (int)Math.Min(int.MaxValue, (long)data.coins + reward.amount);
+                    break;
+                case TaskRewardType.Gems:
+                    data.gems = (int)Math.Min(int.MaxValue, (long)data.gems + reward.amount);
+                    break;
+                case TaskRewardType.Energy:
+                    if (data.energy >= data.maxEnergy)
+                        data.lastEnergyRefillUnixTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                    data.energy = Mathf.Min(data.maxEnergy, data.energy + reward.amount);
+                    break;
+            }
         }
 
         // =====================================================================

@@ -354,6 +354,10 @@ public class EnemySpawner : MonoBehaviour
         if (enemy == null)
             return;
 
+        // Boss vào sân: còi báo động + đổi sang nhạc Boss (chỉ con đầu tiên của wave).
+        if (isBoss && index == 0)
+            AudioManager.OnBossIncoming();
+
         bool isLeader = wave.formation == FormationType.VFormation && index == 0;
 
         enemy.Initialize(

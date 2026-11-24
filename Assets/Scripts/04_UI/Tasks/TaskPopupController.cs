@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using TMPro;
+using GalaxyStrike.Data;
 using GalaxyStrike.Save;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,6 +18,11 @@ namespace GalaxyStrike.UI.Tasks
         Energy
     }
 
+    /// <summary>
+    /// Dữ liệu hiển thị của một dòng do editor builder sinh ra. Từ khi có <see cref="TaskCatalog"/>,
+    /// popup chỉ còn dùng các Sprite ở đây (icon dòng, icon phần thưởng); tiêu đề, mục tiêu,
+    /// tiến độ và phần thưởng lấy từ catalog + save.
+    /// </summary>
     [Serializable]
     public sealed class TaskPopupEntry
     {
@@ -42,7 +47,11 @@ namespace GalaxyStrike.UI.Tasks
         public TaskPopupEntry[] entries;
     }
 
-    /// <summary>Controls the HomeScene task popup and its Daily, Weekly, and Achievements tabs.</summary>
+    /// <summary>
+    /// Popup TASK ở HomeScene với 3 tab Daily / Weekly / Achievements.
+    /// Nhiệm vụ lấy từ <see cref="TaskCatalog"/>, tiến độ và trạng thái đã nhận lấy từ
+    /// <see cref="SaveManager"/> (đếm thật trong trận, tự reset theo ngày/tuần UTC).
+    /// </summary>
     public sealed class TaskPopupController : MonoBehaviour
     {
         [SerializeField] private GameObject popupRoot;
@@ -55,19 +64,26 @@ namespace GalaxyStrike.UI.Tasks
         [SerializeField] private TaskPopupRowView[] rows;
         [SerializeField] private TaskPopupCategory[] categories;
 
-        private UnityAction[] tabCallbacks;
-        private readonly Dictionary<Button, UnityAction> actionCallbacks = new Dictionary<Button, UnityAction>();
-        private int selectedCategoryIndex;
-
-        private const string ClaimPrefsPrefix = "GalaxyStrike.TaskPopup.Claimed.v1";
-        private const string ClaimedLabel = "CLAIMED";
-        private const string UnavailableLabel = "UNAVAILABLE";
-
         [SerializeField] private Sprite goButtonSprite;
         [SerializeField] private Sprite claimButtonSprite;
 
+        [Header("Reward icons (để trống thì lấy từ layout builder)")]
+        [SerializeField] private Sprite coinRewardIcon;
+        [SerializeField] private Sprite gemRewardIcon;
+        [SerializeField] private Sprite energyRewardIcon;
+
+        private UnityAction[] tabCallbacks;
+        private readonly Dictionary<Button, UnityAction> actionCallbacks = new Dictionary<Button, UnityAction>();
+        private int selectedCategoryIndex;
+        private float refreshAt;
+
+        private const string ClaimLabel = "CLAIM";
+        private const string ClaimedLabel = "CLAIMED";
+        private const string GoLabel = "GO";
+
         private static readonly Color32 SelectedTabColor = new Color32(255, 179, 24, 255);
         private static readonly Color32 IdleTabColor = new Color32(7, 42, 91, 255);
+        private static readonly Color32 DisabledActionColor = new Color32(158, 185, 210, 255);
 
         /// <summary>Called by the HomeScene editor builder to connect generated UI objects.</summary>
         public void Configure(
@@ -99,6 +115,7 @@ namespace GalaxyStrike.UI.Tasks
 
         private void Awake()
         {
+            ResolveRewardIcons();
             BindButtons();
             if (popupRoot != null)
                 popupRoot.SetActive(false);
@@ -108,6 +125,16 @@ namespace GalaxyStrike.UI.Tasks
         private void OnDestroy()
         {
             UnbindButtons();
+        }
+
+        private void Update()
+        {
+            // Popup mở qua 00:00 UTC thì tự reset; cũng cập nhật khi Daily Reward được nhận ở popup khác.
+            if (popupRoot == null || !popupRoot.activeInHierarchy || Time.unscaledTime < refreshAt)
+                return;
+
+            refreshAt = Time.unscaledTime + 1f;
+            RenderRows();
         }
 
         public void OpenPopup()
@@ -124,6 +151,30 @@ namespace GalaxyStrike.UI.Tasks
         {
             if (popupRoot != null)
                 popupRoot.SetActive(false);
+        }
+
+        /// <summary>
+        /// Builder cũ không gắn loại phần thưởng cho icon; suy ra từ layout đã biết:
+        /// dòng "Login today" có Coin + Gem, dòng "Destroy 50 enemies" có Energy ở ô thứ hai.
+        /// </summary>
+        private void ResolveRewardIcons()
+        {
+            TaskPopupEntry[] daily = categories != null && categories.Length > 0 && categories[0] != null
+                ? categories[0].entries
+                : null;
+            if (daily == null)
+                return;
+
+            foreach (TaskPopupEntry entry in daily)
+            {
+                if (entry == null || !entry.isDailyLoginReward)
+                    continue;
+                if (coinRewardIcon == null) coinRewardIcon = entry.rewardOneIcon;
+                if (gemRewardIcon == null) gemRewardIcon = entry.rewardTwoIcon;
+            }
+
+            if (energyRewardIcon == null && daily.Length > 1 && daily[1] != null)
+                energyRewardIcon = daily[1].rewardTwoIcon;
         }
 
         private void BindButtons()
@@ -155,11 +206,7 @@ namespace GalaxyStrike.UI.Tasks
             if (closeButton != null)
                 closeButton.onClick.RemoveListener(ClosePopup);
 
-            if (tabButtons == null || tabCallbacks == null)
-            {
-                tabCallbacks = null;
-            }
-            else
+            if (tabButtons != null && tabCallbacks != null)
             {
                 int count = Mathf.Min(tabButtons.Length, tabCallbacks.Length);
                 for (int i = 0; i < count; i++)
@@ -167,9 +214,8 @@ namespace GalaxyStrike.UI.Tasks
                     if (tabButtons[i] != null && tabCallbacks[i] != null)
                         tabButtons[i].onClick.RemoveListener(tabCallbacks[i]);
                 }
-
-                tabCallbacks = null;
             }
+            tabCallbacks = null;
 
             foreach (KeyValuePair<Button, UnityAction> binding in actionCallbacks)
             {
@@ -181,13 +227,11 @@ namespace GalaxyStrike.UI.Tasks
 
         private void SelectTab(int index)
         {
-            if (categories == null || categories.Length == 0)
-                return;
-
-            index = Mathf.Clamp(index, 0, categories.Length - 1);
+            int tabCount = tabButtons != null ? tabButtons.Length : 3;
+            index = Mathf.Clamp(index, 0, Mathf.Max(0, tabCount - 1));
             selectedCategoryIndex = index;
-            int tabCount = tabButtons != null ? tabButtons.Length : 0;
-            for (int i = 0; i < tabCount; i++)
+
+            for (int i = 0; tabButtons != null && i < tabButtons.Length; i++)
             {
                 bool selected = i == index;
                 if (tabBackgrounds != null && i < tabBackgrounds.Length && tabBackgrounds[i] != null)
@@ -196,46 +240,70 @@ namespace GalaxyStrike.UI.Tasks
                     tabLabels[i].color = selected ? Color.white : new Color32(183, 218, 255, 255);
             }
 
-            TaskPopupEntry[] entries = categories[index] != null ? categories[index].entries : null;
-            EnsureRowCapacity(entries != null ? entries.Length : 0);
+            EnsureRowCapacity(TaskCatalog.ForTab(index).Count);
             BindActionButtons();
-
-            if (rows != null)
-            {
-                for (int i = 0; i < rows.Length; i++)
-                {
-                    TaskPopupRowView row = rows[i];
-                    if (row == null || row.root == null)
-                        continue;
-
-                    TaskPopupEntry entry = entries != null && i < entries.Length ? entries[i] : null;
-                    row.root.SetActive(entry != null);
-                    if (entry == null)
-                        continue;
-
-                    if (row.icon != null)
-                        row.icon.sprite = entry.icon;
-                    if (row.title != null)
-                        row.title.text = entry.title;
-                    if (row.progressFill != null)
-                    {
-                        row.progressFill.fillAmount = entry.claimAvailable ? Mathf.Clamp01(entry.progress) : 0f;
-                        Transform track = row.progressFill.transform.parent;
-                        if (track != null && track.name == "Progress_Track")
-                            track.gameObject.SetActive(entry.claimAvailable);
-                    }
-                    if (row.progressLabel != null)
-                        row.progressLabel.text = entry.claimAvailable ? entry.progressLabel : string.Empty;
-                    SetReward(row.rewardOneIcon, row.rewardOneAmount, entry.rewardOneIcon,
-                        entry.isDailyLoginReward ? $"x{SaveManager.DailyLoginCoins}" : entry.rewardOneAmount);
-                    SetReward(row.rewardTwoIcon, row.rewardTwoAmount, entry.rewardTwoIcon,
-                        entry.isDailyLoginReward ? $"x{SaveManager.DailyLoginGems}" : entry.rewardTwoAmount);
-
-                    RenderActionButton(row, entry, entry.claimAvailable && HasClaimed(entry, index, i));
-                }
-            }
-
+            RenderRows();
             ResetScrollPosition();
+        }
+
+        /// <summary>Vẽ lại toàn bộ dòng của tab đang chọn theo tiến độ thật.</summary>
+        private void RenderRows()
+        {
+            if (rows == null)
+                return;
+
+            IReadOnlyList<TaskDefinition> tasks = TaskCatalog.ForTab(selectedCategoryIndex);
+            SaveManager save = SaveManager.Instance;
+
+            for (int i = 0; i < rows.Length; i++)
+            {
+                TaskPopupRowView row = rows[i];
+                if (row == null || row.root == null)
+                    continue;
+
+                TaskDefinition task = i < tasks.Count ? tasks[i] : null;
+                row.root.SetActive(task != null);
+                if (task == null)
+                    continue;
+
+                int progress = save != null ? Mathf.Min(save.GetTaskProgress(task), task.target) : 0;
+                bool claimed = save != null && save.IsTaskClaimed(task);
+                bool complete = progress >= task.target;
+
+                if (row.icon != null)
+                {
+                    Sprite icon = GetLayoutEntry(selectedCategoryIndex, i)?.icon;
+                    if (icon != null)
+                        row.icon.sprite = icon;
+                }
+                if (row.title != null)
+                    row.title.text = task.title;
+
+                if (row.progressFill != null)
+                {
+                    row.progressFill.fillAmount = claimed ? 1f : (float)progress / task.target;
+                    Transform track = row.progressFill.transform.parent;
+                    if (track != null && track.name == "Progress_Track")
+                        track.gameObject.SetActive(true);
+                }
+                if (row.progressLabel != null)
+                    row.progressLabel.text = string.Format(CultureInfo.InvariantCulture, "{0:N0}/{1:N0}",
+                        claimed ? task.target : progress, task.target);
+
+                SetReward(row.rewardOneIcon, row.rewardOneAmount, task.rewardOne);
+                SetReward(row.rewardTwoIcon, row.rewardTwoAmount, task.rewardTwo);
+
+                RenderActionButton(row, complete, claimed);
+            }
+        }
+
+        private TaskPopupEntry GetLayoutEntry(int categoryIndex, int rowIndex)
+        {
+            if (categories == null || categoryIndex < 0 || categoryIndex >= categories.Length)
+                return null;
+
+            TaskPopupEntry[] entries = categories[categoryIndex]?.entries;
+            return entries != null && rowIndex >= 0 && rowIndex < entries.Length ? entries[rowIndex] : null;
         }
 
         private void BindActionButtons()
@@ -255,61 +323,49 @@ namespace GalaxyStrike.UI.Tasks
             }
         }
 
+        /// <summary>
+        /// Nút của dòng: đã xong -> nhận thưởng; chưa xong -> "GO" đóng popup để người chơi vào trận.
+        /// </summary>
         private void HandleActionClick(TaskPopupRowView row)
         {
             int rowIndex = rows != null ? Array.IndexOf(rows, row) : -1;
-            if (rowIndex < 0 || categories == null || selectedCategoryIndex >= categories.Length)
+            IReadOnlyList<TaskDefinition> tasks = TaskCatalog.ForTab(selectedCategoryIndex);
+            if (rowIndex < 0 || rowIndex >= tasks.Count)
                 return;
 
-            TaskPopupEntry[] entries = categories[selectedCategoryIndex] != null
-                ? categories[selectedCategoryIndex].entries
-                : null;
-            if (entries == null || rowIndex >= entries.Length)
+            TaskDefinition task = tasks[rowIndex];
+            SaveManager save = SaveManager.Instance;
+            if (save == null || save.IsTaskClaimed(task))
                 return;
 
-            TaskPopupEntry entry = entries[rowIndex];
-            if (entry == null || !entry.claimAvailable)
-                return;
-
-            if (entry.isDailyLoginReward)
+            if (!save.IsTaskComplete(task))
             {
-                SaveManager save = SaveManager.Instance;
-                save.TryClaimDailyLoginReward();
-                RenderActionButton(row, entry, save.IsDailyLoginRewardClaimed);
+                ClosePopup();
                 return;
             }
 
-            if (HasClaimed(entry, selectedCategoryIndex, rowIndex))
-            {
-                RenderActionButton(row, entry, true);
-                return;
-            }
+            if (save.TryClaimTask(task))
+                AudioManager.Play(SfxCue.Reward);
 
-            if (!GrantReward(entry.rewardOneType, entry.rewardOneAmount)
-                || !GrantReward(entry.rewardTwoType, entry.rewardTwoAmount))
-                return;
-
-            PlayerPrefs.SetInt(GetClaimPrefsKey(selectedCategoryIndex, rowIndex), 1);
-            PlayerPrefs.Save();
-            RenderActionButton(row, entry, true);
+            RenderRows();
         }
 
-        private void RenderActionButton(TaskPopupRowView row, TaskPopupEntry entry, bool claimed)
+        private void RenderActionButton(TaskPopupRowView row, bool complete, bool claimed)
         {
-            bool canClaim = entry.claimAvailable && !claimed;
+            bool canClaim = complete && !claimed;
             if (row.actionLabel != null)
-                row.actionLabel.text = claimed ? ClaimedLabel : canClaim ? entry.actionLabel : UnavailableLabel;
+                row.actionLabel.text = claimed ? ClaimedLabel : canClaim ? ClaimLabel : GoLabel;
 
             if (row.actionButton != null)
             {
-                row.actionButton.interactable = canClaim;
+                row.actionButton.interactable = !claimed;
                 if (row.actionButton.image != null)
                 {
                     if (goButtonSprite != null)
                         row.actionButton.image.sprite = canClaim && claimButtonSprite != null ? claimButtonSprite : goButtonSprite;
                     row.actionButton.image.type = Image.Type.Simple;
                     row.actionButton.image.preserveAspect = false;
-                    row.actionButton.image.color = canClaim ? Color.white : new Color32(158, 185, 210, 255);
+                    row.actionButton.image.color = claimed ? (Color)DisabledActionColor : Color.white;
                 }
             }
 
@@ -317,65 +373,33 @@ namespace GalaxyStrike.UI.Tasks
                 row.actionFace.enabled = false;
         }
 
-        private static bool GrantReward(TaskPopupRewardType rewardType, string amountText)
+        private void SetReward(Image icon, TMP_Text amount, TaskReward reward)
         {
-            if (rewardType == TaskPopupRewardType.None)
-                return true;
-
-            int amount = ParseRewardAmount(amountText);
-            if (amount <= 0)
-                return false;
-
-            SaveManager save = SaveManager.Instance;
-            switch (rewardType)
+            Sprite sprite = null;
+            switch (reward.type)
             {
-                case TaskPopupRewardType.Coins:
-                    save.AddCoins(amount);
-                    return true;
-                case TaskPopupRewardType.Gems:
-                    save.AddGems(amount);
-                    return true;
-                case TaskPopupRewardType.Energy:
-                    save.AddEnergy(amount);
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        private static int ParseRewardAmount(string amountText)
-        {
-            if (string.IsNullOrEmpty(amountText))
-                return 0;
-
-            StringBuilder digits = new StringBuilder(amountText.Length);
-            foreach (char character in amountText)
-            {
-                if (char.IsDigit(character))
-                    digits.Append(character);
+                case TaskRewardType.Coins: sprite = coinRewardIcon; break;
+                case TaskRewardType.Gems: sprite = gemRewardIcon; break;
+                case TaskRewardType.Energy: sprite = energyRewardIcon; break;
             }
 
-            return int.TryParse(digits.ToString(), NumberStyles.None, CultureInfo.InvariantCulture, out int amount)
-                ? amount
-                : 0;
-        }
+            bool visible = reward.type != TaskRewardType.None && reward.amount > 0;
+            if (icon != null)
+            {
+                icon.sprite = sprite;
+                icon.gameObject.SetActive(visible && sprite != null);
+            }
 
-        private static bool HasClaimed(TaskPopupEntry entry, int categoryIndex, int rowIndex)
-        {
-            return entry.isDailyLoginReward
-                ? SaveManager.Instance.IsDailyLoginRewardClaimed
-                : PlayerPrefs.GetInt(GetClaimPrefsKey(categoryIndex, rowIndex), 0) == 1;
-        }
-
-        private static string GetClaimPrefsKey(int categoryIndex, int rowIndex)
-        {
-            string day = DateTime.UtcNow.ToString("yyyyMMdd", CultureInfo.InvariantCulture);
-            return ClaimPrefsPrefix + "." + day + "." + categoryIndex + "." + rowIndex;
+            if (amount != null)
+            {
+                amount.text = visible ? "x" + reward.amount.ToString("N0", CultureInfo.InvariantCulture) : string.Empty;
+                amount.gameObject.SetActive(visible);
+            }
         }
 
         private void EnsureRowCapacity(int requiredCount)
         {
-            if (requiredCount <= (rows != null ? rows.Length : 0) || rows == null || rows.Length == 0 || rows[0] == null)
+            if (rows == null || rows.Length == 0 || rows[0] == null || requiredCount <= rows.Length)
                 return;
 
             List<TaskPopupRowView> expandedRows = new List<TaskPopupRowView>(rows);
@@ -412,21 +436,6 @@ namespace GalaxyStrike.UI.Tasks
             if (scrollRect.content != null)
                 LayoutRebuilder.ForceRebuildLayoutImmediate(scrollRect.content);
             scrollRect.verticalNormalizedPosition = 1f;
-        }
-
-        private static void SetReward(Image icon, TMP_Text amount, Sprite sprite, string text)
-        {
-            if (icon != null)
-            {
-                icon.sprite = sprite;
-                icon.gameObject.SetActive(sprite != null);
-            }
-
-            if (amount != null)
-            {
-                amount.text = text ?? string.Empty;
-                amount.gameObject.SetActive(!string.IsNullOrEmpty(text));
-            }
         }
     }
 }

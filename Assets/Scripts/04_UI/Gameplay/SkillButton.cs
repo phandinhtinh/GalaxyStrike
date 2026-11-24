@@ -71,6 +71,10 @@ public abstract class SkillButton : MonoBehaviour, ICanvasRaycastFilter
         readyAt = Time.time + cooldown;
         RefreshButton();
         ApplySkill(player);
+
+        // Nhiệm vụ "Use N Power-ups" tính cả Skill lẫn Booster.
+        GalaxyStrike.Save.SaveManager.Instance?.RecordTaskMetric(GalaxyStrike.Data.TaskMetric.PowerUpsUsed);
+        AudioManager.Play(SfxCue.Skill);
     }
 
     protected abstract void ApplySkill(PlayerController player);

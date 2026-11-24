@@ -47,6 +47,24 @@ namespace GalaxyStrike.Save
         [Tooltip("Transaction ID các giao dịch IAP đã cộng thưởng (chống cộng 2 lần khi Store gửi lại đơn)")]
         public List<string> processedIapTransactions = new List<string>();
 
+        // --- NHIỆM VỤ (TaskCatalog) ---
+        // Mảng thống kê đánh chỉ số theo GalaxyStrike.Data.TaskMetric.
+
+        [Tooltip("Ngày UTC (yyyyMMdd) của bộ đếm nhiệm vụ ngày hiện tại")]
+        public int taskDay;
+        [Tooltip("Ngày UTC (yyyyMMdd) của thứ Hai mở đầu tuần nhiệm vụ hiện tại")]
+        public int taskWeek;
+        [Tooltip("Ngày UTC (yyyyMMdd) gần nhất đã tính một lượt đăng nhập")]
+        public int lastLoginDay;
+
+        public int[] dailyTaskStats = new int[0];
+        public int[] weeklyTaskStats = new int[0];
+        public int[] lifetimeTaskStats = new int[0];
+
+        public List<string> claimedDailyTasks = new List<string>();
+        public List<string> claimedWeeklyTasks = new List<string>();
+        public List<string> claimedAchievements = new List<string>();
+
         public bool HasItem(string itemId)
         {
             return !string.IsNullOrEmpty(itemId) &&

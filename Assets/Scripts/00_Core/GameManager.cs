@@ -272,6 +272,11 @@ public class GameManager : MonoBehaviour
         // Tổng số quái hạ (tích luỹ mọi màn) — dùng cho bảng xếp hạng.
         SaveManager.Instance.AddTotalKills(1);
 
+        // Nhiệm vụ: quái hạ + Boss hạ (Boss/Mini Boss đều mang BossController).
+        SaveManager.Instance.RecordTaskMetric(TaskMetric.EnemiesDestroyed);
+        if (enemy != null && enemy.GetComponent<BossController>() != null)
+            SaveManager.Instance.RecordTaskMetric(TaskMetric.BossesDefeated);
+
         UpdateUI();
     }
 
@@ -319,14 +324,15 @@ public class GameManager : MonoBehaviour
             SaveManager.Instance.ReportLevelCleared(clearedLevel);
         }
 
+        // Nhiệm vụ: một trận kết thúc + một màn đã qua (Challenge cũng tính).
+        // Ghi trước GrantLevelReward vì hàm đó flush save.
+        SaveManager.Instance.RecordTaskMetric(TaskMetric.BattlesPlayed);
+        SaveManager.Instance.RecordTaskMetric(TaskMetric.StagesCleared);
+
         // Cộng thưởng hoàn thành màn vào ví thật (trước đây chỉ hiển thị trên panel).
         GrantLevelReward(clearedLevel);
 
-        // Âm thanh ăn mừng (nếu có)
-        if (AudioManager.Instance != null && AudioManager.Instance.coinCollectSFX != null)
-        {
-            AudioManager.Instance.PlaySFX(AudioManager.Instance.coinCollectSFX);
-        }
+        AudioManager.Play(SfxCue.Victory);
 
         Victory();
     }
@@ -555,6 +561,11 @@ public class GameManager : MonoBehaviour
         if (enemiesDefeated > 0)
             SaveManager.Instance.AddExperience(enemiesDefeated * 2);
 
+        // Nhiệm vụ "chơi N trận": thua cũng là một trận đã chơi.
+        SaveManager.Instance.RecordTaskMetric(TaskMetric.BattlesPlayed);
+
+        AudioManager.Play(SfxCue.Defeat);
+
         // Thua vẫn ghi thành tích: quái đã hạ + điểm cao (nếu phá kỷ lục).
         SaveManager.Instance.ReportScore(score);
         SaveManager.Instance.FlushProgress();
@@ -646,6 +657,8 @@ public class GameManager : MonoBehaviour
     public void LoadMainMenu()
     {
         Time.timeScale = 1f;
+        // Bỏ trận giữa chừng: vẫn lưu số quái đã hạ / tiến độ nhiệm vụ đã ghi trong trận.
+        SaveManager.Instance.FlushProgress();
         LoadingSceneController.LoadScene("HomeScene");
     }
 

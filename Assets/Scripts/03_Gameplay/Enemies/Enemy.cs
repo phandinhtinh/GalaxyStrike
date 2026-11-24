@@ -1236,6 +1236,8 @@ public class Enemy : MonoBehaviour
             nextHitEffectTime = Time.time + 0.045f;
             Vector2 outward = impactPosition - transform.position;
             EnemyHitVfx.Emit(impactPosition, outward, hitColor, hitSparkCount, hitScale, hitSpread, hitPulse);
+            if (health > 0)
+                AudioManager.Play(SfxCue.Hit);
         }
 
         if (GameManager.Instance != null)

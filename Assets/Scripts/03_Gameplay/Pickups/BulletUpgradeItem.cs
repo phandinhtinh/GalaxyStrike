@@ -90,17 +90,12 @@ public class BulletUpgradeItem : MonoBehaviour
                     new Color(0.2f, 1f, 0.8f));
             }
 
-            // Phát âm thanh nhặt vật phẩm
-            AudioClip sfxToPlay = pickupSFX;
-            if (sfxToPlay == null && AudioManager.Instance != null)
-            {
-                sfxToPlay = AudioManager.Instance.coinCollectSFX;
-            }
-
-            if (AudioManager.Instance != null && sfxToPlay != null)
-            {
-                AudioManager.Instance.PlaySFX(sfxToPlay);
-            }
+            // Phát âm thanh nhặt vật phẩm (không gán pickupSFX thì dùng tiếng power-up riêng,
+            // trước đây dùng tạm tiếng coin nên không phân biệt được với nhặt tiền).
+            if (pickupSFX != null && AudioManager.Instance != null)
+                AudioManager.Instance.PlaySFX(pickupSFX);
+            else
+                AudioManager.Play(SfxCue.PowerUp);
 
             // "Juice": flash nhẹ camera + tia lửa xanh tại chỗ nhặt.
             CameraShake.Play(0.08f);
