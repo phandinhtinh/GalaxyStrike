@@ -146,10 +146,19 @@ public sealed class BulletPool : MonoBehaviour
     /// <summary>Lấy một object từ pool (tự Instantiate nếu pool chưa có / đang cạn).</summary>
     public GameObject Spawn(GameObject prefab, Vector3 position, Quaternion rotation)
     {
+        return Spawn(prefab, position, rotation, -1);
+    }
+
+    /// <summary>
+    /// Lấy object từ pool. <paramref name="initialReserve"/> &gt;= 0 đặt số object dựng sẵn
+    /// cho prefab này (quái nặng nên để 0 = chỉ tạo khi cần); -1 dùng mặc định của pool.
+    /// </summary>
+    public GameObject Spawn(GameObject prefab, Vector3 position, Quaternion rotation, int initialReserve)
+    {
         if (prefab == null)
             return null;
 
-        PrefabPool pool = GetOrCreatePool(prefab);
+        PrefabPool pool = GetOrCreatePool(prefab, initialReserve);
 
         GameObject go = null;
         while (pool.idle.Count > 0 && go == null)
@@ -221,11 +230,28 @@ public sealed class BulletPool : MonoBehaviour
     /// Đạn của quái (EnemyBullet) được giữ lượng dự trữ nhỏ hơn để tiết kiệm bộ nhớ
     /// vì có nhiều biến thể đạn khác nhau, sau đó tự tăng khi cần.
     /// </summary>
-    private PrefabPool GetOrCreatePool(GameObject prefab)
+    /// <summary>
+    /// Trả object về pool nếu nó được tạo từ pool, ngược lại Destroy như bình thường.
+    /// Dùng thay cho Destroy ở mọi object có thể đến từ pool (quái, coin...).
+    /// </summary>
+    public static void Release(GameObject go)
+    {
+        if (go == null)
+            return;
+
+        if (go.TryGetComponent(out PooledHandle handle) && handle.Owner != null && HasInstanceAvailable)
+            Instance.Despawn(go);
+        else
+            Destroy(go);
+    }
+
+    private PrefabPool GetOrCreatePool(GameObject prefab, int initialReserve = -1)
     {
         // A large arsenal needs a small initial reserve per hostile variant.
         // Grow on demand instead of reserving 24 objects for every artwork variant.
-        int reserve = prefab.GetComponent<EnemyBullet>() != null ? Mathf.Min(prewarmCount, 8) : prewarmCount;
+        int reserve = initialReserve >= 0
+            ? initialReserve
+            : prefab.GetComponent<EnemyBullet>() != null ? Mathf.Min(prewarmCount, 8) : prewarmCount;
         if (pools.TryGetValue(prefab, out PrefabPool pool))
         {
             if (pool.idle.Count == 0 && pool.totalCreated < reserve)

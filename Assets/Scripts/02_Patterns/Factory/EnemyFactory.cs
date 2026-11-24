@@ -54,7 +54,19 @@ public static class EnemyFactory
         if (prefab == null)
             return null;
 
-        GameObject obj = Object.Instantiate(prefab, position, rotation);
+        if (prefab.GetComponent<Enemy>() == null)
+        {
+            Debug.LogError($"[EnemyFactory] Prefab '{prefab.name}' thiếu component Enemy.");
+            return null;
+        }
+
+        // PATTERN: Object Pool — quái được tái sử dụng thay vì Instantiate/Destroy mỗi lần.
+        // Không dựng sẵn (reserve 0) vì có nhiều biến thể quái; pool lớn dần theo nhu cầu.
+        // Pool đầy thì vẫn Instantiate để wave không bao giờ thiếu quái.
+        GameObject obj = BulletPool.Instance.Spawn(prefab, position, rotation, 0);
+        if (obj == null)
+            obj = Object.Instantiate(prefab, position, rotation);
+
         Enemy enemy = obj.GetComponent<Enemy>();
 
         if (enemy == null)
