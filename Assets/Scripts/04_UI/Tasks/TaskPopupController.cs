@@ -272,7 +272,7 @@ namespace GalaxyStrike.UI.Tasks
 
                 if (row.icon != null)
                 {
-                    Sprite icon = GetLayoutEntry(selectedCategoryIndex, i)?.icon;
+                    Sprite icon = GetIconForMetric(task.metric) ?? GetLayoutEntry(selectedCategoryIndex, i)?.icon;
                     if (icon != null)
                         row.icon.sprite = icon;
                 }
@@ -295,6 +295,22 @@ namespace GalaxyStrike.UI.Tasks
 
                 RenderActionButton(row, complete, claimed);
             }
+        }
+
+        /// <summary>
+        /// Icon theo loại chỉ số. Tab Weekly của layout khớp 1-1 với <see cref="TaskCatalog.Weekly"/>,
+        /// nên dùng nó làm nguồn icon chuẩn: tránh việc dòng "Clear 1 stage" ở tab Daily
+        /// hiện icon quảng cáo của dòng "Watch 1 Ad" cũ.
+        /// </summary>
+        private Sprite GetIconForMetric(TaskMetric metric)
+        {
+            IReadOnlyList<TaskDefinition> weekly = TaskCatalog.Weekly;
+            for (int i = 0; i < weekly.Count; i++)
+            {
+                if (weekly[i].metric == metric)
+                    return GetLayoutEntry(1, i)?.icon;
+            }
+            return null;
         }
 
         private TaskPopupEntry GetLayoutEntry(int categoryIndex, int rowIndex)

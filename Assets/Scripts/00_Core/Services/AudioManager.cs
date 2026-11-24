@@ -59,6 +59,9 @@ public sealed class AudioManager : SingletonBehaviour<AudioManager>
     /// Bản trong Scene vừa Awake trong khi đã có AudioManager sống: chuyển cấu hình sang
     /// bản đang sống trước, rồi base.Awake mới huỷ bản trùng.
     /// </summary>
+    /// <summary>Mỗi Scene đều có một AudioManager chỉ để mang cấu hình sang -> huỷ là bình thường.</summary>
+    protected override bool WarnOnDuplicate => false;
+
     protected override void Awake()
     {
         if (HasInstance && Instance != this)

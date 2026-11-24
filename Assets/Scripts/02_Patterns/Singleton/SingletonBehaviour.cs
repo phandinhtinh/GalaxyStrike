@@ -59,6 +59,12 @@ public abstract class SingletonBehaviour<T> : MonoBehaviour where T : SingletonB
     protected virtual bool PersistAcrossScenes => true;
 
     /// <summary>
+    /// Ghi cảnh báo khi huỷ bản trùng. Tắt ở lớp con mà bản trùng là chuyện bình thường
+    /// (ví dụ AudioManager: bản trong Scene chỉ để mang cấu hình sang bản đang sống).
+    /// </summary>
+    protected virtual bool WarnOnDuplicate => true;
+
+    /// <summary>
     /// Đăng ký instance, tự huỷ bản trùng, giữ object qua Scene (nếu PersistAcrossScenes)
     /// rồi gọi hook OnSingletonAwake cho lớp con. Lớp con KHÔNG cần override Awake,
     /// chỉ cần override OnSingletonAwake.
@@ -67,7 +73,8 @@ public abstract class SingletonBehaviour<T> : MonoBehaviour where T : SingletonB
     {
         if (_instance != null && _instance != this)
         {
-            Debug.LogWarning($"[Singleton] Đã có {typeof(T).Name}, huỷ bản trùng trên '{name}'.");
+            if (WarnOnDuplicate)
+                Debug.LogWarning($"[Singleton] Đã có {typeof(T).Name}, huỷ bản trùng trên '{name}'.");
             Destroy(gameObject);
             return;
         }

@@ -202,6 +202,10 @@ namespace GalaxyStrike.IAP
             store.OnPurchaseFailed += HandlePurchaseFailed;
             store.OnPurchaseDeferred += HandlePurchaseDeferred;
             store.OnStoreDisconnected += HandleStoreDisconnected;
+            // IAP 5 cảnh báo nếu gọi Connect/FetchPurchases mà không có các callback này.
+            store.OnStoreConnected += HandleStoreConnected;
+            store.OnPurchasesFetched += HandlePurchasesFetched;
+            store.OnPurchasesFetchFailed += HandlePurchasesFetchFailed;
         }
 
         private void UnsubscribeStore()
@@ -215,6 +219,32 @@ namespace GalaxyStrike.IAP
             store.OnPurchaseFailed -= HandlePurchaseFailed;
             store.OnPurchaseDeferred -= HandlePurchaseDeferred;
             store.OnStoreDisconnected -= HandleStoreDisconnected;
+            store.OnStoreConnected -= HandleStoreConnected;
+            store.OnPurchasesFetched -= HandlePurchasesFetched;
+            store.OnPurchasesFetchFailed -= HandlePurchasesFetchFailed;
+        }
+
+        private void HandleStoreConnected()
+        {
+            Log("Đã kết nối Store.");
+        }
+
+        /// <summary>
+        /// Danh sách đơn của người chơi đã tải xong. Đơn chờ giao hàng được xử lý qua
+        /// OnPurchasePending (ProcessPendingOrdersOnPurchasesFetched = true), ở đây chỉ ghi log.
+        /// </summary>
+        private void HandlePurchasesFetched(Orders orders)
+        {
+            if (orders == null)
+                return;
+
+            Log($"Đã tải đơn: {orders.ConfirmedOrders.Count} đã xác nhận, " +
+                $"{orders.PendingOrders.Count} chờ giao, {orders.DeferredOrders.Count} đang hoãn.");
+        }
+
+        private void HandlePurchasesFetchFailed(PurchasesFetchFailureDescription failure)
+        {
+            Debug.LogWarning($"[IAP] Không tải được danh sách đơn: {failure?.failureReason} {failure?.message}");
         }
 
         // =====================================================================
