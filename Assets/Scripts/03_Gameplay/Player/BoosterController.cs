@@ -204,7 +204,7 @@ public sealed class BoosterController : MonoBehaviour
     private void ApplyEmpNuke()
     {
         // Xoá đạn địch: trả về pool thay vì Destroy để không sinh rác GC.
-        EnemyBullet[] bullets = FindObjectsOfType<EnemyBullet>();
+        EnemyBullet[] bullets = FindObjectsByType<EnemyBullet>(FindObjectsSortMode.None);
         for (int i = 0; i < bullets.Length; i++)
         {
             if (bullets[i] == null) continue;
@@ -216,7 +216,7 @@ public sealed class BoosterController : MonoBehaviour
         }
 
         // Sát thương diện rộng. Duyệt bản sao mảng để TakeDamage -> Die() không làm hỏng vòng lặp.
-        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        Enemy[] enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
         for (int i = 0; i < enemies.Length; i++)
         {
             if (enemies[i] != null)

@@ -31,7 +31,7 @@ public abstract class SingletonBehaviour<T> : MonoBehaviour where T : SingletonB
                 return _instance;
 
             // Fallback: tìm trong scene (trường hợp object được đặt tay trong scene).
-            _instance = FindObjectOfType<T>();
+            _instance = FindFirstObjectByType<T>();
             return _instance;
         }
     }
@@ -48,7 +48,7 @@ public abstract class SingletonBehaviour<T> : MonoBehaviour where T : SingletonB
         if (_instance != null)
             return _instance;
 
-        T found = FindObjectOfType<T>();
+        T found = FindFirstObjectByType<T>();
         if (found != null)
             return found;
 

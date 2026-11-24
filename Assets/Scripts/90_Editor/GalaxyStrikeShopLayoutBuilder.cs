@@ -347,7 +347,7 @@ public static class GalaxyStrikeShopLayoutBuilder
     }
     private static TextMeshProUGUI Text(Transform parent,string name,string text,float size,Color color,TextAlignmentOptions alignment=TextAlignmentOptions.Left)
     {
-        var r=Rect(parent,name);var t=r.gameObject.AddComponent<TextMeshProUGUI>();if(font)t.font=font;t.text=text;t.fontSize=size;t.fontSizeMin=size*.65f;t.fontSizeMax=size;t.enableAutoSizing=true;t.fontStyle=FontStyles.Bold;t.alignment=alignment;t.color=color;t.raycastTarget=false;t.enableWordWrapping=false;return t;
+        var r=Rect(parent,name);var t=r.gameObject.AddComponent<TextMeshProUGUI>();if(font)t.font=font;t.text=text;t.fontSize=size;t.fontSizeMin=size*.65f;t.fontSizeMax=size;t.enableAutoSizing=true;t.fontStyle=FontStyles.Bold;t.alignment=alignment;t.color=color;t.raycastTarget=false;t.textWrappingMode = TextWrappingModes.NoWrap;return t;
     }
     private static void Top(RectTransform r,float x,float y,float w,float h)
     {

@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
         }
 
         // Tự động gắn HUD_Panel nếu trong Scene chưa có
-        if (FindObjectOfType<HUD_Panel>() == null)
+        if (FindFirstObjectByType<HUD_Panel>() == null)
         {
             gameObject.AddComponent<HUD_Panel>();
         }
@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
         VfxSpawner.Configure(explosionPrefab, hitSparkPrefab);
 
         // CameraShake phải nằm trên camera để rung đúng.
-        if (FindObjectOfType<CameraShake>() == null)
+        if (FindFirstObjectByType<CameraShake>() == null)
         {
             Camera cam = Camera.main;
             if (cam != null && cam.GetComponent<CameraShake>() == null)

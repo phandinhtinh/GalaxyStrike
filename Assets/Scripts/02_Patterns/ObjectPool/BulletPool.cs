@@ -28,7 +28,7 @@ public sealed class BulletPool : MonoBehaviour
             if (instance != null)
                 return true;
 
-            instance = FindObjectOfType<BulletPool>();
+            instance = FindFirstObjectByType<BulletPool>();
             return instance != null;
         }
     }
@@ -41,7 +41,7 @@ public sealed class BulletPool : MonoBehaviour
             if (instance != null)
                 return instance;
 
-            instance = FindObjectOfType<BulletPool>();
+            instance = FindFirstObjectByType<BulletPool>();
             if (instance == null)
                 instance = new GameObject("[BulletPool]").AddComponent<BulletPool>();
 

@@ -42,8 +42,8 @@ public class ShopItemUI : MonoBehaviour
 
     private void OnDisable()
     {
-        // FindObjectOfType thay vì .Instance: getter sẽ tự tạo lại object khi scene đang đóng.
-        SaveManager save = FindObjectOfType<SaveManager>();
+        // FindFirstObjectByType thay vì .Instance: getter sẽ tự tạo lại object khi scene đang đóng.
+        SaveManager save = FindFirstObjectByType<SaveManager>();
         if (save != null)
             save.OnDataChanged -= RefreshState;
     }

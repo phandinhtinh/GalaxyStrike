@@ -49,7 +49,7 @@ public sealed class LeaderboardPanelUI : MonoBehaviour
 
     private void OnDisable()
     {
-        LeaderboardService service = FindObjectOfType<LeaderboardService>();
+        LeaderboardService service = FindFirstObjectByType<LeaderboardService>();
         if (service != null)
         {
             service.OnSignInChanged -= HandleSignInChanged;

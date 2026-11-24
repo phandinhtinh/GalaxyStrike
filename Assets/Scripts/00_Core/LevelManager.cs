@@ -30,7 +30,7 @@ public class LevelManager : MonoBehaviour
             if (_instance != null)
                 return _instance;
 
-            _instance = FindObjectOfType<LevelManager>();
+            _instance = FindFirstObjectByType<LevelManager>();
             if (_instance == null)
             {
                 GameObject obj = new GameObject("LevelManager");

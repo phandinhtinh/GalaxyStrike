@@ -135,7 +135,7 @@ public class HUD_Panel : MonoBehaviour
         }
         else
         {
-            Canvas canvas = FindObjectOfType<Canvas>();
+            Canvas canvas = FindFirstObjectByType<Canvas>();
             if (canvas != null) hudPanel = canvas.transform;
         }
 

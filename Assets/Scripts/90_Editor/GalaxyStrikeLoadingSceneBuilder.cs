@@ -163,7 +163,7 @@ public static class GalaxyStrikeLoadingSceneBuilder
         TextMeshProUGUI body = CreateText(panel, "Tip_Text",
             "Nâng cấp phi thuyền để mạnh hơn\nvà vượt qua những thử thách khó khăn hơn!", 20f,
             TextAlignmentOptions.MidlineLeft, new Color32(226, 245, 255, 255));
-        body.enableWordWrapping = true;
+        body.textWrappingMode = TextWrappingModes.Normal;
         body.fontStyle = FontStyles.Bold;
         SetRect(body.rectTransform,
             new Vector2(0.25f, 0.12f), new Vector2(0.95f, 0.66f), new Vector2(0f, 0.5f),
@@ -191,7 +191,7 @@ public static class GalaxyStrikeLoadingSceneBuilder
         label.fontSize = fontSize;
         label.alignment = alignment;
         label.verticalAlignment = VerticalAlignmentOptions.Middle;
-        label.enableWordWrapping = false;
+        label.textWrappingMode = TextWrappingModes.NoWrap;
         label.overflowMode = TextOverflowModes.Overflow;
         label.color = color;
         label.raycastTarget = false;

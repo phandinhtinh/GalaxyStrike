@@ -100,7 +100,7 @@ namespace GalaxyStrike.UI.Home
             if (initialized)
                 return;
 
-            Canvas canvas = FindObjectOfType<Canvas>();
+            Canvas canvas = FindFirstObjectByType<Canvas>();
             if (canvas == null)
             {
                 Debug.LogError("[Backpack] Không tìm thấy Canvas trong HomeScene.");
@@ -897,7 +897,7 @@ namespace GalaxyStrike.UI.Home
             text.alignment = alignment;
             text.color = color;
             text.raycastTarget = false;
-            text.enableWordWrapping = true;
+            text.textWrappingMode = TextWrappingModes.Normal;
             text.overflowMode = TextOverflowModes.Truncate;
             if (TMP_Settings.defaultFontAsset != null)
                 text.font = TMP_Settings.defaultFontAsset;

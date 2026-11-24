@@ -67,7 +67,7 @@ public sealed class RevivePanelUI : MonoBehaviour
         if (Instance != null)
             return Instance;
 
-        Canvas canvas = Object.FindObjectOfType<Canvas>();
+        Canvas canvas = Object.FindFirstObjectByType<Canvas>();
         if (canvas == null)
             return null;
 

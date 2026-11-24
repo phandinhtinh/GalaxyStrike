@@ -50,12 +50,12 @@ namespace GalaxyStrike.UI
         private void OnEnable()
         {
             // Ở OnEnable, service được tạo bởi GameBootstrap trước khi scene load,
-            // nên FindObjectOfType luôn tìm thấy. Không dùng .Instance để tránh tạo trùng.
-            SaveManager save = FindObjectOfType<SaveManager>();
+            // nên FindFirstObjectByType luôn tìm thấy. Không dùng .Instance để tránh tạo trùng.
+            SaveManager save = FindFirstObjectByType<SaveManager>();
             if (save != null)
                 save.OnDataChanged += RefreshAllCards;
 
-            IapPurchaseService iap = FindObjectOfType<IapPurchaseService>();
+            IapPurchaseService iap = FindFirstObjectByType<IapPurchaseService>();
             if (iap != null)
                 iap.OnStoreReady += RefreshIapCards;
             if (iap != null)
@@ -67,12 +67,12 @@ namespace GalaxyStrike.UI
             // KHÔNG dùng SaveManager.Instance / IapPurchaseService.Instance ở đây:
             // getter tự sinh object mới nếu instance đã bị huỷ, và khi scene đang unload
             // Unity sẽ báo "Some objects were not cleaned up when closing the scene".
-            // Dùng FindObjectOfType để chỉ huỷ đăng ký với service còn sống.
-            SaveManager save = FindObjectOfType<SaveManager>();
+            // Dùng FindFirstObjectByType để chỉ huỷ đăng ký với service còn sống.
+            SaveManager save = FindFirstObjectByType<SaveManager>();
             if (save != null)
                 save.OnDataChanged -= RefreshAllCards;
 
-            IapPurchaseService iap = FindObjectOfType<IapPurchaseService>();
+            IapPurchaseService iap = FindFirstObjectByType<IapPurchaseService>();
             if (iap != null)
                 iap.OnStoreReady -= RefreshIapCards;
             if (iap != null)

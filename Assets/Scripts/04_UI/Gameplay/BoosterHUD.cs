@@ -81,7 +81,7 @@ public sealed class BoosterHUD : MonoBehaviour
     {
         if (buttons[0] != null) return;
 
-        Canvas canvas = FindObjectOfType<Canvas>();
+        Canvas canvas = FindFirstObjectByType<Canvas>();
         if (canvas == null) return;
 
         RectTransform root = new GameObject("BoosterBar", typeof(RectTransform)).GetComponent<RectTransform>();

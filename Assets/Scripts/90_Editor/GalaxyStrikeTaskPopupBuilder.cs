@@ -537,7 +537,7 @@ public static class GalaxyStrikeTaskPopupBuilder
         text.fontSize = fontSize;
         text.alignment = alignment;
         text.verticalAlignment = VerticalAlignmentOptions.Middle;
-        text.enableWordWrapping = false;
+        text.textWrappingMode = TextWrappingModes.NoWrap;
         text.overflowMode = TextOverflowModes.Ellipsis;
         text.color = color;
         text.raycastTarget = false;

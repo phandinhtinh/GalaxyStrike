@@ -321,7 +321,7 @@ public static class GalaxyStrikeUpgradeLayoutBuilder
         tmp.fontSize = fontSize;
         tmp.alignment = alignment;
         tmp.verticalAlignment = VerticalAlignmentOptions.Middle;
-        tmp.enableWordWrapping = false;
+        tmp.textWrappingMode = TextWrappingModes.NoWrap;
         tmp.overflowMode = TextOverflowModes.Ellipsis;
         tmp.color = color;
         tmp.raycastTarget = false;

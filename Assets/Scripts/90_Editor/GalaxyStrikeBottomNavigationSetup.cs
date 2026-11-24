@@ -210,7 +210,7 @@ public static class GalaxyStrikeBottomNavigationSetup
             label.fontSizeMin = 16f;
             label.fontSizeMax = 20f;
             label.enableAutoSizing = true;
-            label.enableWordWrapping = false;
+            label.textWrappingMode = TextWrappingModes.NoWrap;
             label.overflowMode = TextOverflowModes.Truncate;
             label.fontStyle = FontStyles.Bold;
             label.color = selected ? Color.white : new Color(0.72f, 0.82f, 0.94f, 0f);

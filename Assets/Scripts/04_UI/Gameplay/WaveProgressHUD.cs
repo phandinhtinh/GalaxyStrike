@@ -22,7 +22,7 @@ public class WaveProgressHUD : MonoBehaviour
 
     private void Start()
     {
-        spawner = FindObjectOfType<EnemySpawner>();
+        spawner = FindFirstObjectByType<EnemySpawner>();
     }
 
     private void Update()

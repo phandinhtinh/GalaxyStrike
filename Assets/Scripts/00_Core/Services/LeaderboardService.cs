@@ -281,6 +281,10 @@ namespace GalaxyStrike.Leaderboard
 
             int count = Mathf.Clamp(Config.maxEntries, 1, 50);
 
+            // Plugin GPGS 2.x vẫn trả điểm/hồ sơ qua IScore / IUserProfile của
+            // UnityEngine.SocialPlatforms (Unity đã đánh dấu lỗi thời). Chưa có kiểu thay thế
+            // nên tắt cảnh báo riêng đoạn này; đổi khi plugin cập nhật API.
+#pragma warning disable CS0618
             PlayGamesPlatform.Instance.LoadScores(
                 id,
                 LeaderboardStart.TopScores,
@@ -330,6 +334,7 @@ namespace GalaxyStrike.Leaderboard
                         OnLeaderboardLoaded?.Invoke(type, entries, true);
                     });
                 });
+#pragma warning restore CS0618
         }
 
         /// <summary>Bảng offline: chỉ có dòng của người chơi hiện tại.</summary>

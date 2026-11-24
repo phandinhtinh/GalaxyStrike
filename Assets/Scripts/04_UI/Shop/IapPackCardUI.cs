@@ -144,7 +144,7 @@ namespace GalaxyStrike.UI.Shop
 
             // Cache lại service đã đăng ký để OnDisable huỷ đúng instance
             // (không dùng .Instance trong OnDisable vì getter có thể tạo object mới khi scene đóng).
-            subscribedService = FindObjectOfType<IapPurchaseService>();
+            subscribedService = FindFirstObjectByType<IapPurchaseService>();
             if (subscribedService == null)
                 return;
 
@@ -222,7 +222,7 @@ namespace GalaxyStrike.UI.Shop
             text.text = value;
             text.fontSize = size;
             text.alignment = alignment;
-            text.enableWordWrapping = false;
+            text.textWrappingMode = TextWrappingModes.NoWrap;
             text.raycastTarget = false;
             text.color = Color.white;
             return text;

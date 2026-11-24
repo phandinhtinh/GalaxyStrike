@@ -51,7 +51,7 @@ public class UpgradePanelUI : MonoBehaviour
 
     private void OnDisable()
     {
-        SaveManager save = FindObjectOfType<SaveManager>();
+        SaveManager save = FindFirstObjectByType<SaveManager>();
         if (save != null)
             save.OnDataChanged -= Refresh;
     }
