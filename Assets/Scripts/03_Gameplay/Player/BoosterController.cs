@@ -227,7 +227,8 @@ public sealed class BoosterController : MonoBehaviour
     /// <summary>Hyper Magnet: cưỡng bức hút Coin/PowerUp trong thời gian cấu hình.</summary>
     private void ApplyHyperMagnet(BoosterConfig cfg)
     {
-        float seconds = cfg != null ? Mathf.Max(1f, cfg.duration) : 10f;
+        // Thiếu cấu hình booster -> 0 = dùng hyperMagnetDuration của PlayerEquipment (mặc định 10s).
+        float seconds = cfg != null ? Mathf.Max(1f, cfg.duration) : 0f;
 
         PlayerController player = PlayerController.Instance;
         PlayerEquipment equipment = player != null ? player.GetComponent<PlayerEquipment>() : null;

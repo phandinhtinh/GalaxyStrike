@@ -12,7 +12,6 @@ public class HUD_Panel : MonoBehaviour
     public static HUD_Panel Instance { get; private set; }
 
     [Header("UI References (Tự động khởi tạo nếu để trống)")]
-    [SerializeField] private RectTransform barContainer;
     [SerializeField] private RectTransform barFillRect;
     [SerializeField] private Image barFillImage;
     [SerializeField] private TextMeshProUGUI hpText;
@@ -159,7 +158,6 @@ public class HUD_Panel : MonoBehaviour
         // WaveProgressHUD now displays stage progress; retire the old red fleet HP bar.
         Transform existingContainer = hudPanel.Find("StageHP_Container");
         if (existingContainer != null) existingContainer.gameObject.SetActive(false);
-        barContainer = null;
         barFillRect = null;
         barFillImage = null;
         hpText = null;

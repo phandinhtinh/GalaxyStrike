@@ -79,6 +79,10 @@ public class PlayerEquipment : MonoBehaviour
     /// </summary>
     public void ActivateHyperMagnet(float seconds)
     {
+        // Không truyền thời gian (<= 0) thì dùng thời lượng mặc định cấu hình trên tàu.
+        if (seconds <= 0f)
+            seconds = hyperMagnetDuration;
+
         HyperMagnetTimeLeft = Mathf.Max(HyperMagnetTimeLeft, seconds);
     }
 
