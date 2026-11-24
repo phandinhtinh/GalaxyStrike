@@ -12,7 +12,7 @@ namespace GalaxyStrike.Save
     ///  - Hợp nhất Coin / Gem / Energy / Level / Tàu đã mở khóa / Cấp nâng cấp vào MỘT file save.
     ///  - Mã hóa AES-256 + chữ ký HMAC -> người chơi không sửa được file trên Android.
     ///  - Tự hồi 1 năng lượng mỗi <see cref="EnergyRefillMinutes"/> phút, tối đa <see cref="MaxEnergy"/>,
-    ///    kể cả khi đã tắt game (dựa trên DateTime.UtcNow).
+    ///    kể cả khi đã tắt game (dựa trên đồng hồ UTC).
     ///  - Tự động chuyển dữ liệu PlayerPrefs cũ (bản trước Giai đoạn 2) sang save mới 1 lần duy nhất.
     ///
     /// Singleton tự sinh (DontDestroyOnLoad) nên dùng được ở cả HomeScene và GameScene.
@@ -22,6 +22,33 @@ namespace GalaxyStrike.Save
     {
         private const string SaveKey = "GalaxyStrike_SaveV2";
         private const string LegacyMigrationKey = "GalaxyStrike_MigratedV2";
+
+        // ---- Điểm nối cho test (Assets/Tests/Editor). Game luôn dùng giá trị mặc định. ----
+
+        /// <summary>
+        /// Tiền tố cho MỌI key PlayerPrefs mà SaveManager đọc/ghi. Test đặt một tiền tố riêng
+        /// để không đọc hay ghi đè save thật của người chơi trong Editor.
+        /// </summary>
+        internal static string KeyPrefix = string.Empty;
+
+        /// <summary>Đồng hồ UTC giả cho test (hồi năng lượng, reset ngày/tuần). null = giờ thật.</summary>
+        internal static Func<DateTime> ClockOverride;
+
+        private static string PrefKey(string key) => KeyPrefix + key;
+
+        private static DateTime UtcNow => ClockOverride != null
+            ? DateTime.SpecifyKind(ClockOverride(), DateTimeKind.Utc)
+            : DateTime.UtcNow;
+
+        private static long UnixNow => new DateTimeOffset(UtcNow).ToUnixTimeSeconds();
+
+        /// <summary>Vào Play Mode luôn dùng key và đồng hồ thật, kể cả khi test bị ngắt giữa chừng.</summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetTestSeams()
+        {
+            KeyPrefix = string.Empty;
+            ClockOverride = null;
+        }
 
         [Header("--- Energy ---")]
         [Tooltip("Số phút để hồi 1 năng lượng")]
@@ -169,7 +196,7 @@ namespace GalaxyStrike.Save
                 gems = startingGems,
                 energy = maxEnergy,
                 maxEnergy = maxEnergy,
-                lastEnergyRefillUnixTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+                lastEnergyRefillUnixTime = UnixNow
             };
 
             fresh.UnlockShip(0);
@@ -183,7 +210,7 @@ namespace GalaxyStrike.Save
         /// </summary>
         private SaveData LoadFromDisk()
         {
-            string stored = PlayerPrefs.GetString(SaveKey, string.Empty);
+            string stored = PlayerPrefs.GetString(PrefKey(SaveKey), string.Empty);
             if (string.IsNullOrEmpty(stored))
                 return null;
 
@@ -281,30 +308,30 @@ namespace GalaxyStrike.Save
         /// <summary>Chuyển dữ liệu PlayerPrefs của bản cũ sang save mới, đúng 1 lần.</summary>
         private bool MigrateLegacyPlayerPrefs()
         {
-            if (PlayerPrefs.GetInt(LegacyMigrationKey, 0) == 1)
+            if (PlayerPrefs.GetInt(PrefKey(LegacyMigrationKey), 0) == 1)
                 return false;
 
-            if (PlayerPrefs.HasKey("GalaxyStrike_Coins"))
-                data.coins = Mathf.Max(data.coins, PlayerPrefs.GetInt("GalaxyStrike_Coins", 0));
+            if (PlayerPrefs.HasKey(PrefKey("GalaxyStrike_Coins")))
+                data.coins = Mathf.Max(data.coins, PlayerPrefs.GetInt(PrefKey("GalaxyStrike_Coins"), 0));
 
             for (int i = 0; i < 8; i++)
             {
-                if (PlayerPrefs.GetInt($"Ship_Unlocked_{i}", 0) == 1)
+                if (PlayerPrefs.GetInt(PrefKey($"Ship_Unlocked_{i}"), 0) == 1)
                     data.UnlockShip(i);
             }
 
-            data.selectedShipIndex = Mathf.Max(0, PlayerPrefs.GetInt("SelectedShipIndex", 0));
+            data.selectedShipIndex = Mathf.Max(0, PlayerPrefs.GetInt(PrefKey("SelectedShipIndex"), 0));
             if (!data.HasShip(data.selectedShipIndex))
                 data.selectedShipIndex = 0;
 
-            PlayerPrefs.SetInt(LegacyMigrationKey, 1);
+            PlayerPrefs.SetInt(PrefKey(LegacyMigrationKey), 1);
             Debug.Log("[SaveManager] Đã chuyển dữ liệu PlayerPrefs cũ sang SaveV2.");
             return true;
         }
 
         private void MigrateCampaignProgress(bool hasSignedSave)
         {
-            int legacyStage = PlayerPrefs.GetInt(LevelManager.LegacyStageKey, 0);
+            int legacyStage = PlayerPrefs.GetInt(PrefKey(LevelManager.LegacyStageKey), 0);
             int cleared = data.highestLevel;
             bool legacyCampaign = !LevelManager.ChallengeSelected &&
                 legacyStage >= 1 && legacyStage <= LevelManager.CampaignLength;
@@ -335,7 +362,7 @@ namespace GalaxyStrike.Save
             try
             {
                 string json = JsonUtility.ToJson(data);
-                PlayerPrefs.SetString(SaveKey, SaveCrypto.Encrypt(json));
+                PlayerPrefs.SetString(PrefKey(SaveKey), SaveCrypto.Encrypt(json));
                 PlayerPrefs.Save();
                 return true;
             }
@@ -369,7 +396,7 @@ namespace GalaxyStrike.Save
         {
             EnsureLoaded();
 
-            long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            long now = UnixNow;
 
             if (data.energy >= data.maxEnergy)
             {
@@ -409,7 +436,7 @@ namespace GalaxyStrike.Save
             if (data.energy >= data.maxEnergy)
                 return 0;
 
-            long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            long now = UnixNow;
             long interval = Mathf.Max(1, energyRefillMinutes) * 60L;
             long elapsed = now - data.lastEnergyRefillUnixTime;
             long remaining = interval - (elapsed % interval);
@@ -431,7 +458,7 @@ namespace GalaxyStrike.Save
 
             // Vừa rời trạng thái đầy -> bắt đầu tính nhịp hồi từ bây giờ.
             if (wasFull)
-                data.lastEnergyRefillUnixTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                data.lastEnergyRefillUnixTime = UnixNow;
 
             Flush();
             NotifyChanged();
@@ -448,7 +475,7 @@ namespace GalaxyStrike.Save
             data.energy = Mathf.Min(data.maxEnergy, data.energy + amount);
 
             if (before >= data.maxEnergy)
-                data.lastEnergyRefillUnixTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                data.lastEnergyRefillUnixTime = UnixNow;
 
             Flush();
             NotifyChanged();
@@ -464,12 +491,12 @@ namespace GalaxyStrike.Save
         public const int DailyLoginCoins = 300;
         public const int DailyLoginGems = 5;
 
-        public bool IsDailyLoginRewardClaimed => HasDailyLoginClaim(Data, DateTime.UtcNow);
+        public bool IsDailyLoginRewardClaimed => HasDailyLoginClaim(Data, UtcNow);
 
         public bool TryClaimDailyLoginReward()
         {
             SaveData save = Data;
-            DateTime now = DateTime.UtcNow;
+            DateTime now = UtcNow;
             if (HasDailyLoginClaim(save, now) || save.coins > int.MaxValue - DailyLoginCoins ||
                 save.gems > int.MaxValue - DailyLoginGems)
                 return false;
@@ -497,7 +524,7 @@ namespace GalaxyStrike.Save
 
             // The previous HomeScene stored Login today as the first tab's sixth row.
             string date = utc.ToString("yyyyMMdd", CultureInfo.InvariantCulture);
-            return PlayerPrefs.GetInt("GalaxyStrike.TaskPopup.Claimed.v1." + date + ".0.5", 0) == 1;
+            return PlayerPrefs.GetInt(PrefKey("GalaxyStrike.TaskPopup.Claimed.v1." + date + ".0.5"), 0) == 1;
         }
 
         private static int GetDailyLoginDay(DateTime utc) => utc.Year * 10000 + utc.Month * 100 + utc.Day;
@@ -613,7 +640,7 @@ namespace GalaxyStrike.Save
             if (energy > 0)
             {
                 if (data.energy >= data.maxEnergy)
-                    data.lastEnergyRefillUnixTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                    data.lastEnergyRefillUnixTime = UnixNow;
                 data.energy = Mathf.Min(data.maxEnergy, data.energy + energy);
             }
 
@@ -770,7 +797,7 @@ namespace GalaxyStrike.Save
         /// <summary>Sang ngày/tuần mới thì xoá bộ đếm và trạng thái đã nhận của chu kỳ cũ.</summary>
         private void RollTaskPeriods()
         {
-            DateTime now = DateTime.UtcNow;
+            DateTime now = UtcNow;
 
             int day = GetDailyLoginDay(now);
             if (data.taskDay != day)
@@ -816,7 +843,7 @@ namespace GalaxyStrike.Save
         public void RecordLoginIfNewDay()
         {
             EnsureLoaded();
-            int today = GetDailyLoginDay(DateTime.UtcNow);
+            int today = GetDailyLoginDay(UtcNow);
             if (data.lastLoginDay == today)
                 return;
 
@@ -925,7 +952,7 @@ namespace GalaxyStrike.Save
                     break;
                 case TaskRewardType.Energy:
                     if (data.energy >= data.maxEnergy)
-                        data.lastEnergyRefillUnixTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                        data.lastEnergyRefillUnixTime = UnixNow;
                     data.energy = Mathf.Min(data.maxEnergy, data.energy + reward.amount);
                     break;
             }
