@@ -29,6 +29,7 @@ public class VictoryPanelUI : MonoBehaviour
     [SerializeField] private VictoryCelebration celebration;
     private Coroutine popInRoutine;
     private bool transitionStarted;
+    private CoinFlyEffect coinFly;
 
     private void Awake()
     {
@@ -132,6 +133,29 @@ public class VictoryPanelUI : MonoBehaviour
             if (popInRoutine != null) StopCoroutine(popInRoutine);
             popInRoutine = StartCoroutine(PopInAnimationRoutine());
         }
+
+        PlayCoinFly(coins);
+    }
+
+    /// <summary>
+    /// Coin thưởng văng ra từ ô COINS rồi bay về biểu tượng vàng trên HUD, số Coin tăng dần.
+    /// Phần thưởng đã được cộng vào ví trước khi panel mở; đây chỉ là hiệu ứng hiển thị.
+    /// </summary>
+    private void PlayCoinFly(int rewardCoins)
+    {
+        GameManager gm = GameManager.Instance;
+        RectTransform hudCoinBar = gm != null ? gm.HudCoinBar : null;
+        if (rewardCoins <= 0 || hudCoinBar == null || coinText == null)
+            return;
+
+        if (coinFly == null && !TryGetComponent(out coinFly))
+            coinFly = gameObject.AddComponent<CoinFlyEffect>();
+
+        RectTransform source = coinText.transform.parent as RectTransform ?? coinText.rectTransform;
+        int total = GalaxyStrike.Save.SaveManager.Instance != null
+            ? GalaxyStrike.Save.SaveManager.Instance.Coins
+            : gm.coins;
+        coinFly.Play(hudCoinBar, source, (RectTransform)transform, total, rewardCoins);
     }
 
     private void OnDisable()

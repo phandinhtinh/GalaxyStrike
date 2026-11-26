@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour
     public int totalStageHP = 16;
     public int currentStageHP = 16;
 
+    /// <summary>Khung Coin trên HUD (cha của text Coin) — đích bay của hiệu ứng coin khi thắng màn.</summary>
+    public RectTransform HudCoinBar => coinText != null ? coinText.transform.parent as RectTransform : null;
+
     private bool isLevelWon = false;
     private bool isGameOver = false;
 
