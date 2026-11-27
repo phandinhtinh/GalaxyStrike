@@ -15,7 +15,6 @@ namespace GalaxyStrike.UI.Home
         [Header("--- Top Bar Display ---")]
         [SerializeField] private TextMeshProUGUI energyText;
         [SerializeField] private TextMeshProUGUI energyRechargeText;
-        [SerializeField] private GameObject energyRechargePanel;
         [SerializeField] private TextMeshProUGUI coinText;
         [SerializeField] private TextMeshProUGUI gemText;
         [SerializeField] private TextMeshProUGUI levelText;
@@ -153,7 +152,7 @@ namespace GalaxyStrike.UI.Home
             SaveManager save = SaveManager.Instance;
             if (save == null) return;
 
-            if (energyText) energyText.text = $"{save.Energy}/{save.MaxEnergy}";
+            if (energyText) energyText.text = save.Energy.ToString();
             RefreshEnergyCountdown(save);
             if (coinText) coinText.text = save.Coins.ToString("N0");
             if (gemText) gemText.text = save.Gems.ToString("N0");
@@ -166,15 +165,15 @@ namespace GalaxyStrike.UI.Home
             if (energyRechargeText == null)
                 return;
 
-            bool showCountdown = save.Energy < save.MaxEnergy;
-            GameObject countdown = energyRechargePanel != null ? energyRechargePanel : energyRechargeText.gameObject;
-            if (countdown.activeSelf != showCountdown)
-                countdown.SetActive(showCountdown);
-            if (!showCountdown)
+            // Đồng hồ nằm cạnh icon trên thanh năng lượng: khi đầy thì báo MAX thay vì để trống.
+            if (save.Energy >= save.MaxEnergy)
+            {
+                energyRechargeText.text = "MAX";
                 return;
+            }
 
             int seconds = save.SecondsUntilNextEnergy();
-            energyRechargeText.text = $"+1 sau {seconds / 60:00}:{seconds % 60:00}";
+            energyRechargeText.text = $"{seconds / 60:00}:{seconds % 60:00}";
         }
 
         private float energyUiTimer;
