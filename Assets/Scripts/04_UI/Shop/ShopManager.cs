@@ -24,6 +24,9 @@ namespace GalaxyStrike.UI
 
         [Header("--- Data Sources (ScriptableObjects) ---")]
         [SerializeField] private ShipDataSO[] shipDataArray;
+
+        /// <summary>Danh sách tàu của người chơi theo đúng chỉ số lưu trong save (dùng cho Collection).</summary>
+        public System.Collections.Generic.IReadOnlyList<ShipDataSO> Ships => shipDataArray;
         [SerializeField] private ItemDataSO[] weaponDataArray;
         [SerializeField] private ItemDataSO[] boosterDataArray;
 

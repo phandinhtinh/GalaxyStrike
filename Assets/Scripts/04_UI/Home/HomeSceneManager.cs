@@ -122,6 +122,8 @@ namespace GalaxyStrike.UI.Home
         private void Start()
         {
             InitUI();
+            if (collectionBoard != null && collectionBoard.GetComponent<CollectionPanelUI>() == null)
+                collectionBoard.AddComponent<CollectionPanelUI>();
             backpackUI = GetComponent<BackpackUIController>();
             if (backpackUI == null)
                 backpackUI = gameObject.AddComponent<BackpackUIController>();

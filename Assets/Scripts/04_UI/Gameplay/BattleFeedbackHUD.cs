@@ -27,10 +27,15 @@ public sealed class BattleFeedbackHUD : MonoBehaviour
     private float toastAge = 10f, toastDuration = 2f, damageFlash, bossScanAt;
     private bool critical;
 
+    /// <summary>Font của HUD trận (dùng chung cho READY/GO và combo).</summary>
+    public TMP_FontAsset Font => toastTitle != null && toastTitle.font != null ? toastTitle.font : TMP_Settings.defaultFontAsset;
+
     private void Awake()
     {
         Instance = this;
         if (hullText == null) Build(TMP_Settings.defaultFontAsset);
+        if (GetComponent<BattleIntroFx>() == null) gameObject.AddComponent<BattleIntroFx>();
+        if (GetComponent<ComboFx>() == null) gameObject.AddComponent<ComboFx>();
         toastGroup.alpha = edgeGroup.alpha = 0f;
         bossRoot.gameObject.SetActive(false);
         for (int i = 0; i < pickupLabels.Length; i++) pickupLabels[i].gameObject.SetActive(false);
@@ -56,7 +61,8 @@ public sealed class BattleFeedbackHUD : MonoBehaviour
         damageFlash = Mathf.MoveTowards(damageFlash, 0f, dt * 3f);
         edgeGroup.alpha = playing ? Mathf.Max(damageFlash,
             critical ? 0.28f + 0.16f * Mathf.Sin(Time.time * 5f) : 0f) : 0f;
-        if (playing && spawner != null && spawner.CurrentWaveNumber > 0 && lastWave != spawner.CurrentWaveNumber)
+        if (playing && spawner != null && spawner.CurrentWaveNumber > 0 && lastWave != spawner.CurrentWaveNumber &&
+            !BattleIntroFx.IsPlaying)
         {
             lastWave = spawner.CurrentWaveNumber;
             ShowNotice(lastWave == 1 ? "SYSTEMS ONLINE" : "WAVE " + lastWave.ToString("00"),
@@ -71,10 +77,17 @@ public sealed class BattleFeedbackHUD : MonoBehaviour
     {
         int health = Mathf.Max(0, player.CurrentHealth);
         int maximum = Mathf.Max(1, player.MaxHealth);
+        bool wasCritical = critical;
         critical = health > 0 && (health <= maximum / 3f || (maximum > 1 && health == 1));
         if (health != lastHealth || maximum != lastMaxHealth)
         {
             if (lastHealth >= 0 && health < lastHealth) damageFlash = 0.45f;
+            // Vừa rơi vào ngưỡng nguy hiểm: báo to giữa màn + rung, ngoài viền đỏ nhấp nháy.
+            if (critical && !wasCritical && lastHealth >= 0 && health < lastHealth)
+            {
+                ShowNotice("HULL CRITICAL", "ONE MORE HIT COULD END YOUR RUN", Danger, 1.8f, 3);
+                Haptics.Vibrate(0.6f);
+            }
             hullText.text = (critical ? "HULL CRITICAL  " : "HULL  ") + health + " / " + maximum;
             hullText.color = hullAccent.color = critical ? Danger : Cyan;
             lastHealth = health;

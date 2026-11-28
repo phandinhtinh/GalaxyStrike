@@ -144,6 +144,7 @@ public partial class Enemy : MonoBehaviour, IPoolable
     private Transform playerTarget;
 
     public int Health => health;
+    public int ScoreValue => scoreValue;
     public int MaxHealth => maxHealth > 0 ? maxHealth : Mathf.Max(1, health);
     public int BaseHealth => MaxHealth;
     public float HealthRatio => maxHealth > 0 ? Mathf.Clamp01((float)health / maxHealth) : 0f;

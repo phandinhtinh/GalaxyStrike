@@ -172,6 +172,14 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(WaveLoopRoutine());
     }
 
+    private static string IntroSubtitle()
+    {
+        LevelManager levels = LevelManager.Instance;
+        if (levels == null)
+            return string.Empty;
+        return levels.IsChallengeMode ? "CHALLENGE" : $"STAGE {levels.CurrentLevel:00}";
+    }
+
     /// <summary>
     /// Cộng dồn count của mọi wave (mỗi wave tối thiểu 1 con) để ra tổng quái CẦN HẠ.
     /// </summary>
@@ -195,6 +203,11 @@ public class EnemySpawner : MonoBehaviour
     private IEnumerator WaveLoopRoutine()
     {
         currentWaveIndex = 0;
+
+        // READY / GO! trước wave đầu; chờ chữ GO! bật lên rồi mới thả quái.
+        float introDelay = BattleIntroFx.Play(IntroSubtitle());
+        if (introDelay > 0f)
+            yield return new WaitForSeconds(introDelay);
 
         while (!isVictoryTriggered)
         {
