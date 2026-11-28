@@ -336,7 +336,96 @@ namespace GalaxyStrike.Tests
             now = Start.Date.AddDays(1).AddMinutes(1);
             Assert.IsFalse(save.IsDailyLoginRewardClaimed);
             Assert.IsTrue(save.TryClaimDailyLoginReward());
-            Assert.AreEqual(500 + SaveManager.DailyLoginCoins * 2, save.Coins);
+            Assert.AreEqual(500 + DailyLoginRewards.Days[0].Coins + DailyLoginRewards.Days[1].Coins, save.Coins);
+        }
+
+        [Test]
+        public void DailyLogin_ConsecutiveDaysAdvanceThroughSevenDayCycle()
+        {
+            SaveManager save = CreateManager();
+            int expectedCoins = 500, expectedGems = 20;
+
+            for (int day = 0; day < DailyLoginRewards.Count; day++)
+            {
+                now = Start.Date.AddDays(day).AddHours(9);
+                Assert.AreEqual(day, save.DailyLoginDayIndex);
+                Assert.AreEqual(day, save.DailyLoginDaysClaimed);
+                Assert.IsTrue(save.TryClaimDailyLoginReward());
+                Assert.AreEqual(day + 1, save.DailyLoginDaysClaimed);
+                expectedCoins += DailyLoginRewards.Days[day].Coins;
+                expectedGems += DailyLoginRewards.Days[day].Gems;
+            }
+
+            Assert.AreEqual(expectedCoins, save.Coins);
+            Assert.AreEqual(expectedGems, save.Gems);
+
+            // Xong ngày 7 -> hôm sau bắt đầu lại từ ngày 1.
+            now = Start.Date.AddDays(DailyLoginRewards.Count).AddHours(9);
+            Assert.AreEqual(0, save.DailyLoginDayIndex);
+            Assert.AreEqual(0, save.DailyLoginDaysClaimed);
+        }
+
+        [Test]
+        public void DailyLogin_MissingADayResetsToDayOne()
+        {
+            SaveManager save = CreateManager();
+            Assert.IsTrue(save.TryClaimDailyLoginReward());
+            now = Start.Date.AddDays(1).AddHours(9);
+            Assert.IsTrue(save.TryClaimDailyLoginReward());
+            Assert.AreEqual(1, save.DailyLoginDayIndex);
+
+            // Bỏ lỡ một ngày.
+            now = Start.Date.AddDays(3).AddHours(9);
+            Assert.AreEqual(0, save.DailyLoginDayIndex);
+
+            int coins = save.Coins;
+            Assert.IsTrue(save.TryClaimDailyLoginReward());
+            Assert.AreEqual(coins + DailyLoginRewards.Days[0].Coins, save.Coins);
+        }
+
+        [Test]
+        public void BattlePass_TierGrantsGemsAndCapsEnergy()
+        {
+            SaveManager save = CreateManager();
+            save.AddExperience(BattlePassRewards.Tiers[BattlePassRewards.Tiers.Count - 1].RequiredExperience);
+
+            int gemTier = -1, energyTier = -1;
+            for (int i = 0; i < BattlePassRewards.Tiers.Count; i++)
+            {
+                if (gemTier < 0 && BattlePassRewards.Tiers[i].Gems > 0) gemTier = i;
+                if (energyTier < 0 && BattlePassRewards.Tiers[i].Energy > 0) energyTier = i;
+            }
+            Assert.GreaterOrEqual(gemTier, 0);
+            Assert.GreaterOrEqual(energyTier, 0);
+
+            int gems = save.Gems;
+            Assert.IsTrue(save.TryClaimBattlePassTier(gemTier));
+            Assert.AreEqual(gems + BattlePassRewards.Tiers[gemTier].Gems, save.Gems);
+            Assert.IsFalse(save.TryClaimBattlePassTier(gemTier));
+
+            // Năng lượng đang đầy -> không vượt quá tối đa.
+            Assert.IsTrue(save.TryClaimBattlePassTier(energyTier));
+            Assert.AreEqual(save.MaxEnergy, save.Energy);
+            Assert.IsTrue(save.IsBattlePassTierClaimed(energyTier));
+        }
+
+        [Test]
+        public void BattlePass_LockedTierCannotBeClaimed()
+        {
+            SaveManager save = CreateManager();
+            int last = BattlePassRewards.Tiers.Count - 1;
+            Assert.IsFalse(save.TryClaimBattlePassTier(last));
+            Assert.IsFalse(save.IsBattlePassTierClaimed(last));
+        }
+
+        [Test]
+        public void DailyLogin_StreakSurvivesReopeningTheGame()
+        {
+            CreateManager().TryClaimDailyLoginReward();
+            now = Start.Date.AddDays(1).AddHours(9);
+
+            SaveManager reopened = CreateManager();
+            Assert.AreEqual(1, reopened.DailyLoginDayIndex);
         }
 
         // =====================================================================

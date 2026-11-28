@@ -11797,6 +11797,8 @@ MonoBehaviour:
     claimLabel: {fileID: 208116173}
     milestoneLabel: {fileID: 1936128048}
     rewardLabel: {fileID: 1881193871}
+  gemIcon: {fileID: -427199135, guid: 0262976f8c0d4b349b3e96d1dd6a89ef, type: 3}
+  energyIcon: {fileID: 21300000, guid: 316cef82358953240bbe6c6c90256256, type: 3}
 --- !u!1 &247233384
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,6 +24,8 @@ namespace GalaxyStrike.Save
         public int coins = 500;
         public bool welcomeGiftClaimed;
         public int dailyLoginClaimDay;
+        [Tooltip("Số ngày đã nhận trong chu kỳ quà đăng nhập 7 ngày hiện tại (1–7 sau lần nhận gần nhất)")]
+        public int dailyLoginStreak;
         public int gems = 20;
         public int energy = 30;
         public int maxEnergy = 30;

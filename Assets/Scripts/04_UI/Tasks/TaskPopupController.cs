@@ -276,7 +276,9 @@ namespace GalaxyStrike.UI.Tasks
                         row.icon.sprite = icon;
                 }
                 if (row.title != null)
-                    row.title.text = task.title;
+                    row.title.text = task.isDailyLoginReward && save != null
+                        ? $"Login Day {save.DailyLoginDayIndex + 1}/{DailyLoginRewards.Count}"
+                        : task.title;
 
                 if (row.progressFill != null)
                 {
@@ -289,8 +291,9 @@ namespace GalaxyStrike.UI.Tasks
                     row.progressLabel.text = string.Format(CultureInfo.InvariantCulture, "{0:N0}/{1:N0}",
                         claimed ? task.target : progress, task.target);
 
-                SetReward(row.rewardOneIcon, row.rewardOneAmount, task.rewardOne);
-                SetReward(row.rewardTwoIcon, row.rewardTwoAmount, task.rewardTwo);
+                GetRewards(task, save, out TaskReward rewardOne, out TaskReward rewardTwo);
+                SetReward(row.rewardOneIcon, row.rewardOneAmount, rewardOne);
+                SetReward(row.rewardTwoIcon, row.rewardTwoAmount, rewardTwo);
 
                 RenderActionButton(row, complete, claimed);
             }
@@ -359,15 +362,31 @@ namespace GalaxyStrike.UI.Tasks
                 return;
             }
 
+            GetRewards(task, save, out TaskReward rewardOne, out TaskReward rewardTwo);
             if (save.TryClaimTask(task))
             {
                 AudioManager.Play(SfxCue.Reward);
-                Toast.Show("Reward claimed!\n" + DescribeReward(task.rewardOne) +
-                           (task.rewardTwo.amount > 0 ? "   " + DescribeReward(task.rewardTwo) : string.Empty),
+                Toast.Show("Reward claimed!\n" + DescribeReward(rewardOne) +
+                           (rewardTwo.amount > 0 ? "   " + DescribeReward(rewardTwo) : string.Empty),
                     ToastKind.Success);
             }
 
             RenderRows();
+        }
+
+        /// <summary>Phần thưởng hiển thị: dòng "Login today" lấy theo ngày hiện tại của lịch 7 ngày.</summary>
+        private static void GetRewards(TaskDefinition task, SaveManager save, out TaskReward one, out TaskReward two)
+        {
+            if (task.isDailyLoginReward && save != null)
+            {
+                DailyLoginRewards.Day today = save.TodayDailyLoginReward;
+                one = TaskReward.Coins(today.Coins);
+                two = TaskReward.Gems(today.Gems);
+                return;
+            }
+
+            one = task.rewardOne;
+            two = task.rewardTwo;
         }
 
         private static string DescribeReward(TaskReward reward)

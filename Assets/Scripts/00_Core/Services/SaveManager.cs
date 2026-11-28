@@ -488,33 +488,73 @@ namespace GalaxyStrike.Save
         public int Gems => Data.gems;
 
         public const int WelcomeGiftCoins = 100;
+        // Quà ngày 1 của lịch 7 ngày (xem DailyLoginRewards).
         public const int DailyLoginCoins = 300;
         public const int DailyLoginGems = 5;
 
         public bool IsDailyLoginRewardClaimed => HasDailyLoginClaim(Data, UtcNow);
 
+        /// <summary>
+        /// Ngày (0–6) trong lịch 7 ngày ứng với hôm nay: ngày đang chờ nhận, hoặc ngày vừa nhận
+        /// nếu hôm nay đã nhận. Nhận liên tục thì tiến lên; bỏ lỡ một ngày hoặc xong ngày 7 thì về 0.
+        /// </summary>
+        public int DailyLoginDayIndex => GetDailyLoginDayIndex(Data, UtcNow);
+
+        /// <summary>Số ô trong lịch 7 ngày đã nhận (tính cả hôm nay nếu đã nhận).</summary>
+        public int DailyLoginDaysClaimed
+        {
+            get
+            {
+                DateTime now = UtcNow;
+                int index = GetDailyLoginDayIndex(Data, now);
+                return HasDailyLoginClaim(Data, now) ? index + 1 : index;
+            }
+        }
+
+        /// <summary>Phần thưởng đăng nhập của hôm nay theo lịch 7 ngày.</summary>
+        public DailyLoginRewards.Day TodayDailyLoginReward => DailyLoginRewards.Days[DailyLoginDayIndex];
+
         public bool TryClaimDailyLoginReward()
         {
             SaveData save = Data;
             DateTime now = UtcNow;
-            if (HasDailyLoginClaim(save, now) || save.coins > int.MaxValue - DailyLoginCoins ||
-                save.gems > int.MaxValue - DailyLoginGems)
+            int index = GetDailyLoginDayIndex(save, now);
+            DailyLoginRewards.Day reward = DailyLoginRewards.Days[index];
+            if (HasDailyLoginClaim(save, now) || save.coins > int.MaxValue - reward.Coins ||
+                save.gems > int.MaxValue - reward.Gems)
                 return false;
 
             int previousDay = save.dailyLoginClaimDay;
+            int previousStreak = save.dailyLoginStreak;
             save.dailyLoginClaimDay = GetDailyLoginDay(now);
-            save.coins += DailyLoginCoins;
-            save.gems += DailyLoginGems;
+            save.dailyLoginStreak = index + 1;
+            save.coins += reward.Coins;
+            save.gems += reward.Gems;
             if (!TryFlush())
             {
                 save.dailyLoginClaimDay = previousDay;
-                save.coins -= DailyLoginCoins;
-                save.gems -= DailyLoginGems;
+                save.dailyLoginStreak = previousStreak;
+                save.coins -= reward.Coins;
+                save.gems -= reward.Gems;
                 return false;
             }
 
             NotifyChanged();
             return true;
+        }
+
+        private static int GetDailyLoginDayIndex(SaveData save, DateTime utc)
+        {
+            int last = DailyLoginRewards.Count - 1;
+            if (HasDailyLoginClaim(save, utc))
+                return Mathf.Clamp(save.dailyLoginStreak - 1, 0, last);
+
+            if (save.dailyLoginClaimDay != GetDailyLoginDay(utc.Date.AddDays(-1)))
+                return 0;
+
+            // Save cũ (trước lịch 7 ngày) không có streak nhưng đã nhận hôm qua -> coi là đã xong ngày 1.
+            int streak = Mathf.Max(1, save.dailyLoginStreak);
+            return streak <= last ? streak : 0;
         }
 
         private static bool HasDailyLoginClaim(SaveData save, DateTime utc)
@@ -542,16 +582,31 @@ namespace GalaxyStrike.Save
 
             BattlePassRewards.Tier tier = BattlePassRewards.Tiers[index];
             SaveData save = Data;
-            if (save.experience < tier.RequiredExperience || save.coins > int.MaxValue - tier.Coins)
+            if (save.experience < tier.RequiredExperience || save.coins > int.MaxValue - tier.Coins ||
+                save.gems > int.MaxValue - tier.Gems)
                 return false;
 
             int claim = 1 << index;
+            int previousEnergy = save.energy;
+            long previousRefill = save.lastEnergyRefillUnixTime;
             save.battlePassClaimedTiers |= claim;
             save.coins += tier.Coins;
+            save.gems += tier.Gems;
+            if (tier.Energy > 0)
+            {
+                // Giống AddEnergy: không vượt quá năng lượng tối đa.
+                if (save.energy >= save.maxEnergy)
+                    save.lastEnergyRefillUnixTime = UnixNow;
+                save.energy = Mathf.Min(save.maxEnergy, save.energy + tier.Energy);
+            }
+
             if (!TryFlush())
             {
                 save.battlePassClaimedTiers &= ~claim;
                 save.coins -= tier.Coins;
+                save.gems -= tier.Gems;
+                save.energy = previousEnergy;
+                save.lastEnergyRefillUnixTime = previousRefill;
                 return false;
             }
 
