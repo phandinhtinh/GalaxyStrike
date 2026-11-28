@@ -23,6 +23,9 @@ public class UpgradePanelUI : MonoBehaviour
     private readonly Dictionary<ShipUpgradeType, UpgradeRow> rows = new Dictionary<ShipUpgradeType, UpgradeRow>();
     private readonly Dictionary<ShipUpgradeType, StatCard> statCards = new Dictionary<ShipUpgradeType, StatCard>();
 
+    // Tàu đang chọn đứng trên bệ hologram ở giữa trang.
+    private Image showcaseShip;
+
     private sealed class UpgradeRow
     {
         public TextMeshProUGUI currentLevel;
@@ -60,6 +63,9 @@ public class UpgradePanelUI : MonoBehaviour
     {
         rows.Clear();
         statCards.Clear();
+
+        Transform ship = transform.Find("Ship_Showcase/Ship");
+        showcaseShip = ship != null ? ship.GetComponent<Image>() : null;
 
         for (int i = 0; i < UpgradeOrder.Length; i++)
         {
@@ -161,6 +167,8 @@ public class UpgradePanelUI : MonoBehaviour
             return;
 
         ShipDataSO ship = GetSelectedShip(save);
+        if (showcaseShip != null && ship != null && ship.shipSprite != null)
+            showcaseShip.sprite = ship.shipSprite;
         int baseHealth = ship != null ? ship.maxHealth : 3;
         float baseFireRate = ship != null ? ship.fireRate : 0.5f;
         float baseMoveSpeed = ship != null ? ship.moveSpeed : 8f;
