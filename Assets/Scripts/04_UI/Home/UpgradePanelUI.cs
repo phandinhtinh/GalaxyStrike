@@ -75,7 +75,7 @@ public class UpgradePanelUI : MonoBehaviour
                     nextLevel = FindText(rowTransform, "NextLevel"),
                     currentValue = FindText(rowTransform, "CurrentValue"),
                     nextValue = FindText(rowTransform, "NextValue"),
-                    cost = FindText(rowTransform, "UpgradeButton/Cost"),
+                    cost = FindText(rowTransform, "UpgradeButton/Cost_Row/Cost") ?? FindText(rowTransform, "UpgradeButton/Cost"),
                     button = FindButton(rowTransform, "UpgradeButton")
                 };
 
