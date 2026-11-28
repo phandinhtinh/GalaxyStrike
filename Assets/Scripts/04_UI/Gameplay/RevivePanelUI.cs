@@ -92,6 +92,7 @@ public sealed class RevivePanelUI : MonoBehaviour
         if (reviveAdButton != null)
             reviveAdButton.gameObject.SetActive(AdsAvailable);
 
+        GalaxyStrike.UI.PopupTransition.Attach(gameObject);
         gameObject.SetActive(true);
     }
 

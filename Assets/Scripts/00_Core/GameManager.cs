@@ -432,6 +432,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public bool CanRevive => reviveCount < 1 && !isLevelWon;
 
+    /// <summary>Đã phải hồi sinh trong màn này chưa (dùng cho đánh giá sao ở Victory).</summary>
+    public bool UsedRevive => reviveCount > 0;
+
     /// <summary>
     /// Người chơi vừa cạn máu. Nếu còn lượt hồi sinh thì mời hồi sinh,
     /// ngược lại chạy luồng Game Over như cũ.

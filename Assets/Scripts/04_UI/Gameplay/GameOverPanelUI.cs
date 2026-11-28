@@ -39,6 +39,7 @@ public class GameOverPanelUI : MonoBehaviour
         if (reviveOffer == null)
             return false;
 
+        GalaxyStrike.UI.PopupTransition.Attach(gameObject);
         gameObject.SetActive(true);
         reviveOffer.ShowRevive(coinCost, shieldSeconds);
         return true;
@@ -52,6 +53,7 @@ public class GameOverPanelUI : MonoBehaviour
         if (reviveOffer != null)
             reviveOffer.gameObject.SetActive(false);
 
+        GalaxyStrike.UI.PopupTransition.Attach(gameObject);
         gameObject.SetActive(true);
         Time.timeScale = 0f;
     }

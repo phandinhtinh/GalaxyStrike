@@ -25,6 +25,7 @@ public partial class Enemy
             return;
 
         health -= damage;
+        DamageNumbers.Show(this, damage, impactPosition, health <= 0);
 
         if (Time.time >= nextHitEffectTime)
         {

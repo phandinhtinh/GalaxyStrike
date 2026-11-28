@@ -25,6 +25,16 @@ public sealed class UIInteractionInstaller : MonoBehaviour
         foreach (var button in FindObjectsByType<UnityEngine.UI.Button>(FindObjectsInactive.Include, FindObjectsSortMode.None))
             if (button.gameObject.scene == gameObject.scene && button.GetComponent<UIButtonFeedback>() == null)
                 button.gameObject.AddComponent<UIButtonFeedback>();
+
+        // Popup toàn màn hình (khung có PopupFrameFitter) -> hiệu ứng mở/đóng.
+        // Victory đã có hiệu ứng riêng nên bỏ qua.
+        foreach (var frame in FindObjectsByType<GalaxyStrike.UI.PopupFrameFitter>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            Transform root = frame.transform.parent;
+            if (root == null || root.gameObject.scene != gameObject.scene || root.GetComponent<VictoryPanelUI>() != null)
+                continue;
+            GalaxyStrike.UI.PopupTransition.Attach(root.gameObject);
+        }
         Destroy(gameObject);
     }
 }

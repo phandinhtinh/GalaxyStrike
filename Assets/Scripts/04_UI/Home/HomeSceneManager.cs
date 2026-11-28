@@ -282,7 +282,7 @@ namespace GalaxyStrike.UI.Home
 
         public void CloseSettingsPopup()
         {
-            if (settingsPanel != null) settingsPanel.SetActive(false);
+            PopupTransition.Close(settingsPanel);
         }
 
         public void OpenCollectionBoard()
@@ -292,7 +292,7 @@ namespace GalaxyStrike.UI.Home
 
         public void CloseCollectionBoard()
         {
-            if (collectionBoard != null) collectionBoard.SetActive(false);
+            PopupTransition.Close(collectionBoard);
         }
 
         // Hàm gọi từ Shop để Mua / Mở khóa tàu mới

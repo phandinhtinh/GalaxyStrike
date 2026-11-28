@@ -102,7 +102,7 @@ namespace GalaxyStrike.UI
             }
             else
             {
-                gameObject.SetActive(false);
+                PopupTransition.Close(gameObject);
             }
         }
 

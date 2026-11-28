@@ -51,7 +51,7 @@ namespace GalaxyStrike.UI.Home
 
         public void Close()
         {
-            gameObject.SetActive(false);
+            PopupTransition.Close(gameObject);
             openButton.Select();
         }
 

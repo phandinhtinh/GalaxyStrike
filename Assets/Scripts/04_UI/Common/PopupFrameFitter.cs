@@ -13,6 +13,18 @@ namespace GalaxyStrike.UI
         private RectTransform frame;
         private RectTransform container;
         private Canvas rootCanvas;
+        private float animationScale = 1f;
+
+        /// <summary>Hệ số phóng to/thu nhỏ của hiệu ứng mở/đóng popup, nhân vào tỉ lệ vừa khung.</summary>
+        public float AnimationScale
+        {
+            get => animationScale;
+            set
+            {
+                animationScale = value;
+                Fit();
+            }
+        }
 
         public void SetWidthFraction(float fraction)
         {
@@ -56,7 +68,8 @@ namespace GalaxyStrike.UI
             if (available.x <= 0f || available.y <= 0f || design.x <= 0f || design.y <= 0f)
                 return;
 
-            float scale = Mathf.Min(available.x * widthFraction / design.x, available.y * HeightFraction / design.y);
+            float scale = Mathf.Min(available.x * widthFraction / design.x, available.y * HeightFraction / design.y)
+                * animationScale;
             Vector2 center = (min + max) * 0.5f - container.rect.center;
             Vector3 fittedScale = new Vector3(scale, scale, 1f);
             if (frame.anchoredPosition != center)

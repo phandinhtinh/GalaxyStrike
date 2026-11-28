@@ -84,6 +84,7 @@ namespace GalaxyStrike.UI.Home
 
             RefreshCurrencySummary();
             RefreshGrid();
+            PopupTransition.Attach(overlay.gameObject);
             overlay.gameObject.SetActive(true);
             overlay.SetAsLastSibling();
             Canvas.ForceUpdateCanvases();
@@ -92,7 +93,7 @@ namespace GalaxyStrike.UI.Home
         public void CloseBackpack()
         {
             if (overlay != null)
-                overlay.gameObject.SetActive(false);
+                PopupTransition.Close(overlay.gameObject);
         }
 
         private void EnsureInitialized()

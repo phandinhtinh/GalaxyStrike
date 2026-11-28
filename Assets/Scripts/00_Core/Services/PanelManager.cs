@@ -65,7 +65,11 @@ public sealed class PanelManager : SingletonBehaviour<PanelManager>
     /// </summary>
     public void OpenSettingsPanel()
     {
-        if (settingsPanel != null) settingsPanel.SetActive(true);
+        if (settingsPanel != null)
+        {
+            GalaxyStrike.UI.PopupTransition.Attach(settingsPanel);
+            settingsPanel.SetActive(true);
+        }
         Time.timeScale = 0f; // Đóng băng game
     }
 
@@ -74,7 +78,7 @@ public sealed class PanelManager : SingletonBehaviour<PanelManager>
     /// </summary>
     public void CloseSettingsPanel()
     {
-        if (settingsPanel != null) settingsPanel.SetActive(false);
+        GalaxyStrike.UI.PopupTransition.Close(settingsPanel);
         Time.timeScale = 1f; // Chạy lại game
     }
 

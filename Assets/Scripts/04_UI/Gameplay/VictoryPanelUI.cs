@@ -30,6 +30,7 @@ public class VictoryPanelUI : MonoBehaviour
     private Coroutine popInRoutine;
     private bool transitionStarted;
     private CoinFlyEffect coinFly;
+    private VictoryStars stars;
 
     private void Awake()
     {
@@ -134,7 +135,44 @@ public class VictoryPanelUI : MonoBehaviour
             popInRoutine = StartCoroutine(PopInAnimationRoutine());
         }
 
+        PlayStars();
         PlayCoinFly(coins);
+    }
+
+    /// <summary>Đánh giá 1–3 sao theo lượng giáp còn lại khi qua màn (hồi sinh -> 1 sao).</summary>
+    private void PlayStars()
+    {
+        PlayerController player = PlayerController.Instance;
+        GameManager gm = GameManager.Instance;
+        int earned = player != null
+            ? VictoryStars.Rate(player.CurrentHealth, player.MaxHealth, gm != null && gm.UsedRevive)
+            : 1;
+
+        if (stars == null)
+            stars = BuildStars();
+        if (stars != null)
+            stars.Play(earned);
+    }
+
+    /// <summary>
+    /// Dựng hàng sao giữa dòng "LEVEL .. CLEARED" và emblem; emblem được thu nhỏ/hạ xuống
+    /// một chút để có chỗ, không chạm vào ba ô kết quả bên dưới.
+    /// </summary>
+    private VictoryStars BuildStars()
+    {
+        RectTransform content = subtitleText != null ? subtitleText.rectTransform.parent as RectTransform : null;
+        if (content == null)
+            return null;
+
+        Transform emblem = content.Find("VictoryEmblem");
+        if (emblem is RectTransform emblemRect)
+        {
+            emblemRect.sizeDelta = new Vector2(400f, 200f);
+            emblemRect.anchoredPosition = new Vector2(emblemRect.anchoredPosition.x, 168f);
+        }
+
+        Vector2 subtitlePos = subtitleText.rectTransform.anchoredPosition;
+        return VictoryStars.Create(content, new Vector2(subtitlePos.x, subtitlePos.y - 92f));
     }
 
     /// <summary>

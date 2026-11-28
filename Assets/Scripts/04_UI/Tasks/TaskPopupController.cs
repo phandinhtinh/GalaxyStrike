@@ -149,8 +149,7 @@ namespace GalaxyStrike.UI.Tasks
 
         public void ClosePopup()
         {
-            if (popupRoot != null)
-                popupRoot.SetActive(false);
+            PopupTransition.Close(popupRoot);
         }
 
         /// <summary>
