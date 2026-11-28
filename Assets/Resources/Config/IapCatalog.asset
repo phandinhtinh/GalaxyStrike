@@ -16,21 +16,21 @@ MonoBehaviour:
     gemPacks:
     - productId: com.solostudio.galaxystrike.gems_small
       displayName: Small Gem Pack
-      description: "G\xC3\xB3i Gem nh\xE1\xBB\x8F"
+      description: Small gem pack
       rewardType: 1
       rewardAmount: 120
       icon: {fileID: 21300000, guid: 342702a3d2a94b64a98e5defab2a9f0b, type: 3}
       badge: 
     - productId: com.solostudio.galaxystrike.gems_medium
       displayName: Medium Gem Pack
-      description: "G\xC3\xB3i Gem v\xE1\xBB\xABa"
+      description: Medium gem pack
       rewardType: 1
       rewardAmount: 650
       icon: {fileID: 21300000, guid: 342702a3d2a94b64a98e5defab2a9f0b, type: 3}
       badge: POPULAR
     - productId: com.solostudio.galaxystrike.gems_large
       displayName: Large Gem Pack
-      description: "G\xC3\xB3i Gem l\xE1\xBB\u203An"
+      description: Large gem pack
       rewardType: 1
       rewardAmount: 1400
       icon: {fileID: 21300000, guid: 342702a3d2a94b64a98e5defab2a9f0b, type: 3}
@@ -38,21 +38,21 @@ MonoBehaviour:
     coinPacks:
     - productId: com.solostudio.galaxystrike.coins_small
       displayName: Small Coin Pack
-      description: "G\xC3\xB3i Coin nh\xE1\xBB\x8F"
+      description: Small coin pack
       rewardType: 0
       rewardAmount: 2500
       icon: {fileID: -1079134412, guid: ac3abd7a989172b438e624f355fd7c29, type: 3}
       badge: 
     - productId: com.solostudio.galaxystrike.coins_medium
       displayName: Medium Coin Pack
-      description: "G\xC3\xB3i Coin v\xE1\xBB\xABa"
+      description: Medium coin pack
       rewardType: 0
       rewardAmount: 14000
       icon: {fileID: -1079134412, guid: ac3abd7a989172b438e624f355fd7c29, type: 3}
       badge: POPULAR
     - productId: com.solostudio.galaxystrike.coins_large
       displayName: Large Coin Pack
-      description: "G\xC3\xB3i Coin l\xE1\xBB\u203An"
+      description: Large coin pack
       rewardType: 0
       rewardAmount: 32000
       icon: {fileID: -1079134412, guid: ac3abd7a989172b438e624f355fd7c29, type: 3}

@@ -126,7 +126,7 @@ public class ShopItemUI : MonoBehaviour
         // phải gộp vào cùng một chuỗi, không tách 2 lần ghi đè.
         if (owned)
         {
-            SetButtonText(presentation != null ? (selected ? "EQUIPPED" : "SELECT") : (selected ? "ĐANG DÙNG" : "CHỌN"));
+            SetButtonText(selected ? "EQUIPPED" : "SELECT");
             if (presentation != null) presentation.ShowCurrency(false);
             SetPriceColor(presentation != null ? new Color32(7, 23, 48, 255) : ownedColor);
             buyButton.interactable = !selected;
@@ -150,7 +150,7 @@ public class ShopItemUI : MonoBehaviour
         // Đã mua rồi: khoá nút, hiện "ĐÃ SỞ HỮU" (trang bị tự áp dụng trong trận).
         if (save.IsItemOwned(itemData.itemID))
         {
-            SetButtonText(presentation != null ? "OWNED" : "ĐÃ SỞ HỮU");
+            SetButtonText("OWNED");
             if (presentation != null) presentation.ShowCurrency(false);
             SetPriceColor(presentation != null ? new Color32(7, 23, 48, 255) : ownedColor);
             buyButton.interactable = false;

@@ -22,16 +22,16 @@ public static class GalaxyStrikeIapCatalogBuilder
 
         catalog.gemPacks = new[]
         {
-            Pack($"{prefix}.gems_small",  "Small Gem Pack",  "GÃ³i Gem nhá»",  120,  GalaxyStrike.IAP.IapRewardType.Gems, null),
-            Pack($"{prefix}.gems_medium", "Medium Gem Pack", "GÃ³i Gem vá»«a",  650,  GalaxyStrike.IAP.IapRewardType.Gems, "POPULAR"),
-            Pack($"{prefix}.gems_large",  "Large Gem Pack",  "GÃ³i Gem lá»›n",  1400, GalaxyStrike.IAP.IapRewardType.Gems, "BEST VALUE"),
+            Pack($"{prefix}.gems_small",  "Small Gem Pack",  "Small gem pack",  120,  GalaxyStrike.IAP.IapRewardType.Gems, null),
+            Pack($"{prefix}.gems_medium", "Medium Gem Pack", "Medium gem pack",  650,  GalaxyStrike.IAP.IapRewardType.Gems, "POPULAR"),
+            Pack($"{prefix}.gems_large",  "Large Gem Pack",  "Large gem pack",  1400, GalaxyStrike.IAP.IapRewardType.Gems, "BEST VALUE"),
         };
 
         catalog.coinPacks = new[]
         {
-            Pack($"{prefix}.coins_small",  "Small Coin Pack",  "GÃ³i Coin nhá»", 2500,  GalaxyStrike.IAP.IapRewardType.Coins, null),
-            Pack($"{prefix}.coins_medium", "Medium Coin Pack", "GÃ³i Coin vá»«a", 14000, GalaxyStrike.IAP.IapRewardType.Coins, "POPULAR"),
-            Pack($"{prefix}.coins_large",  "Large Coin Pack",  "GÃ³i Coin lá»›n", 32000, GalaxyStrike.IAP.IapRewardType.Coins, "BEST VALUE"),
+            Pack($"{prefix}.coins_small",  "Small Coin Pack",  "Small coin pack", 2500,  GalaxyStrike.IAP.IapRewardType.Coins, null),
+            Pack($"{prefix}.coins_medium", "Medium Coin Pack", "Medium coin pack", 14000, GalaxyStrike.IAP.IapRewardType.Coins, "POPULAR"),
+            Pack($"{prefix}.coins_large",  "Large Coin Pack",  "Large coin pack", 32000, GalaxyStrike.IAP.IapRewardType.Coins, "BEST VALUE"),
         };
 
         catalog.removeAdsProductId = $"{prefix}.remove_ads";
@@ -47,11 +47,11 @@ public static class GalaxyStrikeIapCatalogBuilder
         UnityEditor.AssetDatabase.Refresh();
 
         Debug.Log(
-            $"[GalaxyStrike] ÄÃ£ táº¡o '{path}' vá»›i 6 gÃ³i tiÃªu thá»¥ + 2 gÃ³i non-consumable.\n" +
-            "BÆ°á»›c tiáº¿p theo (Giai Ä‘oáº¡n 4/5):\n" +
-            "1. Äá»•i applicationIdentifier sang com.<studio>.galaxystrike.\n" +
-            "2. Sá»­a Product ID trong asset cho khá»›p prefix má»›i.\n" +
-            "3. Khai bÃ¡o Ä‘Ãºng cÃ¡c Product ID Ä‘Ã³ trong Play Console â†’ In-app products.");
+            $"[GalaxyStrike] Created '{path}' with 6 consumable packs + 2 non-consumables.\n" +
+            "Next steps (phase 4/5):\n" +
+            "1. Change applicationIdentifier to com.<studio>.galaxystrike.\n" +
+            "2. Update the Product IDs in the asset to match the new prefix.\n" +
+            "3. Declare the same Product IDs in Play Console -> In-app products.");
     }
 
     private static GalaxyStrike.IAP.IapProductDefinition Pack(

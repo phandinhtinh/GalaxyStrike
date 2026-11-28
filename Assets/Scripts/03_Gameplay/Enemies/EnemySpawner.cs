@@ -266,7 +266,7 @@ public class EnemySpawner : MonoBehaviour
         int count = Mathf.Max(1, wave.count);
 
         if (wave.tutorialStep == TutorialStep.Move)
-            ShowTutorialHint("Kéo để di chuyển");
+            ShowTutorialHint("Drag to move");
         else if (wave.tutorialStep == TutorialStep.Upgrade)
         {
             Camera camera = Camera.main;
@@ -275,7 +275,7 @@ public class EnemySpawner : MonoBehaviour
             {
                 Vector3 position = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.65f, Mathf.Abs(camera.transform.position.z)));
                 Instantiate(pickup, position, Quaternion.identity);
-                ShowTutorialHint("Nhặt vật phẩm để nâng cấp đạn");
+                ShowTutorialHint("Pick up power-ups to upgrade your guns");
             }
         }
 

@@ -82,10 +82,10 @@ public sealed class RevivePanelUI : MonoBehaviour
         hasOffer = true;
 
         if (costText != null)
-            costText.text = Mathf.Max(0, coinCost).ToString("N0", CultureInfo.InvariantCulture) + " COIN";
+            costText.text = Mathf.Max(0, coinCost).ToString("N0", CultureInfo.InvariantCulture) + " COINS";
 
         if (shieldText != null)
-            shieldText.text = $"Khiên {Mathf.RoundToInt(Mathf.Max(0f, shieldSeconds))} giây";
+            shieldText.text = $"{Mathf.RoundToInt(Mathf.Max(0f, shieldSeconds))}s shield after revive";
 
         // Ẩn nút quảng cáo khi chưa tích hợp SDK (GameManager từ chối hồi sinh bằng Ad)
         // để người chơi không bấm nhầm vào nút không có tác dụng.
@@ -173,15 +173,15 @@ public sealed class RevivePanelUI : MonoBehaviour
         Image boxImage = box.gameObject.AddComponent<Image>();
         boxImage.color = new Color(0.06f, 0.10f, 0.18f, 0.96f);
 
-        CreateLabel(box, "Tiêu đề", "SHIP DESTROYED", 44f, new Vector2(0f, 170f), new Vector2(600f, 60f), Color.white);
-        CreateLabel(box, "Mô tả", "Tiếp tục chiến đấu ngay tại Wave hiện tại?", 24f, new Vector2(0f, 110f), new Vector2(600f, 40f), new Color(0.75f, 0.82f, 0.9f, 1f));
+        CreateLabel(box, "Title", "SHIP DESTROYED", 44f, new Vector2(0f, 170f), new Vector2(600f, 60f), Color.white);
+        CreateLabel(box, "Description", "Continue fighting from the current wave?", 24f, new Vector2(0f, 110f), new Vector2(600f, 40f), new Color(0.75f, 0.82f, 0.9f, 1f));
 
-        TextMeshProUGUI costText = CreateLabel(box, "Giá", "900", 40f, new Vector2(0f, 40f), new Vector2(600f, 56f), new Color(1f, 0.82f, 0.3f, 1f));
-        TextMeshProUGUI shieldText = CreateLabel(box, "Khiên", "3", 22f, new Vector2(0f, -6f), new Vector2(600f, 34f), new Color(0.55f, 0.85f, 1f, 1f));
+        TextMeshProUGUI costText = CreateLabel(box, "Cost", "900", 40f, new Vector2(0f, 40f), new Vector2(600f, 56f), new Color(1f, 0.82f, 0.3f, 1f));
+        TextMeshProUGUI shieldText = CreateLabel(box, "Shield", "3", 22f, new Vector2(0f, -6f), new Vector2(600f, 34f), new Color(0.55f, 0.85f, 1f, 1f));
 
-        Button coinBtn = CreateButton(box, "Nút_Coin", "HỒI SINH (COIN)", new Vector2(0f, -80f), new Color(0.10f, 0.55f, 0.95f, 1f));
-        Button adBtn = CreateButton(box, "Nút_Ad", "XEM QUẢNG CÁO", new Vector2(0f, -160f), new Color(0.15f, 0.65f, 0.35f, 1f));
-        Button declineBtn = CreateButton(box, "Nút_BỏQua", "BỎ QUA", new Vector2(0f, AdsAvailable ? -240f : -160f), new Color(0.3f, 0.32f, 0.36f, 1f));
+        Button coinBtn = CreateButton(box, "Button_Coin", "REVIVE (COINS)", new Vector2(0f, -80f), new Color(0.10f, 0.55f, 0.95f, 1f));
+        Button adBtn = CreateButton(box, "Button_Ad", "WATCH AD", new Vector2(0f, -160f), new Color(0.15f, 0.65f, 0.35f, 1f));
+        Button declineBtn = CreateButton(box, "Button_Skip", "SKIP", new Vector2(0f, AdsAvailable ? -240f : -160f), new Color(0.3f, 0.32f, 0.36f, 1f));
 
         RevivePanelUI panel = rootGo.AddComponent<RevivePanelUI>();
         panel.reviveCoinButton = coinBtn;

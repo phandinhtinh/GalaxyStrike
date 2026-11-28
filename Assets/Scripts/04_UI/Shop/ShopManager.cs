@@ -506,8 +506,8 @@ namespace GalaxyStrike.UI
             if (catalog == null)
                 return;
 
-            gemPackGrid = BuildIapSection("Header_GemPacks", "GÓI GEM", catalog.gemPacks, new Color(0.55f, 0.3f, 1f));
-            coinPackGrid = BuildIapSection("Header_CoinPacks", "GÓI COIN", catalog.coinPacks, new Color(1f, 0.84f, 0.2f));
+            gemPackGrid = BuildIapSection("Header_GemPacks", "GEM PACKS", catalog.gemPacks, new Color(0.55f, 0.3f, 1f));
+            coinPackGrid = BuildIapSection("Header_CoinPacks", "COIN PACKS", catalog.coinPacks, new Color(1f, 0.84f, 0.2f));
         }
 
         private Transform BuildIapSection(string headerName, string headerLabel, IapProductDefinition[] packs, Color accent)

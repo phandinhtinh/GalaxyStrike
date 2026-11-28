@@ -161,7 +161,7 @@ public static class GalaxyStrikeLoadingSceneBuilder
             Vector2.zero, Vector2.zero);
 
         TextMeshProUGUI body = CreateText(panel, "Tip_Text",
-            "Nâng cấp phi thuyền để mạnh hơn\nvà vượt qua những thử thách khó khăn hơn!", 20f,
+            "Upgrade your ship to grow stronger\nand beat even tougher challenges!", 20f,
             TextAlignmentOptions.MidlineLeft, new Color32(226, 245, 255, 255));
         body.textWrappingMode = TextWrappingModes.Normal;
         body.fontStyle = FontStyles.Bold;

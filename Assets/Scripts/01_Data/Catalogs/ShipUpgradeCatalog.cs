@@ -35,10 +35,10 @@ namespace GalaxyStrike.Save
         {
             switch (type)
             {
-                case ShipUpgradeType.MaxHealth: return "GIÁP TÀU";
-                case ShipUpgradeType.FireRate: return "TỐC ĐỘ BẮN";
-                case ShipUpgradeType.MoveSpeed: return "TỐC ĐỘ BAY";
-                case ShipUpgradeType.Damage: return "SÁT THƯƠNG";
+                case ShipUpgradeType.MaxHealth: return "MAX HP";
+                case ShipUpgradeType.FireRate: return "FIRE RATE";
+                case ShipUpgradeType.MoveSpeed: return "MOVE SPEED";
+                case ShipUpgradeType.Damage: return "FIREPOWER";
                 default: return type.ToString();
             }
         }
@@ -49,13 +49,13 @@ namespace GalaxyStrike.Save
             switch (type)
             {
                 case ShipUpgradeType.MaxHealth:
-                    return $"Giáp: {shipBaseHealth + GetHealthBonus(level)} (+{GetHealthBonus(level)})";
+                    return $"HP: {shipBaseHealth + GetHealthBonus(level)} (+{GetHealthBonus(level)})";
                 case ShipUpgradeType.FireRate:
-                    return $"Nhịp bắn: {ApplyFireRate(shipBaseFireRate, level):0.00}s (-{GetFireRateBonusPercent(level)}%)";
+                    return $"Fire rate: {ApplyFireRate(shipBaseFireRate, level):0.00}s (-{GetFireRateBonusPercent(level)}%)";
                 case ShipUpgradeType.MoveSpeed:
-                    return $"Tốc độ: {ApplyMoveSpeed(shipBaseMoveSpeed, level):0.0} (+{GetMoveSpeedBonusPercent(level)}%)";
+                    return $"Speed: {ApplyMoveSpeed(shipBaseMoveSpeed, level):0.0} (+{GetMoveSpeedBonusPercent(level)}%)";
                 case ShipUpgradeType.Damage:
-                    return $"Sát thương: x{ApplyDamage(1, level)}";
+                    return $"Damage: x{ApplyDamage(1, level)}";
                 default:
                     return string.Empty;
             }
