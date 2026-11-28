@@ -16,7 +16,7 @@ public sealed class DamageNumbers : MonoBehaviour
     private const float Lifetime = 0.75f;
     private const float MergeWindow = 0.14f;   // gộp các phát trúng cùng quái trong khoảng này
     private const float RiseDistance = 0.85f;  // đơn vị world (camera ortho size 5)
-    private const float BaseFontSize = 2.1f;
+    private const float BaseFontSize = 2.7f;
     private const int SortingOrder = 60;       // trên VFX trúng đạn (30) và cảnh báo (50)
 
     private static readonly Color NormalColor = new Color(1f, 1f, 1f);

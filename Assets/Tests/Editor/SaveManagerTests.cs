@@ -383,6 +383,44 @@ namespace GalaxyStrike.Tests
             Assert.AreEqual(coins + DailyLoginRewards.Days[0].Coins, save.Coins);
         }
 
+        // =====================================================================
+        // SỰ KIỆN OnDataChanged
+        // =====================================================================
+
+        private sealed class DataListener : MonoBehaviour
+        {
+            public int calls;
+            public void Handle() => calls++;
+        }
+
+        [Test]
+        public void NotifyChanged_SkipsAndRemovesDestroyedListeners()
+        {
+            SaveManager save = CreateManager();
+            var go = new GameObject("listener (test)") { hideFlags = HideFlags.HideAndDontSave };
+            DataListener listener = go.AddComponent<DataListener>();
+            save.OnDataChanged += listener.Handle;
+            UnityEngine.Object.DestroyImmediate(go);
+
+            // Trước đây handler của UI đã huỷ ném MissingReferenceException ngay trong AddCoins.
+            Assert.DoesNotThrow(() => save.AddCoins(10));
+            Assert.AreEqual(510, save.Coins);
+        }
+
+        [Test]
+        public void NotifyChanged_OneFailingListenerDoesNotBreakOthersOrTheCaller()
+        {
+            SaveManager save = CreateManager();
+            int calls = 0;
+            save.OnDataChanged += () => throw new InvalidOperationException("listener boom");
+            save.OnDataChanged += () => calls++;
+
+            UnityEngine.TestTools.LogAssert.Expect(LogType.Exception, new System.Text.RegularExpressions.Regex("listener boom"));
+            Assert.DoesNotThrow(() => save.AddCoins(10));
+            Assert.AreEqual(1, calls);
+            Assert.AreEqual(510, save.Coins);
+        }
+
         [Test]
         public void BattlePass_TierGrantsGemsAndCapsEnergy()
         {

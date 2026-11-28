@@ -142,16 +142,23 @@ public sealed class CoinDrop : MonoBehaviour, IPoolable
 
         isActive = false;
 
-        if (coinValue > 0 && GameManager.Instance != null)
-            GameManager.Instance.AddCoins(coinValue);
+        // Luôn trả coin về pool kể cả khi phần cộng tiền / hiệu ứng ném lỗi; nếu không,
+        // coin đã bị đánh dấu "đã nhặt" sẽ đứng im mãi quanh tàu.
+        try
+        {
+            if (coinValue > 0 && GameManager.Instance != null)
+                GameManager.Instance.AddCoins(coinValue);
 
-        if (AudioManager.Instance != null && AudioManager.Instance.coinCollectSFX != null)
-            AudioManager.Instance.PlaySFX(AudioManager.Instance.coinCollectSFX);
+            if (AudioManager.Instance != null && AudioManager.Instance.coinCollectSFX != null)
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.coinCollectSFX);
 
-        CameraShake.Play(0.05f);
-        VfxSpawner.SpawnPickup(transform.position);
-        BattleFeedbackHUD.Instance?.ShowCoinPickup(transform.position, coinValue);
-
-        BulletPool.Release(gameObject);
+            CameraShake.Play(0.05f);
+            VfxSpawner.SpawnPickup(transform.position);
+            BattleFeedbackHUD.Instance?.ShowCoinPickup(transform.position, coinValue);
+        }
+        finally
+        {
+            BulletPool.Release(gameObject);
+        }
     }
 }

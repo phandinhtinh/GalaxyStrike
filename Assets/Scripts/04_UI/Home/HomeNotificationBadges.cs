@@ -29,6 +29,9 @@ namespace GalaxyStrike.UI.Home
 
         private readonly List<Badge> badges = new List<Badge>(4);
         private float refreshAt;
+        // SaveManager sống xuyên Scene: phải huỷ đăng ký đúng instance đã đăng ký, nếu không
+        // handler của object đã huỷ vẫn bị gọi trong GameScene (từng làm gãy việc nhặt coin).
+        private SaveManager subscribedSave;
 
         private void Start()
         {
@@ -50,15 +53,21 @@ namespace GalaxyStrike.UI.Home
             Add(SidebarRoot + "Left_Sidebar/BattlePass", sprite, new Vector2(0.64f, 0.64f), new Vector2(1.0f, 1.0f),
                 HasClaimableBattlePassTier);
 
-            SaveManager.Instance.OnDataChanged += Refresh;
+            subscribedSave = SaveManager.Instance;
+            subscribedSave.OnDataChanged += Refresh;
             Refresh();
         }
 
         private void OnDestroy()
         {
-            SaveManager save = FindFirstObjectByType<SaveManager>();
-            if (save != null)
-                save.OnDataChanged -= Refresh;
+            Unsubscribe();
+        }
+
+        private void Unsubscribe()
+        {
+            if (subscribedSave != null)
+                subscribedSave.OnDataChanged -= Refresh;
+            subscribedSave = null;
         }
 
         private void Update()
@@ -101,6 +110,13 @@ namespace GalaxyStrike.UI.Home
 
         private void Refresh()
         {
+            // Phòng hờ: object đã bị huỷ mà vẫn được gọi -> tự gỡ, không đụng tới UI đã mất.
+            if (this == null)
+            {
+                Unsubscribe();
+                return;
+            }
+
             refreshAt = Time.unscaledTime + 1f;
             SaveManager save = SaveManager.Instance;
             if (save == null)

@@ -379,7 +379,29 @@ namespace GalaxyStrike.Save
         /// </summary>
         public void NotifyChanged()
         {
-            OnDataChanged?.Invoke();
+            Action handlers = OnDataChanged;
+            if (handlers == null)
+                return;
+
+            // Gọi từng listener riêng: một UI lỗi (hoặc đã bị huỷ mà quên huỷ đăng ký)
+            // không được làm gãy luồng gameplay đang gọi tới đây (cộng Coin, nhặt vật phẩm...).
+            foreach (Delegate handler in handlers.GetInvocationList())
+            {
+                if (handler.Target is UnityEngine.Object owner && owner == null)
+                {
+                    OnDataChanged -= (Action)handler;
+                    continue;
+                }
+
+                try
+                {
+                    ((Action)handler)();
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                }
+            }
         }
 
         // =====================================================================
