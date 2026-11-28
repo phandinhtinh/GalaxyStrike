@@ -287,6 +287,11 @@ namespace GalaxyStrike.Save
             if (save.claimedAchievements == null)
                 save.claimedAchievements = new System.Collections.Generic.List<string>();
 
+            if (save.campaignStars == null)
+                save.campaignStars = new System.Collections.Generic.List<int>();
+            for (int i = 0; i < save.campaignStars.Count; i++)
+                save.campaignStars[i] = Mathf.Clamp(save.campaignStars[i], 0, MaxStageStars);
+
             // XP không được âm; level phải khớp với tổng XP (chống sửa tay).
             // Giới hạn XP tối đa để vòng lặp bên dưới luôn kết thúc (chống file save bị chỉnh).
             save.experience = Mathf.Clamp(save.experience, 0, MaxExperience);
@@ -1039,6 +1044,61 @@ namespace GalaxyStrike.Save
         // TIẾN TRÌNH LEVEL
         // =====================================================================
         public int HighestLevel => Data.highestLevel;
+
+        // =====================================================================
+        // SAO TỪNG MÀN (CHIẾN DỊCH)
+        // =====================================================================
+        public const int MaxStageStars = 3;
+
+        /// <summary>Số sao cao nhất đã đạt ở màn chiến dịch <paramref name="stage"/> (0 nếu chưa có).</summary>
+        public int GetCampaignStars(int stage)
+        {
+            var stars = Data.campaignStars;
+            return stars != null && stage >= 1 && stage <= stars.Count ? stars[stage - 1] : 0;
+        }
+
+        /// <summary>Tổng số sao đã đạt trên toàn bản đồ chiến dịch.</summary>
+        public int TotalCampaignStars
+        {
+            get
+            {
+                int total = 0;
+                if (Data.campaignStars != null)
+                    foreach (int stars in Data.campaignStars)
+                        total += stars;
+                return total;
+            }
+        }
+
+        /// <summary>
+        /// Ghi nhận kết quả sao của một lượt thắng. Chỉ lưu khi tốt hơn kỷ lục cũ
+        /// (chơi lại được ít sao hơn không làm mất sao). Trả về true nếu là kỷ lục mới.
+        /// </summary>
+        public bool RecordCampaignStars(int stage, int stars)
+        {
+            stars = Mathf.Clamp(stars, 0, MaxStageStars);
+            if (stage < 1 || stars <= GetCampaignStars(stage))
+                return false;
+
+            SaveData save = Data;
+            if (save.campaignStars == null)
+                save.campaignStars = new System.Collections.Generic.List<int>();
+            int previousCount = save.campaignStars.Count;
+            while (save.campaignStars.Count < stage)
+                save.campaignStars.Add(0);
+
+            int previous = save.campaignStars[stage - 1];
+            save.campaignStars[stage - 1] = stars;
+            if (!TryFlush())
+            {
+                save.campaignStars[stage - 1] = previous;
+                save.campaignStars.RemoveRange(previousCount, save.campaignStars.Count - previousCount);
+                return false;
+            }
+
+            NotifyChanged();
+            return true;
+        }
 
         public int CampaignStage => Data.campaignStage;
 

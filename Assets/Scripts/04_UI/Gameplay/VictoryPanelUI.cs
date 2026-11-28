@@ -142,10 +142,11 @@ public class VictoryPanelUI : MonoBehaviour
     /// <summary>Đánh giá 1–3 sao theo lượng giáp còn lại khi qua màn (hồi sinh -> 1 sao).</summary>
     private void PlayStars()
     {
-        PlayerController player = PlayerController.Instance;
+        // GameManager đã tính (và lưu kỷ lục) trong Victory(); không có GameManager thì tự tính.
         GameManager gm = GameManager.Instance;
-        int earned = player != null
-            ? VictoryStars.Rate(player.CurrentHealth, player.MaxHealth, gm != null && gm.UsedRevive)
+        PlayerController player = PlayerController.Instance;
+        int earned = gm != null && gm.LastStageStars > 0 ? gm.LastStageStars
+            : player != null ? VictoryStars.Rate(player.CurrentHealth, player.MaxHealth, false)
             : 1;
 
         if (stars == null)

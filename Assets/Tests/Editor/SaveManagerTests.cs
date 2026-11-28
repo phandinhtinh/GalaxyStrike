@@ -384,6 +384,44 @@ namespace GalaxyStrike.Tests
         }
 
         // =====================================================================
+        // SAO TỪNG MÀN
+        // =====================================================================
+
+        [Test]
+        public void CampaignStars_KeepsBestResultPerStage()
+        {
+            SaveManager save = CreateManager();
+            Assert.AreEqual(0, save.GetCampaignStars(3));
+
+            Assert.IsTrue(save.RecordCampaignStars(3, 2));
+            Assert.AreEqual(2, save.GetCampaignStars(3));
+            Assert.AreEqual(0, save.GetCampaignStars(1));
+            Assert.AreEqual(0, save.GetCampaignStars(2));
+
+            // Chơi lại được ít sao hơn không làm mất kỷ lục.
+            Assert.IsFalse(save.RecordCampaignStars(3, 1));
+            Assert.AreEqual(2, save.GetCampaignStars(3));
+
+            Assert.IsTrue(save.RecordCampaignStars(3, 5)); // bị giới hạn ở 3
+            Assert.AreEqual(SaveManager.MaxStageStars, save.GetCampaignStars(3));
+
+            Assert.IsTrue(save.RecordCampaignStars(1, 1));
+            Assert.AreEqual(4, save.TotalCampaignStars);
+        }
+
+        [Test]
+        public void CampaignStars_SurviveReopeningAndRejectInvalidStage()
+        {
+            SaveManager save = CreateManager();
+            Assert.IsFalse(save.RecordCampaignStars(0, 3));
+            Assert.IsTrue(save.RecordCampaignStars(12, 3));
+
+            SaveManager reopened = CreateManager();
+            Assert.AreEqual(3, reopened.GetCampaignStars(12));
+            Assert.AreEqual(0, reopened.GetCampaignStars(51));
+        }
+
+        // =====================================================================
         // SỰ KIỆN OnDataChanged
         // =====================================================================
 

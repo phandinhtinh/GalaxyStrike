@@ -30,7 +30,17 @@ namespace GalaxyStrike.UI.Home
             public Image focus;
             public Image badge;
             public TMP_Text number;
+            [NonSerialized] public Image[] stars;
         }
+
+        private const string StarFullSprite = "UI/Victory/Star_Full";
+        private const string StarEmptySprite = "UI/Victory/Star_Empty";
+        private const float StarSize = 40f;
+        private const float StarSpacing = 40f;
+        private const float StarRowY = -116f; // ngay dưới nhãn số màn
+
+        private Sprite starFull;
+        private Sprite starEmpty;
 
         [SerializeField] private HomeSceneManager home;
         [SerializeField] private ScrollRect route;
@@ -60,11 +70,39 @@ namespace GalaxyStrike.UI.Home
             nextZone.onClick.AddListener(() => ChangeZone(1));
             missionButton.onClick.AddListener(UseMissionAction);
             route.onValueChanged.AddListener(UpdateVisibleZone);
+            starFull = Resources.Load<Sprite>(StarFullSprite);
+            starEmpty = Resources.Load<Sprite>(StarEmptySprite);
             for (int i = 0; i < nodes.Length; i++)
             {
                 int stage = i + 1;
                 nodes[i].button.onClick.AddListener(() => PlayStage(stage));
+                nodes[i].stars = BuildStarRow(nodes[i].button.transform);
             }
+        }
+
+        /// <summary>Hàng 3 ngôi sao nhỏ dưới mỗi màn (chỉ hiện khi màn đã qua).</summary>
+        private Image[] BuildStarRow(Transform node)
+        {
+            var row = new GameObject("Stage_Stars", typeof(RectTransform));
+            var rowRect = (RectTransform)row.transform;
+            rowRect.SetParent(node, false);
+            rowRect.anchorMin = rowRect.anchorMax = new Vector2(0.5f, 0.5f);
+            rowRect.anchoredPosition = new Vector2(0f, StarRowY);
+            rowRect.sizeDelta = new Vector2(StarSpacing * 3f, StarSize);
+
+            var stars = new Image[SaveManager.MaxStageStars];
+            for (int i = 0; i < stars.Length; i++)
+            {
+                var go = new GameObject("Star_" + (i + 1), typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+                var rect = (RectTransform)go.transform;
+                rect.SetParent(rowRect, false);
+                rect.anchoredPosition = new Vector2((i - 1) * StarSpacing, i == 1 ? 6f : 0f);
+                rect.sizeDelta = new Vector2(StarSize, StarSize);
+                stars[i] = go.GetComponent<Image>();
+                stars[i].preserveAspect = true;
+                stars[i].raycastTarget = false;
+            }
+            return stars;
         }
 
         private void OnEnable()
@@ -162,7 +200,10 @@ namespace GalaxyStrike.UI.Home
             bool ready = stage == currentStage;
             bool cleared = stage <= lastCleared;
             missionTitle.text = stage % StagesPerZone == 0 ? $"BOSS STAGE {stage:00}" : $"STAGE {stage:00}";
-            missionStatus.text = cleared ? "STAGE CLEARED" : ready ? "READY TO LAUNCH" : "LOCKED";
+            int stars = SaveManager.Instance.GetCampaignStars(stage);
+            missionStatus.text = cleared
+                ? (stars > 0 ? $"STAGE CLEARED  ·  {stars}/{SaveManager.MaxStageStars} STARS" : "STAGE CLEARED")
+                : ready ? "READY TO LAUNCH" : "LOCKED";
             missionStatus.color = cleared ? ClearedColor : ready ? ActiveColor : LockedColor;
             missionButton.image.sprite = CanPlayStage(stage) ? mainActionSprite : secondaryActionSprite;
             missionAction.text = cleared ? "REPLAY STAGE" : ready ? "PLAY STAGE" : "GO TO ACTIVE STAGE";
@@ -181,6 +222,24 @@ namespace GalaxyStrike.UI.Home
             node.badge.color = ready ? new Color32(123, 225, 255, 255) : accent;
             node.number.color = accent;
             node.number.text = stage.ToString("00");
+            UpdateStars(node, stage);
+        }
+
+        private void UpdateStars(StageNode node, int stage)
+        {
+            if (node.stars == null)
+                return;
+
+            bool cleared = stage <= lastCleared;
+            int earned = cleared && SaveManager.HasInstance ? SaveManager.Instance.GetCampaignStars(stage) : 0;
+            Transform row = node.stars[0].transform.parent;
+            row.gameObject.SetActive(cleared);
+            for (int i = 0; i < node.stars.Length; i++)
+            {
+                Image star = node.stars[i];
+                star.sprite = i < earned ? starFull : starEmpty;
+                star.enabled = star.sprite != null;
+            }
         }
 
 #if UNITY_EDITOR

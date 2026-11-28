@@ -34,6 +34,9 @@ namespace GalaxyStrike.Save
         // Zero identifies a save created before Campaign and Challenge used separate progress.
         public int campaignStage;
 
+        [Tooltip("Số sao cao nhất (0–3) của từng màn chiến dịch, phần tử i = màn i + 1")]
+        public List<int> campaignStars = new List<int>();
+
         [Tooltip("Tổng số quái đã hạ (dùng cho bảng xếp hạng)")]
         public int totalKills;
 

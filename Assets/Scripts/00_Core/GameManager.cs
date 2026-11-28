@@ -435,6 +435,12 @@ public class GameManager : MonoBehaviour
     /// <summary>Đã phải hồi sinh trong màn này chưa (dùng cho đánh giá sao ở Victory).</summary>
     public bool UsedRevive => reviveCount > 0;
 
+    /// <summary>Số sao (1–3) của lượt thắng gần nhất, tính trong <see cref="Victory"/>.</summary>
+    public int LastStageStars { get; private set; }
+
+    /// <summary>Lượt thắng gần nhất có lập kỷ lục sao mới cho màn chiến dịch không.</summary>
+    public bool LastStageStarsIsRecord { get; private set; }
+
     /// <summary>
     /// Người chơi vừa cạn máu. Nếu còn lượt hồi sinh thì mời hồi sinh,
     /// ngược lại chạy luồng Game Over như cũ.
@@ -594,6 +600,14 @@ public class GameManager : MonoBehaviour
         int levelNum = (LevelManager.Instance != null)
             ? LevelManager.Instance.CurrentLevel
             : LevelManager.SavedLevel;
+
+        // Đánh giá sao theo giáp còn lại; màn chiến dịch thì lưu kỷ lục để hiện trên bản đồ.
+        PlayerController player = PlayerController.Instance;
+        LastStageStars = player != null ? VictoryStars.Rate(player.CurrentHealth, player.MaxHealth, UsedRevive) : 1;
+        LastStageStarsIsRecord = false;
+        bool isChallenge = LevelManager.Instance != null && LevelManager.Instance.IsChallengeMode;
+        if (!isChallenge && SaveManager.Instance != null)
+            LastStageStarsIsRecord = SaveManager.Instance.RecordCampaignStars(levelNum, LastStageStars);
 
         if (VictoryPanelUI.Instance != null)
         {
