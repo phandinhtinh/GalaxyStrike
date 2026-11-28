@@ -160,7 +160,7 @@ namespace GalaxyStrike.UI.Home
             if (seen > 0 && level > seen)
             {
                 int levels = level - seen;
-                Toast.Show($"LEVEL UP!  You reached Lv.{level}\n+{levels * 3} Energy", ToastKind.Success, 3.2f);
+                Toast.Show($"LEVEL UP!  You reached Lv.{level}\n+{levels * 3} Energy", ToastKind.LevelUp, 3.2f);
                 AudioManager.Play(SfxCue.Victory);
             }
             if (level != seen)

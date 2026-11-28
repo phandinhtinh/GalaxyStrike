@@ -11,7 +11,8 @@ namespace GalaxyStrike.UI
         Info,
         Success,
         Warning,
-        Error
+        Error,
+        LevelUp
     }
 
     /// <summary>
@@ -22,7 +23,14 @@ namespace GalaxyStrike.UI
     /// </summary>
     public sealed class Toast : MonoBehaviour
     {
-        private const float MaxTextWidth = 860f;
+        private const float MaxTextWidth = 800f;
+        private const string ArtFolder = "UI/Toast/";
+        private const float IconSize = 76f;
+        private const float PadLeft = 34f;      // mép trái khung -> icon
+        private const float IconGap = 18f;      // icon -> chữ
+        private const float PadRight = 50f;
+        private const float PadVertical = 60f;
+        private const float MinHeight = 116f;   // >= tổng viền 9-slice trên + dưới của khung
         private const float FadeIn = 0.18f;
         private const float FadeOut = 0.25f;
         private const int MaxQueued = 3;
@@ -36,6 +44,9 @@ namespace GalaxyStrike.UI
         private RectTransform panel;
         private Image background;
         private Outline outline;
+        private Image icon;
+        private Sprite fallbackSprite;
+        private readonly Dictionary<string, Sprite> art = new Dictionary<string, Sprite>();
         private TextMeshProUGUI label;
         private CanvasGroup group;
         private string currentMessage;
@@ -101,7 +112,7 @@ namespace GalaxyStrike.UI
                 currentMessage = message;
                 currentHoldUntil = Time.unscaledTime + FadeIn + duration;
 
-                if (kind == ToastKind.Warning || kind == ToastKind.Error)
+                if (kind == ToastKind.Warning || kind == ToastKind.Error || kind == ToastKind.LevelUp)
                     Haptics.Light();
 
                 for (float t = 0f; t < FadeIn; t += Time.unscaledDeltaTime)
@@ -136,22 +147,62 @@ namespace GalaxyStrike.UI
         private void Apply(string message, ToastKind kind)
         {
             Color accent;
+            string panelName;
             switch (kind)
             {
-                case ToastKind.Success: accent = new Color(0.35f, 1f, 0.55f); break;
-                case ToastKind.Warning: accent = new Color(1f, 0.78f, 0.25f); break;
-                case ToastKind.Error: accent = new Color(1f, 0.38f, 0.38f); break;
-                default: accent = new Color(0.35f, 0.88f, 1f); break;
+                case ToastKind.Success: accent = new Color(0.35f, 1f, 0.55f); panelName = "Success"; break;
+                case ToastKind.LevelUp: accent = new Color(1f, 0.86f, 0.3f); panelName = "Success"; break;
+                case ToastKind.Warning: accent = new Color(1f, 0.78f, 0.25f); panelName = "Warning"; break;
+                case ToastKind.Error: accent = new Color(1f, 0.38f, 0.38f); panelName = "Error"; break;
+                default: accent = new Color(0.35f, 0.88f, 1f); panelName = "Info"; break;
             }
 
-            outline.effectColor = accent;
-            label.color = kind == ToastKind.Info ? Color.white : Color.Lerp(Color.white, accent, 0.35f);
+            // Khung + icon vẽ sẵn (Resources/UI/Toast). Thiếu ảnh thì quay về khung bo góc sinh bằng code.
+            Sprite panelSprite = LoadArt("Panel_" + panelName);
+            if (panelSprite != null)
+            {
+                background.sprite = panelSprite;
+                background.color = Color.white;
+                outline.enabled = false;
+            }
+            else
+            {
+                background.sprite = fallbackSprite;
+                background.color = new Color(0.03f, 0.09f, 0.22f, 0.94f);
+                outline.enabled = true;
+                outline.effectColor = accent;
+            }
+
+            Sprite iconSprite = LoadArt("Icon_" + kind);
+            icon.sprite = iconSprite;
+            icon.gameObject.SetActive(iconSprite != null);
+            float iconSpace = iconSprite != null ? IconSize + IconGap : 0f;
+
+            label.color = kind == ToastKind.LevelUp ? Color.Lerp(Color.white, accent, 0.45f) : Color.white;
             label.text = message;
 
             Vector2 size = label.GetPreferredValues(message, MaxTextWidth, 0f);
             size.x = Mathf.Min(size.x, MaxTextWidth);
             label.rectTransform.sizeDelta = size;
-            panel.sizeDelta = size + new Vector2(80f, 48f);
+
+            float width = PadLeft + iconSpace + size.x + PadRight;
+            float height = Mathf.Max(MinHeight, size.y + PadVertical);
+            panel.sizeDelta = new Vector2(width, height);
+
+            // Chữ nằm giữa phần còn lại bên phải icon.
+            float textCenter = PadLeft + iconSpace + size.x * 0.5f - width * 0.5f;
+            label.rectTransform.anchoredPosition = new Vector2(textCenter, 0f);
+            icon.rectTransform.anchoredPosition = new Vector2(PadLeft + IconSize * 0.5f - width * 0.5f, 0f);
+        }
+
+        private Sprite LoadArt(string name)
+        {
+            if (!art.TryGetValue(name, out Sprite sprite))
+            {
+                sprite = Resources.Load<Sprite>(ArtFolder + name);
+                art[name] = sprite;
+            }
+            return sprite;
         }
 
         private void Build()
@@ -166,12 +217,13 @@ namespace GalaxyStrike.UI
 
             panel = new GameObject("Toast_Panel", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image)).GetComponent<RectTransform>();
             panel.SetParent(transform, false);
-            // Phía trên thanh điều hướng dưới, không che nút giữa màn hình.
-            panel.anchorMin = panel.anchorMax = new Vector2(0.5f, 0.22f);
+            // Ngay trên thanh điều hướng dưới, dưới hàng nút Campaign/Challenge của Home.
+            panel.anchorMin = panel.anchorMax = new Vector2(0.5f, 0.17f);
             panel.pivot = new Vector2(0.5f, 0.5f);
 
             background = panel.GetComponent<Image>();
-            background.sprite = CreateRoundedSprite();
+            fallbackSprite = CreateRoundedSprite();
+            background.sprite = fallbackSprite;
             background.type = Image.Type.Sliced;
             background.color = new Color(0.03f, 0.09f, 0.22f, 0.94f);
             background.raycastTarget = false;
@@ -182,6 +234,12 @@ namespace GalaxyStrike.UI
             group.alpha = 0f;
             group.blocksRaycasts = false;
             group.interactable = false;
+
+            icon = new GameObject("Toast_Icon", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image)).GetComponent<Image>();
+            icon.rectTransform.SetParent(panel, false);
+            icon.rectTransform.sizeDelta = new Vector2(IconSize, IconSize);
+            icon.preserveAspect = true;
+            icon.raycastTarget = false;
 
             label = new GameObject("Toast_Text", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI)).GetComponent<TextMeshProUGUI>();
             label.rectTransform.SetParent(panel, false);

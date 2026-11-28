@@ -363,7 +363,7 @@ namespace GalaxyStrike.UI.Tasks
             if (save.TryClaimTask(task))
             {
                 AudioManager.Play(SfxCue.Reward);
-                Toast.Show("Reward claimed!  " + DescribeReward(task.rewardOne) +
+                Toast.Show("Reward claimed!\n" + DescribeReward(task.rewardOne) +
                            (task.rewardTwo.amount > 0 ? "   " + DescribeReward(task.rewardTwo) : string.Empty),
                     ToastKind.Success);
             }
