@@ -791,7 +791,7 @@ namespace GalaxyStrike.UI.Home
             name.fontSizeMin = 16f;
             name.fontSizeMax = 25f;
             name.textWrappingMode = TextWrappingModes.Normal;
-            name.overflowMode = TextOverflowModes.Ellipsis;
+            GalaxyStrike.UI.TmpOverflow.SetEllipsisSafe(name);
 
             TextMeshProUGUI count = AddText(card.transform, "Count", entry.quantity, 24f, FontStyles.Bold, TextAlignmentOptions.Center, new Color32(177, 220, 249, 255));
             Stretch(count.rectTransform, new Vector2(0.10f, 0.10f), new Vector2(0.90f, 0.23f), Vector2.zero, Vector2.zero);

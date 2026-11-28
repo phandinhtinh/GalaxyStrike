@@ -393,6 +393,10 @@ namespace GalaxyStrike.UI.Home
             // Home actions are a sibling of the panels; transparent shop UI must hide them explicitly.
             if (playBtn != null && playBtn.transform.parent != null)
                 playBtn.transform.parent.gameObject.SetActive(tabName == "Home");
+            // Nút Settings nằm chung lớp UI_Panels nên đè lên tiêu đề Store/Upgrade/Leaderboard;
+            // chỉ hiện ở tab Home.
+            if (settingsBtn != null)
+                settingsBtn.gameObject.SetActive(tabName == "Home");
             if (centerPanel) centerPanel.SetActive(false);
             if (shopPanel) shopPanel.SetActive(false);
             if (upgradePanel) upgradePanel.SetActive(false);

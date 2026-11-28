@@ -58,7 +58,7 @@ public class HUD_Panel : MonoBehaviour
                 nameLabel.fontSizeMin = 24f;
                 nameLabel.fontSizeMax = 43f;
                 nameLabel.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 60f);
-                nameLabel.overflowMode = TextOverflowModes.Ellipsis;
+                GalaxyStrike.UI.TmpOverflow.SetEllipsisSafe(nameLabel);
             }
         }
     }
