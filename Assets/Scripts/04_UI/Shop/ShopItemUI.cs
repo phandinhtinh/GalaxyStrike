@@ -214,8 +214,11 @@ public class ShopItemUI : MonoBehaviour
         if (save.IsShipUnlocked(shipIndex))
         {
             // Đã sở hữu -> chỉ cần trang bị.
+            bool alreadySelected = save.SelectedShipIndex == shipIndex;
             save.SelectShip(shipIndex);
             PlayClickSound();
+            if (!alreadySelected)
+                GalaxyStrike.UI.Toast.Show($"{shipData.shipName} equipped.", GalaxyStrike.UI.ToastKind.Info);
             RefreshState();
             return;
         }
@@ -223,14 +226,26 @@ public class ShopItemUI : MonoBehaviour
         int price = Mathf.Max(0, shipData.price);
         if (!save.TryBuyShip(shipIndex, shipData.currencyType, price))
         {
-            Debug.LogWarning($"[Shop] Không đủ tiền mua '{shipData.shipName}' ({price}).");
+            ShowNotEnough(shipData.currencyType, price, shipData.shipName);
             RefreshState();
             return;
         }
 
-        Debug.Log($"[Shop] Đã mua '{shipData.shipName}' với {price} {shipData.currencyType}.");
         PlayClickSound();
+        AudioManager.Play(SfxCue.Reward);
+        GalaxyStrike.UI.Toast.Show($"{shipData.shipName} unlocked!", GalaxyStrike.UI.ToastKind.Success);
         RefreshState();
+    }
+
+    /// <summary>Báo thiếu tiền kèm giá và số dư hiện có.</summary>
+    private static void ShowNotEnough(CurrencyType currency, int price, string what)
+    {
+        SaveManager save = SaveManager.Instance;
+        bool gems = currency == CurrencyType.Gem;
+        int have = gems ? save.Gems : save.Coins;
+        string unit = gems ? "gems" : "coins";
+        GalaxyStrike.UI.Toast.Show($"Not enough {unit}! {what} costs {price:N0}, you have {have:N0}.",
+            GalaxyStrike.UI.ToastKind.Warning);
     }
 
     private void OnClickItem()
@@ -245,16 +260,17 @@ public class ShopItemUI : MonoBehaviour
         if (!save.TryBuyItem(itemData.itemID, itemData.currencyType, price))
         {
             if (save.IsItemOwned(itemData.itemID))
-                Debug.Log($"[Shop] Đã sở hữu '{itemData.itemName}'.");
+                GalaxyStrike.UI.Toast.Show($"You already own {itemData.itemName}.", GalaxyStrike.UI.ToastKind.Info);
             else
-                Debug.LogWarning($"[Shop] Không đủ tiền mua '{itemData.itemName}' ({price}).");
+                ShowNotEnough(itemData.currencyType, price, itemData.itemName);
 
             RefreshState();
             return;
         }
 
-        Debug.Log($"[Shop] Đã mua '{itemData.itemName}' với {price} {itemData.currencyType}.");
         PlayClickSound();
+        AudioManager.Play(SfxCue.Reward);
+        GalaxyStrike.UI.Toast.Show($"{itemData.itemName} purchased!", GalaxyStrike.UI.ToastKind.Success);
         RefreshState();
     }
 

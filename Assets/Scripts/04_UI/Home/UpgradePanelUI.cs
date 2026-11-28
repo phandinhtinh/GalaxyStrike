@@ -122,15 +122,35 @@ public class UpgradePanelUI : MonoBehaviour
 
         if (!save.TryUpgrade(type))
         {
-            Debug.LogWarning("[Upgrade] Cannot upgrade " + type + ": max level or not enough Coins.");
+            if (save.IsUpgradeMaxed(type))
+                GalaxyStrike.UI.Toast.Show($"{UpgradeTitle(type)} is already at max level.", GalaxyStrike.UI.ToastKind.Info);
+            else
+                GalaxyStrike.UI.Toast.Show(
+                    $"Not enough coins! Need {save.GetUpgradeCost(type):N0}, you have {save.Coins:N0}.",
+                    GalaxyStrike.UI.ToastKind.Warning);
             Refresh();
             return;
         }
 
         if (AudioManager.Instance != null && AudioManager.Instance.buttonClickSFX != null)
             AudioManager.Instance.PlaySFX(AudioManager.Instance.buttonClickSFX);
+        AudioManager.Play(SfxCue.Reward);
+        GalaxyStrike.UI.Toast.Show($"{UpgradeTitle(type)} upgraded to Lv.{save.GetUpgradeLevel(type)}!",
+            GalaxyStrike.UI.ToastKind.Success);
 
         Refresh();
+    }
+
+    private static string UpgradeTitle(ShipUpgradeType type)
+    {
+        switch (type)
+        {
+            case ShipUpgradeType.Damage: return "Firepower";
+            case ShipUpgradeType.FireRate: return "Fire Rate";
+            case ShipUpgradeType.MaxHealth: return "Max HP";
+            case ShipUpgradeType.MoveSpeed: return "Move Speed";
+            default: return type.ToString();
+        }
     }
 
     /// <summary>Updates values and costs from the existing save data/catalog.</summary>

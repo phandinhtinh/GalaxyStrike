@@ -169,8 +169,18 @@ namespace GalaxyStrike.UI.Shop
             if (definition == null || productId != definition.productId)
                 return;
 
-            if (!success)
+            if (success)
+            {
+                string unit = definition.rewardType == IapRewardType.Gems ? "Gems"
+                    : definition.rewardType == IapRewardType.Energy ? "Energy" : "Coins";
+                Toast.Show($"Purchase complete!  +{definition.rewardAmount:N0} {unit}", ToastKind.Success);
+            }
+            else
+            {
                 Debug.LogWarning($"[IAP] Gói {definition.displayName} thất bại: {message}");
+                bool soft = message != null && (message.Contains("cancelled") || message.Contains("pending"));
+                Toast.Show(message, soft ? ToastKind.Info : ToastKind.Warning);
+            }
 
             Refresh();
         }

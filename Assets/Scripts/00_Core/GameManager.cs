@@ -681,6 +681,9 @@ public class GameManager : MonoBehaviour
     {
         Debug.LogWarning("[GameManager] Không đủ năng lượng để chơi tiếp -> về Home, mở Shop.");
         GalaxyStrike.UI.Home.HomeSceneManager.RequestTabOnLoad("Shop");
+        GalaxyStrike.UI.Home.HomeSceneManager.RequestToastOnLoad(
+            "Not enough energy to keep playing.\nWait for it to refill or get more in the Store.",
+            GalaxyStrike.UI.ToastKind.Warning);
         LoadingSceneController.LoadScene("HomeScene");
     }
 }

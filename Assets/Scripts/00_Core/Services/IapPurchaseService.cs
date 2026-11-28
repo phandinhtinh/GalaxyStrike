@@ -300,7 +300,7 @@ namespace GalaxyStrike.IAP
         {
             if (string.IsNullOrEmpty(productId))
             {
-                NotifyFailure(productId, "Thiếu Product ID.");
+                NotifyFailure(productId, "Missing product ID.");
                 return;
             }
 
@@ -314,7 +314,7 @@ namespace GalaxyStrike.IAP
 
             if (!productCache.TryGetValue(productId, out Product product) || product == null || !product.availableToPurchase)
             {
-                NotifyFailure(productId, "Sản phẩm hiện không khả dụng.");
+                NotifyFailure(productId, "This pack is not available right now.");
                 return;
             }
 
@@ -335,7 +335,7 @@ namespace GalaxyStrike.IAP
             {
                 Debug.LogError($"[IAP] Đơn cho sản phẩm không có trong catalog: {productId}. " +
                                "Không cộng thưởng và không xác nhận đơn.");
-                NotifyFailure(productId, "Sản phẩm không hợp lệ.");
+                NotifyFailure(productId, "Unknown product. Your payment will be refunded.");
                 return;
             }
 
@@ -354,7 +354,7 @@ namespace GalaxyStrike.IAP
             if (granted)
             {
                 Log($"Mua thành công: {productId} (+{definition.rewardAmount} {definition.rewardType})");
-                OnPurchaseFinished?.Invoke(productId, true, "Mua thành công.");
+                OnPurchaseFinished?.Invoke(productId, true, "Purchase complete.");
                 OnRewardGranted?.Invoke(productId);
             }
             else
@@ -367,12 +367,11 @@ namespace GalaxyStrike.IAP
         private void HandlePurchaseFailed(FailedOrder order)
         {
             string productId = GetProductId(order);
-            string reason = order != null && order.FailureReason == PurchaseFailureReason.UserCancelled
-                ? "Đã huỷ giao dịch."
-                : order != null ? $"{order.FailureReason}: {order.Details}" : "Unknown";
-
-            Debug.LogWarning($"[IAP] Mua thất bại: {productId} - {reason}");
-            OnPurchaseFinished?.Invoke(productId, false, reason);
+            bool cancelled = order != null && order.FailureReason == PurchaseFailureReason.UserCancelled;
+            Debug.LogWarning($"[IAP] Mua thất bại: {productId} - {(order != null ? $"{order.FailureReason}: {order.Details}" : "Unknown")}");
+            // Thông điệp gửi UI bằng tiếng Anh (font UI không có dấu tiếng Việt).
+            OnPurchaseFinished?.Invoke(productId, false,
+                cancelled ? "Purchase cancelled." : "Purchase failed. Please try again.");
         }
 
         /// <summary>
@@ -383,7 +382,7 @@ namespace GalaxyStrike.IAP
         {
             string productId = GetProductId(order);
             Log($"Đơn đang chờ xử lý: {productId}");
-            OnPurchaseFinished?.Invoke(productId, false, "Giao dịch đang chờ xử lý, phần thưởng sẽ được cộng khi hoàn tất.");
+            OnPurchaseFinished?.Invoke(productId, false, "Payment pending. Your reward arrives once it completes.");
         }
 
         private static string GetProductId(Order order)
@@ -425,7 +424,7 @@ namespace GalaxyStrike.IAP
         {
             if (!allowSimulationOutsideStore)
             {
-                NotifyFailure(productId, "Cửa hàng chưa sẵn sàng, vui lòng thử lại.");
+                NotifyFailure(productId, "The store is not ready. Please try again.");
                 return;
             }
 
@@ -433,7 +432,7 @@ namespace GalaxyStrike.IAP
                 $"[IAP] (Mô phỏng) Bấm mua '{productId}' khi Store chưa kết nối. " +
                 "Không có giao dịch thật, KHÔNG cộng Coin/Gem.");
 
-            OnPurchaseFinished?.Invoke(productId, false, "Cửa hàng chưa kết nối (chế độ mô phỏng).");
+            OnPurchaseFinished?.Invoke(productId, false, "The store is not connected yet. Please try again later.");
         }
 
         // =====================================================================

@@ -111,6 +111,13 @@ public sealed class RevivePanelUI : MonoBehaviour
 
         // Không đủ Coin -> giữ panel mở để người chơi chọn quảng cáo hoặc bỏ qua.
         PlayInsufficientFeedback();
+        if (GameManager.Instance != null)
+        {
+            var save = GalaxyStrike.Save.SaveManager.Instance;
+            GalaxyStrike.UI.Toast.Show(
+                $"Not enough coins! Revive costs {GameManager.Instance.NextReviveCost:N0}, you have {(save != null ? save.Coins : 0):N0}.",
+                GalaxyStrike.UI.ToastKind.Warning);
+        }
     }
 
     private void OnClickReviveWithAd()

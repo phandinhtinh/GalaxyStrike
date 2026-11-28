@@ -361,9 +361,21 @@ namespace GalaxyStrike.UI.Tasks
             }
 
             if (save.TryClaimTask(task))
+            {
                 AudioManager.Play(SfxCue.Reward);
+                Toast.Show("Reward claimed!  " + DescribeReward(task.rewardOne) +
+                           (task.rewardTwo.amount > 0 ? "   " + DescribeReward(task.rewardTwo) : string.Empty),
+                    ToastKind.Success);
+            }
 
             RenderRows();
+        }
+
+        private static string DescribeReward(TaskReward reward)
+        {
+            string unit = reward.type == TaskRewardType.Gems ? "Gems"
+                : reward.type == TaskRewardType.Energy ? "Energy" : "Coins";
+            return $"+{reward.amount.ToString("N0", CultureInfo.InvariantCulture)} {unit}";
         }
 
         private void RenderActionButton(TaskPopupRowView row, bool complete, bool claimed)

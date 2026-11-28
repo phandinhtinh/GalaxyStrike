@@ -70,11 +70,17 @@ namespace GalaxyStrike.UI.Home
 
         /// <summary>Tab cần mở ngay khi HomeScene vào (ví dụ "Shop" khi hết năng lượng trong trận).</summary>
         private static string pendingTabOnLoad;
+        private static string pendingToastOnLoad;
+        private static ToastKind pendingToastKind;
+
+        /// <summary>Cấp tài khoản người chơi đã được báo (để chỉ báo "LEVEL UP" một lần).</summary>
+        private const string SeenAccountLevelKey = "GalaxyStrike_SeenAccountLevel";
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void ResetStatics()
         {
             pendingTabOnLoad = null;
+            pendingToastOnLoad = null;
         }
 
         /// <summary>
@@ -83,6 +89,16 @@ namespace GalaxyStrike.UI.Home
         public static void RequestTabOnLoad(string tabName)
         {
             pendingTabOnLoad = tabName;
+        }
+
+        /// <summary>
+        /// Hiện một thông báo khi HomeScene vừa vào (dùng khi đổi Scene từ GameScene,
+        /// vì toast hiện ngay sẽ trôi qua trong lúc màn hình Loading).
+        /// </summary>
+        public static void RequestToastOnLoad(string message, ToastKind kind = ToastKind.Info)
+        {
+            pendingToastOnLoad = message;
+            pendingToastKind = kind;
         }
         private Coroutine navSelectionRoutine;
 
@@ -120,6 +136,38 @@ namespace GalaxyStrike.UI.Home
             RegisterButtonEvents();
             if (backpackUI != null)
                 backpackUI.BindShopAction(() => OnTabSelected("Shop"));
+
+            // Dấu báo đỏ trên các nút Missions / Daily / Gift / Battle Pass theo dữ liệu thật.
+            if (GetComponent<HomeNotificationBadges>() == null)
+                gameObject.AddComponent<HomeNotificationBadges>();
+
+            ShowPendingNotices();
+        }
+
+        /// <summary>Thông báo chuyển từ Scene trước và báo lên cấp tài khoản (nếu có).</summary>
+        private void ShowPendingNotices()
+        {
+            if (!string.IsNullOrEmpty(pendingToastOnLoad))
+            {
+                Toast.Show(pendingToastOnLoad, pendingToastKind, 3f);
+                pendingToastOnLoad = null;
+            }
+
+            SaveManager save = SaveManager.Instance;
+            int level = save.AccountLevel;
+            int seen = PlayerPrefs.GetInt(SeenAccountLevelKey, 0);
+            // Lần đầu có tính năng này: chỉ ghi nhận, không báo các cấp cũ.
+            if (seen > 0 && level > seen)
+            {
+                int levels = level - seen;
+                Toast.Show($"LEVEL UP!  You reached Lv.{level}\n+{levels * 3} Energy", ToastKind.Success, 3.2f);
+                AudioManager.Play(SfxCue.Victory);
+            }
+            if (level != seen)
+            {
+                PlayerPrefs.SetInt(SeenAccountLevelKey, level);
+                PlayerPrefs.Save();
+            }
         }
 
         private void InitUI()
@@ -348,7 +396,7 @@ namespace GalaxyStrike.UI.Home
             // Chặn vào trận nếu tàu chưa mở khóa
             if (!IsShipUnlocked(currentShipIndex))
             {
-                Debug.LogWarning("[HomeSceneManager] Tàu này chưa được sở hữu! Chuyển hướng sang Shop.");
+                Toast.Show("This ship is locked.\nUnlock it in the Store.", ToastKind.Warning);
                 OnTabSelected("Shop");
                 return;
             }
@@ -377,7 +425,9 @@ namespace GalaxyStrike.UI.Home
             else
             {
                 gameStarting = false;
-                Debug.LogWarning("[HomeSceneManager] Không đủ năng lượng để vào trận!");
+                int wait = save.SecondsUntilNextEnergy();
+                Toast.Show($"Not enough energy! Need {save.EnergyCostPerRun}, you have {save.Energy}.\n" +
+                           $"+1 in {wait / 60:00}:{wait % 60:00}", ToastKind.Warning, 3f);
                 OnTabSelected("Shop");
             }
         }
